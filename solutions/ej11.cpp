@@ -48,7 +48,7 @@ void set_input_mode (void) {
     tcgetattr(STDIN_FILENO, &default_attributes);
 
     /* hide cursor */
-    printf("\033[?25l");
+    cout << "\033[?25l";
 
     /* Set the terminal modes. */
     tcgetattr(STDIN_FILENO, &tattr);
@@ -62,7 +62,7 @@ void reset_input_mode (void) {
     tcsetattr(STDIN_FILENO, TCSANOW, &default_attributes);
 
     /* show cursor */
-    printf("\033[?25h");
+    cout << "\033[?25h";
 }
 
 void print_menu(void) {
@@ -160,9 +160,9 @@ int main (void) {
     if(selected_item != MENU_ITEMS) {
         if (menu[selected_item] == menu[ES]) {
             mg = "Usted seleccionó: `";
-        } else if (menu[selected_item] == menu [DE]) {
+        } else if (menu[selected_item] == menu[DE]) {
             mg = "Sie wählen: `";
-        } else if (menu[selected_item] == menu [PT]) {
+        } else if (menu[selected_item] == menu[PT]) {
             mg = "Você seleciona: `";
         } else {
             mg = "You selected: `";
