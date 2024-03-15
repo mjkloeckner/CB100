@@ -17,10 +17,10 @@ unsigned int cursor_pos;
 bool run_program;
 
 string menu[menu_items] = {
-	"Español",
-	"English",
-	"Deutsch",
-	"Português" 
+    "Español",
+    "English",
+    "Deutsch",
+    "Português" 
 };
 
 void sig_handler(int signo) {
