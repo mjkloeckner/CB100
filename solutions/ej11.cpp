@@ -89,7 +89,6 @@ void move_cursor_down() {
 }
 
 int main (void) {
-    const clock_t start = clock();
     char cmd;
     unsigned int selected_item;
     run_program = true;
@@ -104,8 +103,6 @@ int main (void) {
 
     print_menu();
     while(run_program) {
-        clock_t now = clock();
-        clock_t delta = (now - start);
         cin.get(cmd);
         switch(cmd) {
             case 'w':
