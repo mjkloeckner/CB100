@@ -9,14 +9,20 @@
 
 using namespace std;
 
-const unsigned int menu_items = 4;
-static struct termios default_attributes;
+enum {
+    ES,
+    EN,
+    DE,
+    PT,
+    MENU_ITEMS
+};
 
-string *cursor = new string[menu_items];
+static struct termios default_attributes;
+string *cursor = new string[MENU_ITEMS];
 unsigned int cursor_pos;
 bool run_program;
 
-string menu[menu_items] = {
+string menu[MENU_ITEMS] = {
     "Español",
     "English",
     "Deutsch",
@@ -60,15 +66,15 @@ void reset_input_mode (void) {
 }
 
 void print_menu(void) {
-    for(size_t i = 0; i < menu_items; ++i) {
+    for(size_t i = 0; i < MENU_ITEMS; ++i) {
         cursor[cursor_pos].assign(((i == cursor_pos) ? " >\033[33m" : "  "));
         cout << cursor[cursor_pos] << menu[i] 
-             << (i == menu_items ? "\033[0m" : "\033[0m\n") << flush;
+             << (i == MENU_ITEMS ? "\033[0m" : "\033[0m\n") << flush;
     }
 }
 
 void clear_menu(void) {
-    cout << "\033[" << menu_items << "A";
+    cout << "\033[" << MENU_ITEMS << "A";
 }
 
 void refresh_menu(void) {
@@ -79,11 +85,11 @@ void refresh_menu(void) {
 void move_cursor_up() {
     if(cursor_pos >= 1)
         cursor_pos--;
-    else cursor_pos = (menu_items - 1);
+    else cursor_pos = (MENU_ITEMS - 1);
 }
 
 void move_cursor_down() {
-    if(cursor_pos < (menu_items - 1))
+    if(cursor_pos < (MENU_ITEMS - 1))
         cursor_pos++;
     else cursor_pos = 0;
 }
@@ -93,7 +99,7 @@ int main (void) {
     unsigned int selected_item;
     run_program = true;
     cursor_pos = 0;
-    selected_item = menu_items;
+    selected_item = MENU_ITEMS;
 
     set_input_mode();
     signal(SIGINT, sig_handler);
@@ -149,9 +155,20 @@ int main (void) {
         }
     }
 
+    string mg;
     clear_menu();
-    if(selected_item != menu_items)
-        cout << "You selected: `" << menu[selected_item] << "`" << endl;
+    if(selected_item != MENU_ITEMS) {
+        if (menu[selected_item] == menu[ES]) {
+            mg = "Usted seleccionó: `";
+        } else if (menu[selected_item] == menu [DE]) {
+            mg = "Sie wählen: `";
+        } else if (menu[selected_item] == menu [PT]) {
+            mg = "Você seleciona: `";
+        } else {
+            mg = "You selected: `";
+        }
+        cout << mg << menu[selected_item] << "`" << endl;
+    }
 
     exit(EXIT_SUCCESS);
 }
