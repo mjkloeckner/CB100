@@ -12,7 +12,7 @@ using namespace std;
 const unsigned int menu_items = 4;
 static struct termios default_attributes;
 
-char cursor[menu_items] = {0};
+string *cursor = new string[menu_items];
 unsigned int cursor_pos;
 bool run_program;
 
@@ -61,7 +61,7 @@ void reset_input_mode (void) {
 
 void print_menu(void) {
     for(size_t i = 0; i < menu_items; ++i) {
-        cursor[cursor_pos] = ((i == cursor_pos) ? '>' : ' ');
+        cursor[cursor_pos].assign(((i == cursor_pos) ? " >" : "  "));
         cout << cursor[cursor_pos] << menu[i] << (i == menu_items ? "" : "\n")
             << flush;
     }
