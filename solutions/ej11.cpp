@@ -120,6 +120,8 @@ int main (void) {
                 break;
             case 10: // Enter
             case ' ':
+            case 'l':
+            case 'f':
                 selected_item = cursor_pos;
                 run_program = false;
                 break;
