@@ -14,8 +14,8 @@ Programación 2
 ## Librería Termios
 
 La librería `termios.h` permite cambiar la configuración de las interfaces de
-entrada y salida de la terminal. Esta libreria resulta util en casos en los que
-se quiera hacer un programa interactive con el que se muestra a continuación
+entrada y salida de la terminal. Esta librería resulta útil en casos en los que
+se quiera hacer un programa interactivo como el que se muestra a continuación
 
 ![Termios Example](https://github.com/mjkloeckner/CB100/assets/64109770/57ef45a4-e7cc-4a01-af84-4b30eb3c48b3)
 
