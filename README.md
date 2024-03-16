@@ -1,8 +1,8 @@
 # Algoritmos y Estructuras de Datos
 
 En este repositorio usted encontrara mis notas y resoluciones del curso
-Algoritmos y Estructuras de Datos (CB100) previamente llamado Algoritmos y
-Programación 2
+Algoritmos y Estructuras de Datos (CB100) cátedra Schmidt. Esta materia en
+cuatrimestres anteriores era llamada Algoritmos y Programación 2
 
 ## Recursos Recomendados
 
@@ -18,6 +18,10 @@ entrada y salida de la terminal. Esta librería resulta útil en casos en los qu
 se quiera hacer un programa interactivo como el que se muestra a continuación
 
 ![Termios Example](https://github.com/mjkloeckner/CB100/assets/64109770/57ef45a4-e7cc-4a01-af84-4b30eb3c48b3)
+
+La aplicación anterior corresponde con la [solución del ejercicio
+11](https://github.com/mjkloeckner/CB100/blob/main/solutions/ej11.cpp) el cual
+pide formar un menu de 4 opciones
 
 ### Recursos Recomendados Sobre Termios y Manejo de Señales
 
