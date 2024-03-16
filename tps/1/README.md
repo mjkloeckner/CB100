@@ -39,3 +39,7 @@ En el caso de windows recomiendo configurar
 siguiendo la [guia oficial de
 Microsoft](https://learn.microsoft.com/en-us/windows/wsl/install). Luego
 seguir los pasos para los sistemas basados en UNIX.
+
+## LICENSE
+
+[MIT](https://opensource.org/license/mit)
