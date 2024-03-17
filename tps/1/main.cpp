@@ -1,6 +1,9 @@
+// El algoritmo utilizado para verificar que un numero es primo 
+// es la Criba de Eratóstenes 
+// https://es.wikipedia.org/wiki/Criba_de_Erat%C3%B3stenes
+
 #include <iostream>
 #include <fstream>
-#include <ctime>
 #include <iomanip>
 #include <vector>
 #include <cmath>
@@ -9,19 +12,18 @@
 const unsigned int MAXIMO = 100000000;
 
 int main (void) {
-    unsigned int ti, tf;
+    unsigned long ti, i, j;
     double tt;
     std::ofstream fp;
 
     ti = clock();
+    std::vector<bool> numeros(MAXIMO, true);
 
-    unsigned long i, j;
-    std::vector<bool> numeros(MAXIMO);
-    std::fill(numeros.begin(), numeros.end(), true);
     for (i = 2; i < std::sqrt(MAXIMO); ++i) {
         if(numeros[i] == true) {
-            for (j = i; j <= (MAXIMO/i); ++j)
+            for (j = i; j <= (MAXIMO/i); ++j) {
                 numeros[i*j] = false;
+            }
         }
     }
 
@@ -40,8 +42,7 @@ int main (void) {
 
     fp.close();
 
-    tf = clock();
-    tt = (double(tf - ti)) / CLOCKS_PER_SEC;
+    tt = (double(clock() - ti)) / CLOCKS_PER_SEC;
 
     std::cout.precision(2);
     std::string t_unit = "segundos";
