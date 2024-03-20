@@ -167,7 +167,7 @@ int main (void) {
         } else {
             mg = "You selected: `";
         }
-        cout << mg << menu[selected_item] << "`" << endl;
+        cout << mg << menu[selected_item] << "`\033[0J\n";
     }
 
     exit(EXIT_SUCCESS);
