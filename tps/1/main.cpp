@@ -15,12 +15,13 @@ int main (void) {
     unsigned long ti, i, j;
     double tt;
     std::ofstream fp;
-
-    ti = clock();
     std::vector<bool> numeros(MAXIMO, true);
 
+    ti = clock();
+	numeros[0] = numeros[1] = false; // 0 y 1 no son primos
+
     for (i = 2; i < std::sqrt(MAXIMO); ++i) {
-        if(numeros[i] == true) {
+        if(numeros[i]) {
             for (j = i; j <= (MAXIMO/i); ++j) {
                 numeros[i*j] = false;
             }
@@ -41,7 +42,6 @@ int main (void) {
     }
 
     fp.close();
-
     tt = (double(clock() - ti)) / CLOCKS_PER_SEC;
 
     std::cout.precision(2);
