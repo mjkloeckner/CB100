@@ -1,4 +1,4 @@
-# Clase 13-03-24
+# Teórica 13-03-24
 
 ## Introducción a la materia
 
@@ -11,11 +11,11 @@
 
 ## El lenguaje de programación C++
 
-### Convenciones
+### Convenciones utilizadas en el curso
 
 * Capitalización de tipo *camelCase* para nombrar las variables
-* definir las constantes como `static const int valor = 1;` al comienzo del
-  archivo
+* Definir las constantes numéricas como `static const int valor = 1;` al
+  comienzo del archivo
 * Evitar el uso de *goto*
 
 
