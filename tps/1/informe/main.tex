@@ -126,42 +126,50 @@ fontupper={\ttfamily\mystrut}}
 
 En el presente trabajo práctico se explica el desarrollo de una aplicación de
 consola que busca números primos hasta un valor máximo determinado por el
-usuario. El lenguaje utilizado para el desarrollo de la aplicación es C++ y el
-algoritmo utilizado para hallar los números primos es la Criba de Eratóstenes,
-aunque también se hace una mención a un método iterativo que es más intuitivo
-pero menos eficiente.
+usuario, cuando finaliza, los imprime en un archivo de texto plano en el
+directorio de ejecución de la aplicación.
+
+El lenguaje utilizado para el desarrollo de la aplicación es C++ y el algoritmo
+utilizado para hallar los números primos es la Criba de Eratóstenes.
 
 \subsection{Números Primos}
 
 Los números primos por definición son aquellos números positivos que solo son
 divisibles por \code{1} y por si mismos, divisibles en términos de que el resto
-de la división es cero. El \code{0} y el \code{1} son dos casos particulares en
+de la división es nulo. El \code{0} y el \code{1} son dos casos particulares en
 los cuales ambos son considerados no primos, el \code{0} por razones obvias, no
 está definida la división por \code{0}, y el \code{1} por que solo es divisible
-por si mismo lo cual hace que solo sea divisible por un número.
+por si mismo, lo cual hace que solo sea divisible por un número.
 
-El numero \code{7}, por ejemplo, es un numero primo, ya que solo es divisible
-por \code{1} y por \code{7}. El numero \code{8} no es un numero primo, ya que
-ademas de ser divisible por si mismo y por \code{1}, es divisible por \code{4} y
-por \code{2}.
+El número \code{7}, por ejemplo, es un número primo, ya que solo es divisible
+por \code{1} y por \code{7}. El número \code{8} no es un número primo, ya que
+ademas de ser divisible por si mismo y por \code{1}, es divisible por \code{2} y
+por \code{4}.
 
-\subsection{Algoritmo Iterativo para Hallar Números Primos}
+\subsection{Algoritmo Primitivo para Descartar Números Primos}
 
-El primer algoritmo que surge casi instantáneamente es un método iterativo, el
-cual comprueba numero a numero si existe algún múltiplo menor distinto de si
-mismo y de \code{1}, en el caso de existir alguno, el numero queda descartado de
-la lista de números primos.
+El primer algoritmo que surge casi instantáneamente es un algoritmo en el que se
+itera sobre una lista de números y por cada numero se descartan todos sus
+múltiplos. Este algoritmo cumple la función de encontrar números primos, pero no
+es para nada eficiente.
 
 \subsection{Criba de Eratóstenes}
 
 La criba de Eratóstenes es un algoritmo más sofisticado y eficiente que el
-método iterativo mencionado previamente. El algoritmo resulta conveniente para
-descartar números no primos de una lista de números naturales. Teniendo una
-lista de números itera numero a numero, comenzando por el primero, si se
-trata de un numero primo, busca todos los múltiplos en la lista de números y
-los tacha, luego procede al siguiente numero no tachado, el cual siempre
-resulta un numero primo, y tacha sus múltiplos, así hasta llegar a la raíz
-cuadrada del numero máximo de la lista.
+método primitivo mencionado previamente. En la Criba de Eratóstenes se itera
+número a número sobre una lista ordenada y finita de números naturales,
+comenzando por el primero, si se trata de un número primo, se buscan todos los
+múltiplos en la lista de números y se descartan, luego se avanza al siguiente
+número que no haya sido descartado, el cual siempre resulta un número primo, y
+se descartan sus múltiplos, así sucesivamente hasta que no queden números no
+primos en la lista. 
+
+La criba de Eratóstenes se puede optimizar basándose en la propiedad de que los
+números no primos se pueden expresar como el producto de números primos, por
+ejemplo \code{4 = 2*2} o \code{21 = 3*7}. Por lo tanto, si un número no es
+primo, debe tener al menos un factor primo que sea menor o igual que su raíz
+cuadrada, de esta propiedad se deduce que se puede detener la iteración en la
+lista de números cuando se llega al cuadrado del numero máximo.
 
 \section{Desarrollo}
 
@@ -169,80 +177,201 @@ Para el desarrollo de la aplicación, como bien se mencionó en la introducción
 se utilizó puramente el lenguaje C++, en particular en su versión estándar C98.
 Para organizar el proceso de compilación se utilizó la herramienta \code{make}.
 
+Si bien se mencionaron dos algoritmos para hallar números primos, se utiliza
+la Criba de Eratóstenes ya que resulta mucho más eficiente que el algoritmo
+primitivo.
+
 \subsection{Implementación en C++}
 
-Para la implementación de la aplicación en C++ se utiliza la Librería estándar
-para escribir sobre archivos, así como también la librería \code{std::vector}
-para representar los números a determinar si son primos.
+Para representar el máximo de números en la lista se define la constante
+\code{MAXIMO}.
 
-\subsection{Reutilización de Makefile}
+\begin{fullgrayverb}[\mbox{}]
+// Se define la constante `MAXIMO` que representa la cantidad
+// de números en la lista
+const unsigned int MAXIMO = 100000000;
+\end{fullgrayverb}
 
-Ademas de la importancia de buenas practicas en el desarrollo de la aplicación,
-también es importante el desarrollo de buenas practicas en el proceso de
-compilación. 
+La Criba de Eratóstenes opera sobre una lista de números naturales ordenada.
+Para representarla se utiliza la librería estándar \code{vector} de la cual
+se define un vector de tipo \code{bool} inicialmente con valores \code{true}
+indicando que son todos números primos, luego al aplicar el algoritmo éste
+cambiará el contenido del vector a \code{false} en las posiciones en que se
+ubiquen números no primos.
 
-El siguiente fragmento del archivo Makefile puede ser reutilizado para cualquier
-proyecto, incluso aquellos con diferentes librerías
+\begin{fullgrayverb}[\mbox{}]
+// Se define un vector de tipo `bool` de largo `MAXIMO`
+// con valores iniciales `true`
+std::vector<bool> numeros(MAXIMO, true);
+\end{fullgrayverb}
+
+Comenzando por los casos particulares, \code{0} y \code{1} no son números
+primos, por lo que se puede cambiar su valor a \code{false} directamente.
+
+\begin{fullgrayverb}[\mbox{}]
+// 0 y 1 no son primos
+numeros[0] = numeros[1] = false;
+\end{fullgrayverb}
+
+Para determinar los números no primos y descartarlos de la lista de números, se
+itera sobre el vector descartando todos los múltiplos de los números primos,
+hasta llegar a la raíz cuadrada del numero máximo de la lista. Para determinar
+la raíz cuadrada del numero máximo se utiliza la función
+\code{std::sqrt} de la librería estándar \code{cmath} 
+
+\begin{fullgrayverb}[\mbox{}]
+for (i = 2; i < std::sqrt(MAXIMO); ++i) {
+    if(numeros[i] == true) {
+        for (j = i; j <= (MAXIMO/i); ++j) {
+            numeros[i*j] = false;
+        }
+    }
+}
+\end{fullgrayverb}
+
+\pagebreak
+Para la impresión en el archivo se define una constante para representar el
+nombre del archivo de salida
+
+\begin{fullgrayverb}[\mbox{}]
+// Se define el nombre del archivo a imprimir los números primos
+#define OUTPUT_FILE_PATH "primos.txt"
+\end{fullgrayverb}
+
+Para la manipulación del archivo se utiliza la clase \code{ofstream} de la
+librería estándar \code{fstream}
+
+\begin{fullgrayverb}[\mbox{}]
+// Se define el objeto fp para representar el archivo de salida
+std::ofstream fp;
+\end{fullgrayverb}
+
+Utilizando los métodos \code{open} e \code{is\_open} del objeto \code{fp} se abre
+el archivo, y se comprueba si hubo algún error, en caso afirmativo, se informa
+al usuario haciendo uso de métodos de la librería estándar \code{iostream} y se
+termina la ejecución con un código de error \code{-1}
+
+\begin{fullgrayverb}[\mbox{}]
+// Se abre el archivo en modo escritura, de haber un error lo reporta
+// al usuario y se termina la ejecución inmediatamente
+fp.open(OUTPUT_FILE_PATH);
+if (fp.is_open() == false) {
+    std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH << "`\n";
+    return -1;
+}
+\end{fullgrayverb}
+
+Para imprimir los números primos hallados al archivo, se recorre la lista en
+búsqueda de aquellos casilleros que contengan \code{true}, ya que resultan
+números primos, en caso de encontrarse se imprime la posición al archivo, los 
+casilleros que contienen \code{false} son ignorados. 
+
+La variable \code{j} se utiliza para contar la cantidad de números primos
+encontrados, ya que luego será informada al usuario por la consola.
+
+\begin{fullgrayverb}[\mbox{}]
+for (i = 2, j = 0; i < numeros.size(); ++i) {
+    if(numeros[i] == true) {
+        fp << i << std::endl;
+        j++;
+    }
+}
+\end{fullgrayverb}
+
+Luego de finalizada la impresión en el archivo, se cierra utilizando el método
+\code{close}
+
+\begin{fullgrayverb}[\mbox{}]
+fp.close();
+\end{fullgrayverb}
+
+Finalmente se imprime un mensaje al usuario indicando que terminó la impresión,
+y se informa la cantidad de números primos hallados, esto se hace utilizando
+metodos de la librería estándar \code{iostream} 
+
+\begin{fullgrayverb}[\mbox{}]
+std::cout << "Se encontraron `" << j << "` números primos\n";
+\end{fullgrayverb}
+
+\pagebreak
+\subsection{Makefile}
+
+Si bien es importante la utilización de buenas practicas en el código fuente de
+la aplicación, muchas veces el proceso compilación no se tiene en cuenta,
+pero es también muy importante para generar una aplicación robusta y fácil de
+diagnosticar en caso de fallas.
+
+Para el desarrollo de la aplicación se utiliza la herramienta \code{GNU make},
+la cual lee un archivo de nombre exclusivo \code{Makefile} que posee su propia
+sintaxis. El archivo \code{Makefile} utilizado intenta ser reutilizable y de
+fácil modificación, es por esto que al comienzo del mismo se utilizan variables
+para almacenar las principales opciones que el usuario podría querer modificar,
+por ejemplo el nombre del compilador utilizado, el nombre final del archivo,
+entre otras.
 
 \begin{fullgrayverb}[\mbox{}]
 CC := g++
 CFLAGS := -Wall -Wshadow -pedantic -ansi -std=c++98 -O3
 SRCS := $(wildcard *.cpp)
-
+OBJS := $(SRCS:.cpp=.o)
 TARGET := primos
+\end{fullgrayverb}
 
-all: $(TARGET)
+Para compilar y enlazar las cabeceras y el programa final, se utilizan las
+siguientes etiquetas
 
-$(TARGET): $(SRCS)
-    $(CC) $(CLIBS) $(CFLAGS) -o $@ $^
-\end{fullgrayverb}$
+\begin{fullgrayverb}[\mbox{}]
+$(TARGET): $(OBJS)
+    $(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $< -o $@
+\end{fullgrayverb}
+
+La etiqueta que contiene \code{\$(TARGET)} se expande al nombre final de la
+aplicación, luego de los dos puntos se indican las dependencias, las cuales se
+expanden a los archivos objeto (los que terminan en \code{.o})
+
+Para compilar los archivos objetos se utiliza la segunda etiqueta, la cual
+corresponde a una \code{pattern rule}, una extension de \code{GNU}, la cual
+compila todos los archivos terminados en \code{.cpp} a archivos objeto.
 
 \subsection{Optimizaciones del Compilador}
 
-La mayoría de los compiladores de C++ proporcionan una opción para activar las
-optimizaciones. Al tener esta opción activada el compilador intenta eliminar
-código redundante para reducir el uso de memoria, tiempo de ejecución y por
-consiguiente el consumo de energía, entre otras cosas.
+La mayoría de los compiladores de C++ modernos proporcionan una opción para
+activar optimizaciones. Al utilizar estas optimizaciones el compilador
+intenta eliminar código redundante y optimizar mediante técnicas avanzadas el
+archivo binario final, de este modo se logra reducir el uso de memoria, el
+tiempo de ejecución y por consiguiente el consumo de energía, entre otras cosas.
+
+En el archivo \code{Makefile} de la aplicación por defecto se utiliza el el
+máximo de optimizaciones disponibles \code{-O3}, de esta manera se obtiene un
+archivo binario superior en rendimiento que el que se obtiene con las
+optimizaciones desactivadas.
 
 % Teniendo un compilador que proporcione optimizaciones del código resulta
 % conveniente activarla ya que reduce el tiempo de ejecución hasta en un
 % \code{406\%}.
 
-En el siguiente caso se muestra la salida del programa utilizando el máximo de
-optimizaciones posible del compilador \code{-O3}, se puede apreciar en la salida
-del programa el tiempo de ejecución del mismo.
-
-\begin{fullgrayverb}
-Se encontraron `5761455` números primos en `11.36` segundos
-\end{fullgrayverb}
-
-Desactivando las optimizaciones del compilador y ejecutando nuevamente la
-aplicación, se obtiene el siguiente mensaje en la consola:
-
-\begin{fullgrayverb}
-Se encontraron `5761455` números primos en `46.21` segundos
-\end{fullgrayverb}
-
-Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
-en un \code{406\%}.
-
 \section{Instalación}
 
-Para la instalación usted debe de disponer de una copia del código fuente, si
-no posee una, puede obtenerla ingresando al
+Para instalar la aplicación usted debe de disponer de una copia del código
+fuente, si no posee una, puede obtenerla ingresando al
 \href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}, de allí
-podrá descargar una copia del código fuente o bien puede clonar el repositorio
-utilizando \code{git} con el siguiente comando:
+podrá descargar una copia, o bien puede clonar el repositorio utilizando
+\code{git} con el siguiente comando:
 
 \begin{fullgrayverb}
 $ git clone https://github.com/mjkloeckner/CB100.git
 \end{fullgrayverb}$
 
+Tenga en cuenta que si clona el Repositorio, o lo descarga del repositorio de
+Github, tendrá que navegar al directorio \code{tps/1}
+
 \subsection{Sistemas basados en UNIX}
 
-Compruebe que este el mismo directorio que el archivo \code{main.cpp}
-
-Compile el código con el programa \code{make}
+Compruebe que este en el mismo directorio que el archivo \code{main.cpp}. Luego,
+compile el código con el programa \code{make}
 
 \begin{fullgrayverb}
  $ make
@@ -256,23 +385,23 @@ Luego puede ejecutar la aplicación de la siguiente manera
 
 \subsection{Windows}
 
-En el caso de Windows puede configurar
-\href{https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux}{WSL},
-para hacerlo puede seguir la
+En el caso de utilizar Windows como sistema operativo, usted puede configurar
+\href{https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux}{WSL}, el cual
+virtualiza un sistema basado en UNIX, para hacerlo puede seguir la
 \href{https://learn.microsoft.com/en-us/windows/wsl/install}{guia oficial de
 Microsoft}. Una vez configurado WSL siga los pasos para los sistemas basados en
 UNIX
 
-De manera análoga si usted dispone de un compilador de C++ instalado puede
-compilar la aplicación directamente desde la consola, sin la necesidad de
-utilizar la herramienta \code{make}, para eso ejecute el siguiente comando:
+De manera análoga si usted dispone de un compilador de C++ puede compilar la
+aplicación directamente desde la consola, sin la necesidad de utilizar la
+herramienta \code{make}, para eso ejecute el siguiente comando:
 
 \begin{fullgrayverb}
  $ g++ -Wall -Wshadow -ansi -std=c++98 -O3 main.cpp -o primos
 \end{fullgrayverb}$
 
 Tenga en cuenta la sintaxis de su compilador ya que puede variar, el comando
-anterior está previsto para \code{MinGW}
+anterior está previsto para \href{https://www.mingw-w64.org/}{MinGW-w64}
 
 Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera 
 
@@ -280,12 +409,56 @@ Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera
  $ ./primos
 \end{fullgrayverb}$
 
+\pagebreak
 \section{Conclusión}
 
-\section{Bibliografía}
+En el siguiente caso se muestra la salida del programa utilizando el máximo de
+optimizaciones posible del compilador \code{-O3}, se puede apreciar en la salida
+del programa el tiempo de ejecución del mismo.
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `11.36` segundos
+\end{fullgrayverb}
+
+Desactivando las optimizaciones del compilador, compilando y ejecutando
+nuevamente la aplicación, se obtiene el siguiente mensaje en la consola:
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `46.21` segundos
+\end{fullgrayverb}
+
+Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
+en un \code{406\%}.
+
+
+\pagebreak
+\section{Referencias}
 
 \begin{itemize}
-	\item \href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}
+    \item Deitel H., Deitel P. - C how to Program: With an Introduction to C++
+        (2015)
+    \item
+        \href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}
+    \item
+        \href{https://en.cppreference.com/w/}{C++ Reference}
+    \item
+        \href{https://cplusplus.com/reference/}{Standard C++ Library reference}
+    \item
+        \href{https://en.cppreference.com/w/cpp/container/vector_bool}{
+            std::vector\textless bool\textgreater}
+    \item
+        \href{https://cplusplus.com/reference/fstream/ofstream/}{std::ofstream}
+    \item
+        \href{https://www.mingw-w64.org/}{MinGW-w64}
+    \item
+        \href{https://www.gnu.org/software/make/manual/html_node/index.html}{GNU
+        Make Manual}
 \end{itemize}
 
 \end{document}
+
+El siguiente fragmento del archivo \code{Makefile} utilizado en el desarrollo de
+la aplicación intenta ser reutilizable y de fácil modificación, se puede ver al
+comienzo del mismo que se definen las principales variables que un usuario
+podría querer modificar, por ejemplo el nombre del compilador utilizado o las
+flags.
