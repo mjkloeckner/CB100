@@ -1,0 +1,288 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{vmargin}
+\usepackage[ddmmyy]{datetime}
+\usepackage{anyfontsize}
+\usepackage{helvet}
+\renewcommand{\familydefault}{phv}
+\usepackage{xcolor}
+\setmarginsrb{3 cm}{1.5 cm}{3 cm}{2.5 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
+
+\usepackage{color}   % May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, % set true if you want colored links
+    linktoc=all,     % set to all if you want sections and subsections linked
+    linkcolor=blue,  % choose some color if you want links to stand out
+	urlcolor=blue,
+}
+
+% \usepackage{subcaption}
+\usepackage{subfig}
+\usepackage[labelformat=empty]{caption}
+
+\usepackage{fancyvrb}
+\fvset{xleftmargin=\mathindent}
+\usepackage{verbatimbox}
+
+\newenvironment{fullgrayverb}
+{\verbbox}
+{\endverbbox\par\colorbox{gray!25}{\parbox{\textwidth}{\theverbbox}}\par}
+
+\usepackage{tcolorbox}
+% \newcommand{\code}[1]{\mbox{
+%     \ttfamily
+%     \tcbox[
+%         on line,
+%         boxsep=0pt, left=2pt, right=2pt, top=2pt, bottom=2.0pt,
+%         toprule=0pt, rightrule=0pt, bottomrule=0pt, leftrule=0pt,
+%         oversize=0pt, enlarge left by=0pt, enlarge right by=0pt,
+%         colframe=white, colback=black!12,
+%         height=.75\baselineskip
+%     ]{#1}
+% }}
+
+% inline code blocks
+\newcommand\mystrut{\rule[-1pt]{0pt}{.8em}}
+
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=2pt,
+left=2pt, bottom=2pt, right=2pt, colback=gray!25, colframe=white,
+fontupper={\ttfamily\mystrut}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DATOS GENERALES
+
+\title{Números Primos}          % Titulo del trabajo.
+\author{Martin J. Klöckner}     % Nombre y apellido
+\newcommand{\padron}{123456}    % Padrón
+\newcommand{\tpnumber}{1}       % Número de trabajo práctico
+\date{\today}                   % Fecha (automática)
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\cfoot{\thepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%% CARATULA - NO TOCAR
+\begin{titlepage}
+    \includegraphics[scale = 0.75]{img/logofiuba.png}\\[1.5 cm]	    % Logo fiuba
+    \centering
+	\textsc{\Large CB100}\\[0.2 cm]
+	\textsc{\large Algoritmos y Estructuras de Datos}\\[4 cm]
+	\textcolor{cyan}{{\fontsize{40}{60}\selectfont \bfseries \thetitle}}\\[0.5cm]
+	{\Large \bfseries Trabajo Práctico N$^\circ$\tpnumber}\\[5cm]
+	
+
+    \vfill
+    \noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\[0.5cm]
+    \begin{minipage}{.46\textwidth}
+    \textbf{Autor}\\
+    \theauthor
+    \end{minipage}%
+    \begin{minipage}{.34\textwidth}
+    \textbf{Legajo}\\
+    \padron
+    \end{minipage}%
+    \begin{minipage}{.2\textwidth}
+     \begin{flushright}
+        \textbf{Fecha}\\
+        \thedate
+    \end{flushright}
+    \end{minipage}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{
+    % \hypersetup{linkbordercolor=black}
+    \hypersetup{linkcolor=black} % colorlinks=true option is used
+    \tableofcontents
+    \pagebreak
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción}
+
+En el presente trabajo práctico se explica el desarrollo de una aplicación de
+consola que busca números primos hasta un valor máximo determinado por el
+usuario. El lenguaje utilizado para el desarrollo de la aplicación es C++ y el
+algoritmo utilizado para hallar los números primos es la Criba de Eratóstenes,
+aunque también se hace una mención a un método iterativo que es más intuitivo
+pero menos eficiente.
+
+\subsection{Números Primos}
+
+Los números primos por definición son aquellos números positivos que solo son
+divisibles por \code{1} y por si mismos, divisibles en términos de que el resto
+de la división es cero. El \code{0} y el \code{1} son dos casos particulares en
+los cuales ambos son considerados no primos, el \code{0} por razones obvias, no
+está definida la división por \code{0}, y el \code{1} por que solo es divisible
+por si mismo lo cual hace que solo sea divisible por un número.
+
+El numero \code{7}, por ejemplo, es un numero primo, ya que solo es divisible
+por \code{1} y por \code{7}. El numero \code{8} no es un numero primo, ya que
+ademas de ser divisible por si mismo y por \code{1}, es divisible por \code{4} y
+por \code{2}.
+
+\subsection{Algoritmo Iterativo para Hallar Números Primos}
+
+El primer algoritmo que surge casi instantáneamente es un método iterativo, el
+cual comprueba numero a numero si existe algún múltiplo menor distinto de si
+mismo y de \code{1}, en el caso de existir alguno, el numero queda descartado de
+la lista de números primos.
+
+\subsection{Criba de Eratóstenes}
+
+La criba de Eratóstenes es un algoritmo más sofisticado y eficiente que el
+método iterativo mencionado previamente. El algoritmo resulta conveniente para
+descartar números no primos de una lista de números naturales. Teniendo una
+lista de números itera numero a numero, comenzando por el primero, si se
+trata de un numero primo, busca todos los múltiplos en la lista de números y
+los tacha, luego procede al siguiente numero no tachado, el cual siempre
+resulta un numero primo, y tacha sus múltiplos, así hasta llegar a la raíz
+cuadrada del numero máximo de la lista.
+
+\section{Desarrollo}
+
+Para el desarrollo de la aplicación, como bien se mencionó en la introducción,
+se utilizó puramente el lenguaje C++, en particular en su versión estándar C98.
+Para organizar el proceso de compilación se utilizó la herramienta \code{make}.
+
+\subsection{Implementación en C++}
+
+Para la implementación de la aplicación en C++ se utiliza la Librería estándar
+para escribir sobre archivos, así como también la librería \code{std::vector}
+para representar los números a determinar si son primos.
+
+\subsection{Reutilización de Makefile}
+
+Ademas de la importancia de buenas practicas en el desarrollo de la aplicación,
+también es importante el desarrollo de buenas practicas en el proceso de
+compilación. 
+
+El siguiente fragmento del archivo Makefile puede ser reutilizado para cualquier
+proyecto, incluso aquellos con diferentes librerías
+
+\begin{fullgrayverb}[\mbox{}]
+CC := g++
+CFLAGS := -Wall -Wshadow -pedantic -ansi -std=c++98 -O3
+SRCS := $(wildcard *.cpp)
+
+TARGET := primos
+
+all: $(TARGET)
+
+$(TARGET): $(SRCS)
+    $(CC) $(CLIBS) $(CFLAGS) -o $@ $^
+\end{fullgrayverb}$
+
+\subsection{Optimizaciones del Compilador}
+
+La mayoría de los compiladores de C++ proporcionan una opción para activar las
+optimizaciones. Al tener esta opción activada el compilador intenta eliminar
+código redundante para reducir el uso de memoria, tiempo de ejecución y por
+consiguiente el consumo de energía, entre otras cosas.
+
+% Teniendo un compilador que proporcione optimizaciones del código resulta
+% conveniente activarla ya que reduce el tiempo de ejecución hasta en un
+% \code{406\%}.
+
+En el siguiente caso se muestra la salida del programa utilizando el máximo de
+optimizaciones posible del compilador \code{-O3}, se puede apreciar en la salida
+del programa el tiempo de ejecución del mismo.
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `11.36` segundos
+\end{fullgrayverb}
+
+Desactivando las optimizaciones del compilador y ejecutando nuevamente la
+aplicación, se obtiene el siguiente mensaje en la consola:
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `46.21` segundos
+\end{fullgrayverb}
+
+Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
+en un \code{406\%}.
+
+\section{Instalación}
+
+Para la instalación usted debe de disponer de una copia del código fuente, si
+no posee una, puede obtenerla ingresando al
+\href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}, de allí
+podrá descargar una copia del código fuente o bien puede clonar el repositorio
+utilizando \code{git} con el siguiente comando:
+
+\begin{fullgrayverb}
+$ git clone https://github.com/mjkloeckner/CB100.git
+\end{fullgrayverb}$
+
+\subsection{Sistemas basados en UNIX}
+
+Compruebe que este el mismo directorio que el archivo \code{main.cpp}
+
+Compile el código con el programa \code{make}
+
+\begin{fullgrayverb}
+ $ make
+\end{fullgrayverb}$
+
+Luego puede ejecutar la aplicación de la siguiente manera
+
+\begin{fullgrayverb}
+ $ ./primos
+\end{fullgrayverb}$
+
+\subsection{Windows}
+
+En el caso de Windows puede configurar
+\href{https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux}{WSL},
+para hacerlo puede seguir la
+\href{https://learn.microsoft.com/en-us/windows/wsl/install}{guia oficial de
+Microsoft}. Una vez configurado WSL siga los pasos para los sistemas basados en
+UNIX
+
+De manera análoga si usted dispone de un compilador de C++ instalado puede
+compilar la aplicación directamente desde la consola, sin la necesidad de
+utilizar la herramienta \code{make}, para eso ejecute el siguiente comando:
+
+\begin{fullgrayverb}
+ $ g++ -Wall -Wshadow -ansi -std=c++98 -O3 main.cpp -o primos
+\end{fullgrayverb}$
+
+Tenga en cuenta la sintaxis de su compilador ya que puede variar, el comando
+anterior está previsto para \code{MinGW}
+
+Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera 
+
+\begin{fullgrayverb}
+ $ ./primos
+\end{fullgrayverb}$
+
+\section{Conclusión}
+
+\section{Bibliografía}
+
+\begin{itemize}
+	\item \href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}
+\end{itemize}
+
+\end{document}
