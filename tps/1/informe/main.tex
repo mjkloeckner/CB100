@@ -14,11 +14,12 @@
 \renewcommand{\familydefault}{phv}
 \usepackage{xcolor}
 
-\usepackage{color}   % May be necessary if you want to color links
 % \setmarginsrb{leftmargin}{topmargin}{rightmargin}{bottommargin}%
 %          {headheight}{headsep}{footheight}{footskip}
 \setmarginsrb{2.25 cm}{2.0 cm}{2.25 cm}{1.75 cm}
            {1 cm}{1.25 cm}{1 cm}{1.50 cm}
+
+\usepackage{color}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true, % set true if you want colored links
@@ -27,32 +28,20 @@
     urlcolor=blue,
 }
 
-% \usepackage{subcaption}
 \usepackage{subfig}
 \usepackage[labelformat=empty]{caption}
 
 \usepackage{fancyvrb}
 \fvset{xleftmargin=\mathindent}
-\usepackage{verbatimbox}
 
+% code blocks
+\usepackage{verbatimbox}
 \newenvironment{fullgrayverb}
 {\verbbox}
 {\endverbbox\par\colorbox{gray!25}{\parbox{\textwidth}{\theverbbox}}\par}
 
-\usepackage{tcolorbox}
-% \newcommand{\code}[1]{\mbox{
-%     \ttfamily
-%     \tcbox[
-%         on line,
-%         boxsep=0pt, left=2pt, right=2pt, top=2pt, bottom=2.0pt,
-%         toprule=0pt, rightrule=0pt, bottomrule=0pt, leftrule=0pt,
-%         oversize=0pt, enlarge left by=0pt, enlarge right by=0pt,
-%         colframe=white, colback=black!12,
-%         height=.75\baselineskip
-%     ]{#1}
-% }}
-
 % inline code blocks
+\usepackage{tcolorbox}
 \newcommand\mystrut{\rule[-1pt]{0pt}{.8em}}
 
 \newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=2pt,
@@ -83,9 +72,10 @@ fontupper={\ttfamily\mystrut}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-%% CARATULA - NO TOCAR
 \begin{titlepage}
-    \includegraphics[scale = 0.75]{img/logofiuba.png}\\[1.5 cm]	    % Logo fiuba
+    \vspace*{-2.5cm}
+    {\centering
+    \includegraphics[width=1.0\textwidth]{img/logofiuba_cropped.png}\\[2.5 cm]}
     \centering
     \textsc{\Large CB100}\\[0.2 cm]
     \textsc{\large Algoritmos y Estructuras de Datos}\\[4 cm]
@@ -94,6 +84,7 @@ fontupper={\ttfamily\mystrut}}
 
 
     \vfill
+    % \vspace{10em}
     \noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\[0.5cm]
     \begin{minipage}{.46\textwidth}
     \textbf{Autor}\\
@@ -114,10 +105,11 @@ fontupper={\ttfamily\mystrut}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {
-    % \hypersetup{linkbordercolor=black}
     \hypersetup{linkcolor=black} % colorlinks=true option is used
     \tableofcontents
+    \thispagestyle{empty}
     \pagebreak
+    \setcounter{page}{1}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
