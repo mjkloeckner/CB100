@@ -53,7 +53,7 @@ int main (void) {
     }
 
     std::cout << std::fixed
-              << "Se econtraron `" << j 
+              << "Se encontraron `" << j 
               << "` numeros primos en `"
               << tt << "` " << t_unit << std::endl;
 
