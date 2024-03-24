@@ -281,7 +281,6 @@ metodos de la librería estándar \code{iostream}
 std::cout << "Se encontraron `" << j << "` números primos\n";
 \end{fullgrayverb}
 
-\pagebreak
 \subsection{Makefile}
 
 Si bien es importante la utilización de buenas practicas en el código fuente de
@@ -332,15 +331,37 @@ intenta eliminar código redundante y optimizar mediante técnicas avanzadas el
 archivo binario final, de este modo se logra reducir el uso de memoria, el
 tiempo de ejecución y por consiguiente el consumo de energía, entre otras cosas.
 
-En el archivo \code{Makefile} de la aplicación por defecto se utiliza el el
-máximo de optimizaciones disponibles \code{-O3}, de esta manera se obtiene un
-archivo binario superior en rendimiento que el que se obtiene con las
-optimizaciones desactivadas.
+\pagebreak
+En el archivo \code{Makefile} de la aplicación por defecto se utiliza el máximo
+de optimizaciones posibles \code{-O3}, de ésta manera se obtiene un archivo
+binario superior en rendimiento que el que se obtendría con las optimizaciones
+desactivadas.
 
 % Teniendo un compilador que proporcione optimizaciones del código resulta
 % conveniente activarla ya que reduce el tiempo de ejecución hasta en un
 % \code{406\%}.
 
+\subsubsection{Tiempo de Ejecución}
+
+En el siguiente bloque se muestra la salida del programa utilizando el máximo de
+optimizaciones posible del compilador \code{-O3}, se puede apreciar en la salida
+del programa el tiempo de ejecución del mismo.
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `11.36` segundos
+\end{fullgrayverb}
+
+Desactivando las optimizaciones del compilador, compilando y ejecutando
+nuevamente la aplicación, se obtiene el siguiente mensaje en la consola:
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `46.21` segundos
+\end{fullgrayverb}
+
+Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
+en un \code{406\%}.
+
+\pagebreak
 \section{Instalación}
 
 Para instalar la aplicación usted debe de disponer de una copia del código
@@ -400,24 +421,25 @@ Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera
 \pagebreak
 \section{Conclusión}
 
-En el siguiente caso se muestra la salida del programa utilizando el máximo de
-optimizaciones posible del compilador \code{-O3}, se puede apreciar en la salida
-del programa el tiempo de ejecución del mismo.
+Luego de finalizar el desarrollo de la aplicación, se puede concluir que la
+combinación de C++ con \code{GNU Make}, resulta muy versátil, y en este caso en
+un alto rendimiento.
 
-\begin{fullgrayverb}
-Se encontraron `5761455` números primos en `11.36` segundos
-\end{fullgrayverb}
+El lenguaje C++ es uno de los lenguajes de mayor rendimiento en la lista de
+lenguajes de programación de alto nivel actuales, junto con C, aunque a
+diferencia de éste, C++ ofrece una amplia variedad de librerías estándar, lo que
+mejora su robustez y permite al usuario abstraerse de ciertas implementaciones
+que resultan irrelevantes en ciertos casos, por ejemplo, en el desarrollo de
+esta aplicación, el objecto \code{vector} utilizado para representar la lista de
+números naturales. De no existir la librería estándar \code{vector} uno tendría
+que ensuciarse las manos e implementar un tipo de dato para representar los
+números naturales, ya que no alcanza con los tipos de datos primitivos ofrecidos
+por el lenguaje.
 
-Desactivando las optimizaciones del compilador, compilando y ejecutando
-nuevamente la aplicación, se obtiene el siguiente mensaje en la consola:
-
-\begin{fullgrayverb}
-Se encontraron `5761455` números primos en `46.21` segundos
-\end{fullgrayverb}
-
-Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
-en un \code{406\%}.
-
+Ademas de ahorrar tiempo al programador, las librerías estándar ofrecen mayor
+seguridad que si se tratase de un tipo de dato creado por el usuario, ya que las
+principales están respaldadas por organizaciones y grupos de estándares como
+ISO, IEC, entre otros.
 
 \pagebreak
 \section{Referencias}
