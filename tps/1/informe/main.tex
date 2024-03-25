@@ -113,13 +113,14 @@ fontupper={\ttfamily\mystrut}}
 
 \section{Introducción}
 
-En el presente trabajo práctico se explica el desarrollo de una aplicación de
-consola que busca números primos hasta un valor máximo determinado por el
-usuario, cuando finaliza, los imprime en un archivo de texto plano en el
-directorio de ejecución de la aplicación.
+En este trabajo práctico se desarrolla una aplicación de consola que busca
+números primos hasta un valor máximo determinado por el usuario, cuando
+finaliza, los imprime en un archivo de texto plano en el directorio de ejecución
+de la aplicación.
 
-El lenguaje utilizado para el desarrollo de la aplicación es C++ y el algoritmo
-utilizado para hallar los números primos es la Criba de Eratóstenes.
+El lenguaje de programacion utilizado para el desarrollo de la aplicación es C++
+y el algoritmo utilizado para hallar los números primos es la Criba de
+Eratóstenes.
 
 \subsection{Números Primos}
 
@@ -150,21 +151,27 @@ número a número sobre una lista ordenada y finita de números naturales,
 comenzando por el primero, si se trata de un número primo, se buscan todos los
 múltiplos en la lista de números y se descartan, luego se avanza al siguiente
 número que no haya sido descartado, el cual siempre resulta un número primo, y
-se descartan sus múltiplos, así sucesivamente hasta que no queden números no
-primos en la lista. 
+se descartan sus múltiplos, así sucesivamente hasta el final de la lista. 
 
 La criba de Eratóstenes se puede optimizar basándose en la propiedad de que los
-números no primos se pueden expresar como el producto de números primos, por
-ejemplo \code{4 = 2*2} o \code{21 = 3*7}. Por lo tanto, si un número no es
-primo, debe tener al menos un factor primo que sea menor o igual que su raíz
-cuadrada, de esta propiedad se deduce que se puede detener la iteración en la
-lista de números cuando se llega al cuadrado del numero máximo.
+números no primos (numeros compuestos), se pueden expresar como el producto de
+números primos, por ejemplo \code{4 = 2*2} o \code{21 = 3*7}, por lo tanto, si
+un número no es primo, debe tener al menos un factor primo que sea menor o igual
+que su raíz cuadrada, ya que de lo contrario, el producto de los factores
+resultaria en un numero mayor.
+
+De la propiedad anterior se deduce que se puede detener la iteración en la lista
+de números cuando se llega a la raiz cuadrado del numero máximo en la lista, ya
+que los numeros no primos por encima de éste tendran algun factor menor que la
+raiz cuadrada del numero máximo, de este modo se reduce drasticamente el numero
+de iteraciones necesarias para descartar los numeros no primos de la lista.
 
 \section{Desarrollo}
 
-Para el desarrollo de la aplicación, como bien se mencionó en la introducción,
-se utilizó puramente el lenguaje C++, en particular en su versión estándar C98.
-Para organizar el proceso de compilación se utilizó la herramienta \code{make}.
+Para la implementacion de la Criba de Eratóstenes, como bien se mencionó en la
+introducción, se utilizó puramente el lenguaje C++, en particular en su versión
+estándar C98. Para organizar el proceso de compilación se utilizó la herramienta
+\code{make}.
 
 % Si bien se mencionaron dos algoritmos para hallar números primos, se utiliza
 % la Criba de Eratóstenes ya que resulta mucho más eficiente que el algoritmo
@@ -220,7 +227,7 @@ for (i = 2; i < std::sqrt(MAXIMO); ++i) {
 
 \pagebreak
 Para la impresión en el archivo se define una constante para representar el
-nombre del archivo de salida
+nombre del archivo de salida.
 
 \begin{fullgrayverb}[\mbox{}]
 // Se define el nombre del archivo a imprimir los números primos
@@ -228,7 +235,7 @@ nombre del archivo de salida
 \end{fullgrayverb}
 
 Para la manipulación del archivo se utiliza la clase \code{ofstream} de la
-librería estándar \code{fstream}
+librería estándar \code{fstream}.
 
 \begin{fullgrayverb}[\mbox{}]
 // Se define el objeto fp para representar el archivo de salida
@@ -238,7 +245,7 @@ std::ofstream fp;
 Utilizando los métodos \code{open} e \code{is\_open} del objeto \code{fp} se abre
 el archivo, y se comprueba si hubo algún error, en caso afirmativo, se informa
 al usuario haciendo uso de métodos de la librería estándar \code{iostream} y se
-termina la ejecución con un código de error \code{-1}
+termina la ejecución con un código de error \code{-1}.
 
 \begin{fullgrayverb}[\mbox{}]
 // Se abre el archivo en modo escritura, de haber un error lo reporta
@@ -250,9 +257,9 @@ if (fp.is_open() == false) {
 }
 \end{fullgrayverb}
 
-Para imprimir los números primos hallados al archivo, se recorre la lista en
+Para imprimir los números primos hallados en el archivo, se recorre la lista en
 búsqueda de aquellos casilleros que contengan \code{true}, ya que resultan
-números primos, en caso de encontrarse se imprime la posición al archivo, los 
+números primos, en caso de encontrarse se imprime la posición al archivo, los
 casilleros que contienen \code{false} son ignorados. 
 
 La variable \code{j} se utiliza para contar la cantidad de números primos
@@ -268,15 +275,16 @@ for (i = 2, j = 0; i < numeros.size(); ++i) {
 \end{fullgrayverb}
 
 Luego de finalizada la impresión en el archivo, se cierra utilizando el método
-\code{close}
+\code{close}.
 
 \begin{fullgrayverb}[\mbox{}]
 fp.close();
 \end{fullgrayverb}
 
+\pagebreak
 Finalmente se imprime un mensaje al usuario indicando que terminó la impresión,
 y se informa la cantidad de números primos hallados, esto se hace utilizando
-metodos de la librería estándar \code{iostream} 
+metodos de la librería estándar \code{iostream}.
 
 \begin{fullgrayverb}[\mbox{}]
 std::cout << "Se encontraron `" << j << "` números primos\n";
@@ -306,7 +314,7 @@ TARGET := primos
 \end{fullgrayverb}
 
 Para compilar y enlazar las cabeceras y el programa final, se utilizan las
-siguientes etiquetas
+siguientes etiquetas:
 
 \begin{fullgrayverb}[\mbox{}]
 $(TARGET): $(OBJS)
@@ -321,8 +329,9 @@ aplicación, luego de los dos puntos se indican las dependencias, las cuales se
 expanden a los archivos objeto (los que terminan en \code{.o})
 
 Para compilar los archivos objetos se utiliza la segunda etiqueta, la cual
-corresponde a una \code{pattern rule}, una extension de \code{GNU}, la cual
-compila todos los archivos terminados en \code{.cpp} a archivos objeto.
+corresponde a una \code{pattern rule}, una extension exclusiva de \code{GNU}, 
+esta \code{pattern rule} compila todos los archivos terminados en \code{.cpp} a
+archivos objeto terminaods en \code{.o}.
 
 \subsection{Optimizaciones del Compilador}
 
@@ -332,7 +341,6 @@ intenta eliminar código redundante y optimizar mediante técnicas avanzadas el
 archivo binario final, de este modo se logra reducir el uso de memoria, el
 tiempo de ejecución y por consiguiente el consumo de energía, entre otras cosas.
 
-\pagebreak
 En el archivo \code{Makefile} de la aplicación por defecto se utiliza el máximo
 de optimizaciones posibles \code{-O3}, de ésta manera se obtiene un archivo
 binario superior en rendimiento que el que se obtendría con las optimizaciones
@@ -387,7 +395,7 @@ compile el código con el programa \code{make}
  $ make
 \end{fullgrayverb}$
 
-Luego puede ejecutar la aplicación de la siguiente manera
+Luego puede ejecutar la aplicación de la siguiente manera:
 
 \begin{fullgrayverb}
  $ ./primos
@@ -419,7 +427,6 @@ Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera
  $ ./primos
 \end{fullgrayverb}$
 
-\pagebreak
 \section{Conclusión}
 
 Luego de finalizar el desarrollo de la aplicación, se puede concluir que la
