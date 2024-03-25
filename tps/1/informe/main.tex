@@ -135,17 +135,17 @@ por \code{1} y por \code{7}. El número \code{8} no es un número primo, ya que
 ademas de ser divisible por si mismo y por \code{1}, es divisible por \code{2} y
 por \code{4}.
 
-\subsection{Algoritmo Primitivo para Descartar Números Primos}
-
-El primer algoritmo que surge casi instantáneamente es un algoritmo en el que se
-itera sobre una lista de números y por cada numero se descartan todos sus
-múltiplos. Este algoritmo cumple la función de encontrar números primos, pero no
-es para nada eficiente.
+% \subsection{Algoritmo Primitivo para Descartar Números Primos}
+% 
+% El primer algoritmo que surge casi instantáneamente es un algoritmo en el que se
+% itera sobre una lista de números y por cada numero se descartan todos sus
+% múltiplos. Este algoritmo cumple la función de descartar números no primos, pero
+% no es para nada eficiente.
 
 \subsection{Criba de Eratóstenes}
 
-La criba de Eratóstenes es un algoritmo más sofisticado y eficiente que el
-método primitivo mencionado previamente. En la Criba de Eratóstenes se itera
+La criba de Eratóstenes es un algoritmo sofisticado y eficiente para descartar
+numeros no primos de una lista de numeros. En la Criba de Eratóstenes se itera
 número a número sobre una lista ordenada y finita de números naturales,
 comenzando por el primero, si se trata de un número primo, se buscan todos los
 múltiplos en la lista de números y se descartan, luego se avanza al siguiente
@@ -166,9 +166,9 @@ Para el desarrollo de la aplicación, como bien se mencionó en la introducción
 se utilizó puramente el lenguaje C++, en particular en su versión estándar C98.
 Para organizar el proceso de compilación se utilizó la herramienta \code{make}.
 
-Si bien se mencionaron dos algoritmos para hallar números primos, se utiliza
-la Criba de Eratóstenes ya que resulta mucho más eficiente que el algoritmo
-primitivo.
+% Si bien se mencionaron dos algoritmos para hallar números primos, se utiliza
+% la Criba de Eratóstenes ya que resulta mucho más eficiente que el algoritmo
+% primitivo.
 
 \subsection{Implementación en C++}
 
