@@ -30,7 +30,7 @@ int main (void) {
 
     fp.open(OUTPUT_FILE_PATH);
     if (!fp.is_open()) {
-        std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH << "`";
+        std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH "`\n";
         return -1;
     }
 
