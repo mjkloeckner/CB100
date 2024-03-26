@@ -11,22 +11,40 @@
 #define OUTPUT_FILE_PATH "primos.txt"
 const unsigned int MAXIMO = 100000000;
 
+void vector_discard_non_primes(std::vector<bool>& v) {
+    v[0] = v[1] = false; // 0 y 1 no son primos
+    for (size_t i = 2; i < std::sqrt(MAXIMO); ++i) {
+        if(v[i]) {
+            for (size_t j = i; j <= (MAXIMO/i); ++j) {
+                v[i*j] = false;
+            }
+        }
+    }
+}
+
+void vector_export_to_file_path(
+        const std::vector<bool> v,
+        std::ofstream& fp,
+        unsigned int &primes_written) {
+
+    primes_written = 0;
+    for (size_t i = 2; i < v.size(); ++i) {
+        if(v[i]) {
+            fp << i << std::endl;
+            primes_written++;
+        }
+    }
+}
+
 int main (void) {
-    unsigned long ti, i, j;
+    unsigned int ti, primes_found;
     double tt;
     std::ofstream fp;
     std::vector<bool> numeros(MAXIMO, true);
 
     ti = clock();
-	numeros[0] = numeros[1] = false; // 0 y 1 no son primos
 
-    for (i = 2; i < std::sqrt(MAXIMO); ++i) {
-        if(numeros[i]) {
-            for (j = i; j <= (MAXIMO/i); ++j) {
-                numeros[i*j] = false;
-            }
-        }
-    }
+    vector_discard_non_primes(numeros);
 
     fp.open(OUTPUT_FILE_PATH);
     if (!fp.is_open()) {
@@ -34,14 +52,9 @@ int main (void) {
         return -1;
     }
 
-    for (i = 2, j = 0; i < numeros.size(); ++i) {
-        if(numeros[i]) {
-            fp << i << std::endl;
-            j++;
-        }
-    }
-
+    vector_export_to_file_path(numeros, fp, primes_found);
     fp.close();
+
     tt = (double(clock() - ti)) / CLOCKS_PER_SEC;
 
     std::cout.precision(2);
@@ -53,7 +66,7 @@ int main (void) {
     }
 
     std::cout << std::fixed
-              << "Se encontraron `" << j 
+              << "Se encontraron `" << primes_found
               << "` numeros primos en `"
               << tt << "` " << t_unit << std::endl;
 
