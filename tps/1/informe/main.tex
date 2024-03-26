@@ -290,6 +290,35 @@ metodos de la librería estándar \code{iostream}.
 std::cout << "Se encontraron `" << j << "` números primos\n";
 \end{fullgrayverb}
 
+\subsubsection{Modularización}
+
+A medida que se va agregando mas funcionalidad a la aplicacion, el codigo se
+extiende resultando mas dificil de leer, es por esto que resulta conveniente
+extraer cierta funcionalidad del punto de entrada \code{main} a sus propias
+funcinones. En el archvio \code{main.cpp} de la aplicacion se extraer dos
+funciones. \code{vectorDiscardNonPrimes} y \code{vectorExportToFilePath}.
+
+\code{vectorDiscardNonPrimes} pone en falso los casilleros del vector que recibe
+como parametro en los cuales el indice resulta un numero no primo.
+
+\begin{fullgrayverb}[\mbox{}]
+void vectorDiscardNonPrimes(std::vector<bool>& v);
+\end{fullgrayverb}
+
+\code{vectorExportToFilePath} imprime el indice de los casillero correspondiente
+al vector que recibe como parametro en los cuales el casillero contiene una
+valor \code{true}, la impresion se realiza sobre un archivo que recibe como
+parametro, este parámetro debe ser un puntero a un archivo abierto, además esta
+funcion recibe una referencia a una variable, en esta variable se almacena la
+cantidad de numeros impresos sobre el archivo.
+
+\begin{fullgrayverb}[\mbox{}]
+void vectorExportToFilePath(
+         const std::vector<bool> v,
+         std::ofstream& fp,
+         unsigned int &primesWritten);
+\end{fullgrayverb}
+
 \subsection{Makefile}
 
 Si bien es importante la utilización de buenas practicas en el código fuente de
