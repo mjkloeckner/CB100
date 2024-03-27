@@ -69,6 +69,8 @@ fontupper={\ttfamily\mystrut}}
 \lhead{\thetitle}
 \cfoot{\thepage}
 
+\def\fileName{primos.cpp}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
@@ -147,7 +149,7 @@ por \code{4}.
 \subsection{Criba de Eratóstenes}
 
 La criba de Eratóstenes es un algoritmo sofisticado y eficiente para descartar
-numeros no primos de una lista de numeros. En la Criba de Eratóstenes se itera
+números no primos de una lista de números. En la Criba de Eratóstenes se itera
 número a número sobre una lista ordenada y finita de números naturales,
 comenzando por el primero, si se trata de un número primo, se buscan todos los
 múltiplos en la lista de números y se descartan, luego se avanza al siguiente
@@ -155,7 +157,7 @@ número que no haya sido descartado, el cual siempre resulta un número primo, y
 se descartan sus múltiplos, así sucesivamente hasta el final de la lista. 
 
 La criba de Eratóstenes se puede optimizar basándose en la propiedad de que los
-números no primos (numeros compuestos), se pueden expresar como el producto de
+números no primos (números compuestos), se pueden expresar como el producto de
 números primos, por ejemplo \code{4 = 2*2} o \code{21 = 3*7}, por lo tanto, si
 un número no es primo, debe tener al menos un factor primo que sea menor o igual
 que su raíz cuadrada, ya que de lo contrario, el producto de los factores
@@ -163,9 +165,9 @@ resultaria en un numero mayor.
 
 De la propiedad anterior se deduce que se puede detener la iteración en la lista
 de números cuando se llega a la raiz cuadrado del numero máximo en la lista, ya
-que los numeros no primos por encima de éste tendran algun factor menor que la
+que los números no primos por encima de éste tendran algun factor menor que la
 raiz cuadrada del numero máximo, de este modo se reduce drasticamente el numero
-de iteraciones necesarias para descartar los numeros no primos de la lista.
+de iteraciones necesarias para descartar los números no primos de la lista.
 
 \section{Desarrollo}
 
@@ -174,27 +176,49 @@ introducción, se utilizó puramente el lenguaje C++, en particular en su versi�
 estándar C98. Para organizar el proceso de compilación se utilizó la herramienta
 \code{make}.
 
-% Si bien se mencionaron dos algoritmos para hallar números primos, se utiliza
-% la Criba de Eratóstenes ya que resulta mucho más eficiente que el algoritmo
-% primitivo.
-
 \subsection{Implementación en C++}
 
-Para representar el máximo de números en la lista se define la constante
-\code{MAXIMO}.
+El codigo fuente de la aplicacion esta contenido en un solo archivo:
+\code{\fileName}.
+
+En la primera parte del archivo se definen dos constantes globales
+\code{OUTPUT\_FILE\_PATH}, que representa el nombre del archivo de salida, y
+\code{MAXIMO} que representa el largo de la lista de números a analizar.
 
 \begin{fullgrayverb}[\mbox{}]
-// Se define la constante `MAXIMO` que representa la cantidad
-// de números en la lista
+#define OUTPUT_FILE_PATH "primos.txt"
 const unsigned int MAXIMO = 100000000;
 \end{fullgrayverb}
 
-La Criba de Eratóstenes opera sobre una lista de números naturales ordenada.
-Para representarla se utiliza la librería estándar \code{vector} de la cual
+Luego se declara la función \code{vectorDiscardNonPrimes}, esta función asigna
+el valor \code{false} a los casilleros del vector, que recibe como argumento, en
+los cuales el índice es un numero no primo.
+
+\begin{fullgrayverb}[\mbox{}]
+// Se declara la función `vectorDiscardNonPrimes`
+void vectorDiscardNonPrimes(std::vector<bool>& v);
+\end{fullgrayverb}
+
+Se declara la función \code{vectorExportToFilePath} la cual recibe como
+argumento un vector, un archivo abierto y una referencia a una variable. Esta
+función imprime sobre el archivo las posiciones del vector en donde el
+contenido es \code{true}, la cantidad de números impresos los asigna a la
+variable \code{primesWritten}.
+
+\begin{fullgrayverb}[\mbox{}]
+// Se declara la función `vectorExportToFilePath`
+void vectorExportToFilePath(
+         const std::vector<bool> v,
+         std::ofstream& fp,
+         unsigned int &primesWritten);
+\end{fullgrayverb}
+
+\subsubsection{Funcion \code{main}}
+
+La Criba de Eratóstenes opera sobre una lista de números naturales ordenada,
+para representarla se utiliza la librería estándar \code{vector}, de la cual
 se define un vector de tipo \code{bool} inicialmente con valores \code{true}
-indicando que son todos números primos, luego al aplicar el algoritmo éste
-cambiará el contenido del vector a \code{false} en las posiciones en que se
-ubiquen números no primos.
+indicando que son todos números primos.
 
 \begin{fullgrayverb}[\mbox{}]
 // Se define un vector de tipo `bool` de largo `MAXIMO`
@@ -202,77 +226,52 @@ ubiquen números no primos.
 std::vector<bool> numeros(MAXIMO, true);
 \end{fullgrayverb}
 
-Comenzando por los casos particulares, \code{0} y \code{1} no son números
-primos, por lo que se puede cambiar su valor a \code{false} directamente.
-
-\begin{fullgrayverb}[\mbox{}]
-// 0 y 1 no son primos
-numeros[0] = numeros[1] = false;
-\end{fullgrayverb}
-
-Para determinar los números no primos y descartarlos de la lista de números, se
-itera sobre el vector descartando todos los múltiplos de los números primos,
-hasta llegar a la raíz cuadrada del numero máximo de la lista. Para determinar
-la raíz cuadrada del numero máximo se utiliza la función
-\code{std::sqrt} de la librería estándar \code{cmath} 
-
-\begin{fullgrayverb}[\mbox{}]
-for (i = 2; i < std::sqrt(MAXIMO); ++i) {
-    if(numeros[i] == true) {
-        for (j = i; j <= (MAXIMO/i); ++j) {
-            numeros[i*j] = false;
-        }
-    }
-}
-\end{fullgrayverb}
-
 \pagebreak
-Para la impresión en el archivo se define una constante para representar el
-nombre del archivo de salida.
-
-\begin{fullgrayverb}[\mbox{}]
-// Se define el nombre del archivo a imprimir los números primos
-#define OUTPUT_FILE_PATH "primos.txt"
-\end{fullgrayverb}
-
-Para la manipulación del archivo se utiliza la clase \code{ofstream} de la
-librería estándar \code{fstream}.
+Para la manipulación del archivo de salida, se utiliza la clase \code{ofstream}
+de la librería estándar \code{fstream}.
 
 \begin{fullgrayverb}[\mbox{}]
 // Se define el objeto fp para representar el archivo de salida
 std::ofstream fp;
 \end{fullgrayverb}
 
-Utilizando los métodos \code{open} e \code{is\_open} del objeto \code{fp} se abre
-el archivo, y se comprueba si hubo algún error, en caso afirmativo, se informa
-al usuario haciendo uso de métodos de la librería estándar \code{iostream} y se
-termina la ejecución con un código de error \code{-1}.
+Además se define la variable \code{primesFound} la cual luego contendrá la
+cantidad de números primos hallados.
 
 \begin{fullgrayverb}[\mbox{}]
-// Se abre el archivo en modo escritura, de haber un error lo reporta
-// al usuario y se termina la ejecución inmediatamente
+unsigned int primesFound;
+\end{fullgrayverb}
+
+Para descartar los números no primos del vector \code{numeros} se invoca la
+función \linebreak\code{vectorDiscardNonPrimes}.
+
+\begin{fullgrayverb}[\mbox{}]
+vectorDiscardNonPrimes(numeros);
+\end{fullgrayverb}
+
+Luego de finalizada la función, se imprime en el archivo de salida los índices
+del vector correspondientes a los casilleros que permanecen con un valor
+\code{true}, ya que éstos representan los números primos.
+
+Utilizando los métodos \code{open} e \code{is\_open} del objeto \code{fp} se
+abre el archivo \code{primos.txt} y se comprueba si hubo algún error, en caso
+afirmativo, se informa al usuario haciendo uso de métodos de la librería
+estándar \code{iostream} y se termina la ejecución inmediatamente con un código
+de error \code{-1}.
+
+\begin{fullgrayverb}[\mbox{}]
 fp.open(OUTPUT_FILE_PATH);
 if (fp.is_open() == false) {
-    std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH << "`\n";
+    std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH "`\n";
     return -1;
 }
 \end{fullgrayverb}
 
-Para imprimir los números primos hallados en el archivo, se recorre la lista en
-búsqueda de aquellos casilleros que contengan \code{true}, ya que resultan
-números primos, en caso de encontrarse se imprime la posición al archivo, los
-casilleros que contienen \code{false} son ignorados. 
-
-La variable \code{j} se utiliza para contar la cantidad de números primos
-encontrados, ya que luego será informada al usuario por la consola.
+Para exportar los números primos del vector se invoca la función
+\linebreak\code{vectorExportToFilePath}
 
 \begin{fullgrayverb}[\mbox{}]
-for (i = 2, j = 0; i < numeros.size(); ++i) {
-    if(numeros[i] == true) {
-        fp << i << std::endl;
-        j++;
-    }
-}
+vectorExportToFilePath(numeros, fp, primesFound);
 \end{fullgrayverb}
 
 Luego de finalizada la impresión en el archivo, se cierra utilizando el método
@@ -282,58 +281,93 @@ Luego de finalizada la impresión en el archivo, se cierra utilizando el método
 fp.close();
 \end{fullgrayverb}
 
-\pagebreak
 Finalmente se imprime un mensaje al usuario indicando que terminó la impresión,
 y se informa la cantidad de números primos hallados, esto se hace utilizando
 metodos de la librería estándar \code{iostream}.
 
 \begin{fullgrayverb}[\mbox{}]
-std::cout << "Se encontraron `" << j << "` números primos\n";
+std::cout << "Se encontraron `" << primesFound << "` números primos\n";
 \end{fullgrayverb}
 
-\subsubsection{Modularización}
-
-A medida que se va agregando mas funcionalidad a la aplicacion, el codigo se
-extiende resultando mas dificil de leer, es por esto que resulta conveniente
-extraer cierta funcionalidad del punto de entrada \code{main} a sus propias
-funcinones. En el archvio \code{main.cpp} de la aplicacion se extraer dos
-funciones. \code{vectorDiscardNonPrimes} y \code{vectorExportToFilePath}.
-
-\code{vectorDiscardNonPrimes} pone en falso los casilleros del vector que recibe
-como parametro en los cuales el indice resulta un numero no primo.
+Por ultimo se termina la ejecución con un codigo \code{0} indicando que el
+programa se ejecutó exitosamente.
 
 \begin{fullgrayverb}[\mbox{}]
-void vectorDiscardNonPrimes(std::vector<bool>& v);
+return 0;
 \end{fullgrayverb}
 
-\code{vectorExportToFilePath} imprime el indice de los casillero correspondiente
-al vector que recibe como parametro en los cuales el casillero contiene una
-valor \code{true}, la impresion se realiza sobre un archivo que recibe como
-parametro, este parámetro debe ser un puntero a un archivo abierto, además esta
-funcion recibe una referencia a una variable, en esta variable se almacena la
-cantidad de numeros impresos sobre el archivo.
+\subsubsection{Función \code{vectorDiscardNonPrimes}}
+
+La función \code{vectorDiscardNonPrimes} recibe una referencia a un vector de
+tipo \code{bool} como argumento y asigna \code{false} a los casilleros en los
+cuales el índice del mismo es un número no primo. 
+
+La función comienza descartando los casos particulares, \code{0} y \code{1}, por
+lo que asigna \code{false} a los índices respectivos directamente.
 
 \begin{fullgrayverb}[\mbox{}]
-void vectorExportToFilePath(
-         const std::vector<bool> v,
-         std::ofstream& fp,
-         unsigned int &primesWritten);
+// 0 y 1 no son primos
+numeros[0] = numeros[1] = false;
+\end{fullgrayverb}
+
+Luego itera sobre el vector asignando \code{false} a todos los múltiplos de los
+números primos, hasta llegar a la raíz cuadrada del numero máximo de la lista.
+Para determinar la raíz cuadrada del numero máximo se utiliza la función
+\code{sqrt} de la librería estándar \code{cmath} 
+
+\begin{fullgrayverb}[\mbox{}]
+for (size_t i = 2; i < std::sqrt(MAXIMO); ++i) {
+    if(vector[i] == true) {
+        for (size_t j = i; j <= (MAXIMO/i); ++j) {
+            vector[i*j] = false;
+        }
+    }
+}
+\end{fullgrayverb}
+
+\subsubsection{Función \code{vectorExportToFilePath}}
+
+La función \code{vectorExportToFilePath} recibe como argumento un vector, una
+archivo abierto y una referencia a una variable. Luego de invocada la función
+imprime sobre el archivo los índices del vector en los cuales el contenido es
+\code{true}, a la variable que recibe le asigna la cantidad de índices impresos.
+
+Al comienzo de la función se asigna a la variable \code{primesWritten} cero.
+
+\begin{fullgrayverb}[\mbox{}]
+primesWritten = 0;
+\end{fullgrayverb}
+
+Para la impresion en el archivo, la función recorre el vector en búsqueda de
+aquellos casilleros que contengan \code{true}, en los casos afirmativos imprime
+el índice del vector al archivo e incrementa el contenido de la variable
+\code{primesWritten}, los casilleros que contienen \code{false} son ignorados.
+
+\begin{fullgrayverb}[\mbox{}]
+for (size_t i = 2; i < v.size(); ++i) {
+    if(v[i]) {
+        fp << i << std::endl;
+        primesWritten++;
+    }
+}
 \end{fullgrayverb}
 
 \subsection{Makefile}
 
-Si bien es importante la utilización de buenas practicas en el código fuente de
-la aplicación, muchas veces el proceso compilación no se tiene en cuenta,
-pero es también muy importante para generar una aplicación robusta y fácil de
-diagnosticar en caso de fallas.
+% Si bien es importante la utilización de buenas practicas en el código fuente de
+% la aplicación, muchas veces el proceso de compilación no se tiene en cuenta,
+% pero es también muy importante para generar una aplicación robusta y fácil de
+% diagnosticar en caso de fallas.
 
-Para el desarrollo de la aplicación se utiliza la herramienta \code{GNU make},
-la cual lee un archivo de nombre exclusivo \code{Makefile} que posee su propia
-sintaxis. El archivo \code{Makefile} utilizado intenta ser reutilizable y de
-fácil modificación, es por esto que al comienzo del mismo se utilizan variables
-para almacenar las principales opciones que el usuario podría querer modificar,
-por ejemplo el nombre del compilador utilizado, el nombre final del archivo,
-entre otras.
+Para organizar el proceso de compilacion de la aplicación se utiliza la
+herramienta \code{GNU make}, la cual lee un archivo de nombre exclusivo
+\code{Makefile} que posee su propia sintaxis.
+
+El archivo \code{Makefile} utilizado intenta ser reutilizable y de fácil
+modificación, es por esto que al comienzo del mismo se utilizan variables para
+almacenar las principales opciones que el usuario podría querer modificar, por
+ejemplo el nombre del compilador utilizado, el nombre final del archivo, entre
+otras.
 
 \begin{fullgrayverb}[\mbox{}]
 CC := g++
@@ -343,8 +377,8 @@ OBJS := $(SRCS:.cpp=.o)
 TARGET := primos
 \end{fullgrayverb}
 
-Para compilar y enlazar las cabeceras y el programa final, se utilizan las
-siguientes etiquetas:
+Para compilar el programa y enlazar cabeceras, en caso de que haya, se utilizan
+las siguientes reglas:
 
 \begin{fullgrayverb}[\mbox{}]
 $(TARGET): $(OBJS)
@@ -354,11 +388,11 @@ $(TARGET): $(OBJS)
     $(CC) $(CFLAGS) -c $< -o $@
 \end{fullgrayverb}
 
-La etiqueta que contiene \code{\$(TARGET)} se expande al nombre final de la
+La regla que contiene \code{\$(TARGET)} se expande al nombre final de la
 aplicación, luego de los dos puntos se indican las dependencias, las cuales se
 expanden a los archivos objeto (los que terminan en \code{.o})
 
-Para compilar los archivos objetos se utiliza la segunda etiqueta, la cual
+Para compilar los archivos objetos se utiliza la segunda regla, la cual
 corresponde a una \code{pattern rule}, una extension exclusiva de \code{GNU}, 
 esta \code{pattern rule} compila todos los archivos terminados en \code{.cpp} a
 archivos objeto terminaods en \code{.o}.
@@ -397,10 +431,14 @@ nuevamente la aplicación, se obtiene el siguiente mensaje en la consola:
 Se encontraron `5761455` números primos en `46.21` segundos
 \end{fullgrayverb}
 
-Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
-en un \code{406\%}.
+Comparando los dos resultados, se puede observar que al utilizar las
+optimizaciones de compilador el tiempo de ejecución se reduce en
+aproximadamente \code{75\%}.
 
-\pagebreak
+% Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
+% en aproximadamente \code{306\%}, dicho de otro modo, utilizando las
+% optimizaciones el tiempo de ejecucion se reduce en aproximadamente \code{75\%}.
+
 \section{Instalación}
 
 Para instalar la aplicación usted debe de disponer de una copia del código
@@ -422,15 +460,16 @@ Compruebe que este en el mismo directorio que el archivo \code{main.cpp}. Luego,
 compile el código con el programa \code{make}
 
 \begin{fullgrayverb}
- $ make
+$ make
 \end{fullgrayverb}$
 
 Luego puede ejecutar la aplicación de la siguiente manera:
 
 \begin{fullgrayverb}
- $ ./primos
+$ ./primos
 \end{fullgrayverb}$
 
+\pagebreak
 \subsection{Windows}
 
 En el caso de utilizar Windows como sistema operativo, usted puede configurar
@@ -444,9 +483,13 @@ De manera análoga si usted dispone de un compilador de C++ puede compilar la
 aplicación directamente desde la consola, sin la necesidad de utilizar la
 herramienta \code{make}, para eso ejecute el siguiente comando:
 
+% Define your variable
+\newcommand{\myvariable}{\textbf{Hello}}
+
 \begin{fullgrayverb}
- $ g++ -Wall -Wshadow -ansi -std=c++98 -O3 main.cpp -o primos
+$ g++ -Wall -Wshadow -ansi -std=c++98 -O3 $\fileName$ -o primos
 \end{fullgrayverb}$
+
 
 Tenga en cuenta la sintaxis de su compilador ya que puede variar, el comando
 anterior está previsto para \href{https://www.mingw-w64.org/}{MinGW-w64}
@@ -454,7 +497,7 @@ anterior está previsto para \href{https://www.mingw-w64.org/}{MinGW-w64}
 Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera 
 
 \begin{fullgrayverb}
- $ ./primos
+$ ./primos
 \end{fullgrayverb}$
 
 \section{Conclusión}
