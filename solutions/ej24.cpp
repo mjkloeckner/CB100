@@ -1,8 +1,7 @@
 #include <iostream>
-#include <cmath>
 
 bool cuadratic_has_real_roots(float a, float b, float c) {
-    return (std::pow(b,2)-(4*a*c)) >= 0;
+    return ((b*b)-(4*a*c)) >= 0;
 }
 
 int main (void) {
