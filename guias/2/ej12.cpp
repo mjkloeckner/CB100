@@ -70,28 +70,6 @@ void game_print_board(void) {
     //           << "└───┴───┴───┘\n";
 }
 
-void game_board_set_cursor_deprecated(void) {
-    if(cursor_row != cursor_row_pre) {
-        if(cursor_row == 0) {
-            if(cursor_row_pre == 1)
-                std::cout << "\033[" << 2 << "A";
-            else
-                std::cout << "\033[" << 4 << "A";
-        }
-        else if((cursor_row == 2) && (cursor_row_pre == 0)) {
-            std::cout << "\033[" << 4 << "B";
-        }
-        else if(cursor_row > cursor_row_pre) {
-            std::cout << "\033[" << 2 << "B";
-        }
-        else if(cursor_row < cursor_row_pre) {
-            std::cout << "\033[" << 2 << "A";
-        }
-        cursor_row_pre = cursor_row;
-    }
-    std::cout << "\033[0G\033[" << (cursor_col*4)+2 << "C";
-}
-
 void game_board_set_cursor(void) {
     if(cursor_row)
         std::cout << "\033[" << cursor_row*2 << "B";
@@ -205,8 +183,6 @@ int main (void) {
     game_print_board();
     std::cout << "\033[" << tui_total_height-1 << "A";
     std::cout << "\033[" << ((cursor_col*4)+2) << "C";
-
-    // game_board_set_cursor();
 
     while(run_program) {
         game_key_handler();
