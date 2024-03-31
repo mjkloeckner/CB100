@@ -2,9 +2,16 @@
 #include <csignal>
 #include <termios.h>
 
+typedef enum {
+    PLAYER_1,
+    PLAYER_2,
+    PLAYER_TOTAL
+} player_t;
+
 bool run_program, refresh_cursor;
 static struct termios default_attributes;
 static unsigned int tui_total_height;
+static player_t current_player;
 static int cursor_col, cursor_row, cursor_row_pre;
 char game_board[3][3]; // Por enunciado: matriz de punteros a char(?)
 
@@ -96,7 +103,11 @@ void game_move_cursor_down(void) {
 }
 
 void game_set_cross_at_cursor_pos(void) {
-    game_board[cursor_row][cursor_col] = 'X';
+    if(game_board[cursor_row][cursor_col] != ' ')
+        return;
+    char aux = ((current_player == PLAYER_1) ? 'X' : 'O');
+    game_board[cursor_row][cursor_col] = aux;
+    current_player = ((current_player == PLAYER_1) ? PLAYER_2 : PLAYER_1);
 }
 
 void game_redraw_board(void) {
@@ -176,6 +187,7 @@ int main (void) {
     refresh_cursor = false;
     tui_total_height = 7;
     cursor_row = cursor_row_pre = cursor_col = 0;
+    current_player = PLAYER_1;
 
     game_tui_setup();
 
