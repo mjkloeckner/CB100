@@ -12,7 +12,7 @@ static struct termios default_attributes;
 static unsigned int tui_total_height;
 static player_t current_player;
 static int cursor_col, cursor_row, cursor_row_pre;
-char game_board[3][3]; // Por enunciado: matriz de punteros a char(?)
+char game_board[3][3];
 
 void tui_set_input_mode (void) {
     struct termios tattr;
@@ -23,11 +23,8 @@ void tui_set_input_mode (void) {
     }
 
     tcgetattr(STDIN_FILENO, &default_attributes);
-    // std::cout << "\033[?25l"; // hide cursor
-
-    /* Set the terminal modes. */
     tcgetattr(STDIN_FILENO, &tattr);
-    tattr.c_lflag &= ~(ICANON|ECHO); /* Clear ICANON and ECHO. */
+    tattr.c_lflag &= ~(ICANON|ECHO);
     tattr.c_cc[VMIN] = 1;
     tattr.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &tattr);
@@ -67,13 +64,6 @@ void game_print_board(void) {
               << game_board[2][1] << " │ " 
               << game_board[2][2] << " │\n"
               << "└───┴───┴───┘\n";
-    // std::cout << "┌───┬───┬───┐\n"
-    //           << "│ · │ · │ · │\n"
-    //           << "├───┼───┼───┤\n"
-    //           << "│ · │ · │ · │\n"
-    //           << "├───┼───┼───┤\n"
-    //           << "│ · │ · │ · │\n"
-    //           << "└───┴───┴───┘\n";
 }
 
 void game_board_set_cursor(void) {
@@ -118,7 +108,6 @@ void game_redraw_board(void) {
 
 void game_tui_cleanup() {
     tui_reset_input_mode();
-    game_clear_board();
 }
 
 void game_tui_setup() {
