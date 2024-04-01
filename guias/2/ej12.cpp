@@ -135,15 +135,24 @@ void game_key_handler(void) {
     switch(cmd) {
     case 'w':
     case 'k':
+        game_move_cursor_up();
+        break;
     case 's':
     case 'j':
+        game_move_cursor_down();
         break;
     case  10: // Enter
     case ' ':
         game_set_cross_at_cursor_pos();
         break;
     case 'l':
-    case 'f':
+    case 'd':
+        game_move_cursor_right();
+        break;
+    case 'h':
+    case 'a':
+        game_move_cursor_left();
+        break;
         break;
     case 'q':
         run_program = false;
