@@ -23,7 +23,7 @@ static unsigned int tui_total_height;
 static player_t current_player;
 static game_status_t game_status;
 static int cursor_col, cursor_row, cursor_row_pre;
-std::string player_status;
+std::string player_status, key_string;
 char game_board[3][3];
 
 void tui_set_input_mode (void) {
@@ -61,6 +61,8 @@ void game_clear_board(void) {
 
 void game_player_status_msg() {
     std::ostringstream current_player_string;
+    key_string.assign("\033[0J");
+
     if(game_status == PLAYING) {
         player_status = std::string("Player ");
         current_player_string << current_player+1;
@@ -76,6 +78,7 @@ void game_player_status_msg() {
     }
     else if (game_status == DRAFT) {
         player_status.assign("Draft\033[0J");
+        key_string.assign("Press `r` to restart\033[0J");
         game_status = HALT;
     }
 }
@@ -87,7 +90,7 @@ void game_print_board(void) {
               << game_board[0][1] << " │ " 
               << game_board[0][2] << " │ " << player_status << "\n";
 
-    std::cout << "├───┼───┼───┤\n│ "
+    std::cout << "├───┼───┼───┤ " << key_string << "\n│ "
               << game_board[1][0] << " │ "
               << game_board[1][1] << " │ " 
               << game_board[1][2] << " │\n";
