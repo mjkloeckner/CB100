@@ -5,7 +5,6 @@
 typedef enum {
     PLAYER_1,
     PLAYER_2,
-    PLAYER_TOTAL
 } player_t;
 
 bool run_program, refresh_cursor;
