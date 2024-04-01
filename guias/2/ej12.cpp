@@ -44,7 +44,6 @@ void tui_set_input_mode (void) {
 
 void tui_reset_input_mode (void) {
     tcsetattr(STDIN_FILENO, TCSANOW, &default_attributes);
-    // std::cout << "\033[?25h"; // show cursor
 }
 
 void game_sig_handler(int signo) {
