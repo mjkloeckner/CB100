@@ -281,6 +281,9 @@ void game_key_handler(void) {
     case 'a':
         game_move_cursor_left();
         break;
+    case 'r':
+        if(game_status == HALT)
+            game_status = RESET;
         break;
     case 'q':
         game_status = EXIT;
@@ -310,8 +313,8 @@ void game_key_handler(void) {
 int main (void) {
     tui_total_height = 7;
     cursor_row = cursor_row_pre = cursor_col = 0;
-    current_player = PLAYER_1;
     game_status = PLAYING;
+    current_player = PLAYER_1;
 
     game_tui_setup();
     game_initialize_board();
@@ -326,6 +329,12 @@ int main (void) {
 
     while(game_status != EXIT) {
         game_key_handler();
+        if(game_status == RESET) {
+            game_status = PLAYING;
+            current_player = PLAYER_1;
+            cursor_col = cursor_row = 1;
+            game_initialize_board();
+        }
         game_check_status();
         game_redraw_board();
     }
