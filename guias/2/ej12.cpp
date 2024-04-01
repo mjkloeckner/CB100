@@ -1,6 +1,8 @@
 #include <iostream>
 #include <csignal>
 #include <termios.h>
+#include <string>
+#include <sstream>
 
 typedef enum {
     PLAYER_1,
@@ -21,6 +23,7 @@ static unsigned int tui_total_height;
 static player_t current_player;
 static game_status_t game_status;
 static int cursor_col, cursor_row, cursor_row_pre;
+std::string player_status;
 char game_board[3][3];
 
 void tui_set_input_mode (void) {
@@ -57,11 +60,34 @@ void game_clear_board(void) {
     cursor_row_pre = cursor_row;
 }
 
+void game_player_status_msg() {
+    if(game_status == PLAYING) {
+        player_status = std::string("Player ");
+        std::ostringstream current_player_string;
+        current_player_string << current_player+1;
+        player_status += current_player_string.str();
+    }
+    else if (game_status == WIN) {
+        unsigned int player_won = ((current_player == PLAYER_1) ? PLAYER_2 : PLAYER_1);
+        player_status = std::string("Player ");
+        std::ostringstream current_player_string;
+        current_player_string << player_won+1;
+        player_status += current_player_string.str();
+        player_status += " Wins!!";
+        game_status = HALT;
+    }
+    else if (game_status == DRAFT) {
+        player_status.assign("Draft\033[0J");
+        game_status = HALT;
+    }
+}
+
 void game_print_board(void) {
+    game_player_status_msg();
     std::cout << "┌───┬───┬───┐\n│ "
               << game_board[0][0] << " │ "
               << game_board[0][1] << " │ " 
-              << game_board[0][2] << " │\n";
+              << game_board[0][2] << " │ " << player_status << "\n";
 
     std::cout << "├───┼───┼───┤\n│ "
               << game_board[1][0] << " │ "
