@@ -145,7 +145,6 @@ void game_redraw_board(void) {
 void game_tui_cleanup() {
     tui_reset_input_mode();
     std::cout << "\033[" << tui_total_height-(cursor_row*2)-1 << "E";
-    // game_clear_board();
 }
 
 void game_tui_setup() {
