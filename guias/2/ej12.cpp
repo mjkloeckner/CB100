@@ -91,12 +91,12 @@ void game_move_cursor_down(void) {
     cursor_row = ((cursor_row + 1) > 2) ? 0 : cursor_row+1;
 }
 
-void game_set_cross_at_cursor_pos(void) {
-    if(game_board[cursor_row][cursor_col] != ' ')
-        return;
-    char aux = ((current_player == PLAYER_1) ? 'X' : 'O');
-    game_board[cursor_row][cursor_col] = aux;
-    current_player = ((current_player == PLAYER_1) ? PLAYER_2 : PLAYER_1);
+void game_set_at_cursor_pos(void) {
+    if(game_board[cursor_row][cursor_col] == ' ') {
+        char aux = ((current_player == PLAYER_1) ? 'X' : 'O');
+        game_board[cursor_row][cursor_col] = aux;
+        current_player = ((current_player == PLAYER_1) ? PLAYER_2 : PLAYER_1);
+    }
 }
 
 void game_redraw_board(void) {
@@ -143,7 +143,7 @@ void game_key_handler(void) {
         break;
     case  10: // Enter
     case ' ':
-        game_set_cross_at_cursor_pos();
+        game_set_at_cursor_pos();
         break;
     case 'l':
     case 'd':
