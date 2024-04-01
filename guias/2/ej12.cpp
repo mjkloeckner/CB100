@@ -318,6 +318,11 @@ int main (void) {
     std::cout << "\033[" << tui_total_height-1 << "A";
     std::cout << "\033[" << ((cursor_col*4)+2) << "C";
 
+    game_move_cursor_right();
+    game_redraw_board();
+    game_move_cursor_down();
+    game_redraw_board();
+
     while(game_status != EXIT) {
         game_key_handler();
         game_check_status();
