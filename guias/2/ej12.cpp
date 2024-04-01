@@ -136,6 +136,97 @@ void game_initialize_board() {
     }
 }
 
+void game_check_status() {
+    char aux;
+    size_t i, j, occ_x, occ_o, occurrences;
+    if(game_status != PLAYING)
+        return;
+
+    // Horizontal line
+    for(i = occ_x = occ_o = 0; i < 3; ++i) {
+        aux = game_board[cursor_row][i];
+        if(aux == 'X') {
+            occ_x++;
+            occ_o = 0;
+        }
+        else if (aux == 'O'){
+            occ_x = 0;
+            occ_o++;
+        }
+        else {
+            occ_x = occ_o = 0;
+        }
+    }
+    if ((occ_o == 3) || (occ_x == 3)) {
+        game_status = WIN;
+    }
+
+    // Vertical line
+    for(i = occ_x = occ_o = 0; i < 3; ++i) {
+        aux = game_board[i][cursor_col];
+        if(aux == 'X') {
+            occ_x++;
+            occ_o = 0;
+        }
+        else if (aux == 'O'){
+            occ_x = 0;
+            occ_o++;
+        }
+        else {
+            occ_x = occ_o = 0;
+        }
+    }
+    if ((occ_o == 3) || (occ_x == 3)) {
+        game_status = WIN;
+    }
+
+    // Reverse diagonal line (\)
+    for(i = occ_x = occ_o = 0; i < 3; ++i) {
+        aux = game_board[i][i];
+        if(aux == 'X') {
+            occ_x++;
+            occ_o = 0;
+        }
+        else if (aux == 'O'){
+            occ_x = 0;
+            occ_o++;
+        }
+        else {
+            occ_x = occ_o = 0;
+        }
+    }
+    if ((occ_o == 3) || (occ_x == 3)) {
+        game_status = WIN;
+    }
+
+    // Forward diagonal line (/)
+    for(i = occ_x = occ_o = 0; i < 3; ++i) {
+        aux = game_board[2-i][i];
+        if(aux == 'X') {
+            occ_x++;
+            occ_o = 0;
+        }
+        else if (aux == 'O'){
+            occ_x = 0;
+            occ_o++;
+        }
+        else {
+            occ_x = occ_o = 0;
+        }
+    }
+    if ((occ_o == 3) || (occ_x == 3)) {
+        game_status = WIN;
+    }
+
+    for(i = 0; i < 3; ++i)
+        for(j = 0; j < 3; ++j)
+            if(game_board[i][j] == ' ')
+                goto end;;
+
+end:
+    if((i == j) && (i == 3))
+        game_status = DRAFT;
+}
 
 void game_key_handler(void) {
     char cmd;
@@ -202,6 +293,7 @@ int main (void) {
 
     while(game_status != EXIT) {
         game_key_handler();
+        game_check_status();
         game_redraw_board();
     }
 
