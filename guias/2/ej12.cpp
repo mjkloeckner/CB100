@@ -60,16 +60,15 @@ void game_clear_board(void) {
 }
 
 void game_player_status_msg() {
+    std::ostringstream current_player_string;
     if(game_status == PLAYING) {
         player_status = std::string("Player ");
-        std::ostringstream current_player_string;
         current_player_string << current_player+1;
         player_status += current_player_string.str();
     }
     else if (game_status == WIN) {
         unsigned int player_won = ((current_player == PLAYER_1) ? PLAYER_2 : PLAYER_1);
         player_status = std::string("Player ");
-        std::ostringstream current_player_string;
         current_player_string << player_won+1;
         player_status += current_player_string.str();
         player_status += " Wins!!";
