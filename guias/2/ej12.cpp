@@ -67,13 +67,14 @@ void game_player_status_msg() {
         player_status = std::string("Player ");
         current_player_string << current_player+1;
         player_status += current_player_string.str();
+        player_status += "\033[0J";
     }
     else if (game_status == WIN) {
         unsigned int player_won = ((current_player == PLAYER_1) ? PLAYER_2 : PLAYER_1);
         player_status = std::string("Player ");
         current_player_string << player_won+1;
         player_status += current_player_string.str();
-        player_status += " Wins!!";
+        player_status += " Wins";
         game_status = HALT;
     }
     else if (game_status == DRAFT) {
