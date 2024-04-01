@@ -270,7 +270,8 @@ void game_key_handler(void) {
         break;
     case  10: // Enter
     case ' ':
-        game_set_at_cursor_pos();
+        if(game_status == PLAYING)
+            game_set_at_cursor_pos();
         break;
     case 'l':
     case 'd':
