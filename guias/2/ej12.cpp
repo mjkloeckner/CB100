@@ -7,10 +7,19 @@ typedef enum {
     PLAYER_2,
 } player_t;
 
-bool run_program, refresh_cursor;
+typedef enum {
+    PLAYING,
+    WIN,
+    DRAFT,
+    RESET,
+    HALT,
+    EXIT
+} game_status_t;
+
 static struct termios default_attributes;
 static unsigned int tui_total_height;
 static player_t current_player;
+static game_status_t game_status;
 static int cursor_col, cursor_row, cursor_row_pre;
 char game_board[3][3];
 
@@ -38,7 +47,7 @@ void tui_reset_input_mode (void) {
 void game_sig_handler(int signo) {
     signal(signo, SIG_IGN);
     if ((signo == SIGINT) || (signo == SIGQUIT)) {
-        run_program = false;
+        game_status = EXIT;
         exit(0);
     }
 }
@@ -155,7 +164,7 @@ void game_key_handler(void) {
         break;
         break;
     case 'q':
-        run_program = false;
+        game_status = EXIT;
         break;
     case 27: { // Escape codes (i.e. arrow keys)
         std::cin.get(cmd); // skip '['
@@ -180,20 +189,18 @@ void game_key_handler(void) {
 }
 
 int main (void) {
-    run_program = true;
-    refresh_cursor = false;
     tui_total_height = 7;
     cursor_row = cursor_row_pre = cursor_col = 0;
     current_player = PLAYER_1;
+    game_status = PLAYING;
 
     game_tui_setup();
-
     game_initialize_board();
     game_print_board();
     std::cout << "\033[" << tui_total_height-1 << "A";
     std::cout << "\033[" << ((cursor_col*4)+2) << "C";
 
-    while(run_program) {
+    while(game_status != EXIT) {
         game_key_handler();
         game_redraw_board();
     }
