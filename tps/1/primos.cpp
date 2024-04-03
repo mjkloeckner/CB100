@@ -65,7 +65,7 @@ int main (void) {
 
     std::cout << std::fixed
               << "Se encontraron `" << primesFound
-              << "` numeros primos en `"
+              << "` números primos en `"
               << tt << "` " << tUnit << std::endl;
 
     return 0;
