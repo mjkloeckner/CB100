@@ -6,13 +6,14 @@
 #include <fstream>
 #include <iomanip>
 #include <vector>
+#include <cmath>
 
 #define OUTPUT_FILE_PATH "primos.txt"
 const unsigned int MAXIMO = 100000000;
 
 void vectorDiscardNonPrimes(std::vector<bool>& v) {
     v[0] = v[1] = false; // 0 y 1 no son primos
-    for (size_t i = 2; i*i < MAXIMO; ++i) {
+    for (size_t i = 2; i < std::sqrt(MAXIMO); ++i) {
         if(v[i]) {
             for (size_t j = i; j <= (MAXIMO/i); ++j) {
                 v[i*j] = false;
@@ -36,12 +37,13 @@ void vectorExportToFilePath(
 }
 
 int main (void) {
-    clock_t t;
-    unsigned int primesFound;
+    unsigned int ti, primesFound;
+    double tt; // total time
     std::ofstream fp;
     std::vector<bool> numeros(MAXIMO, true);
 
-    t = clock();
+    ti = clock();
+
     vectorDiscardNonPrimes(numeros);
 
     fp.open(OUTPUT_FILE_PATH);
@@ -53,13 +55,20 @@ int main (void) {
     vectorExportToFilePath(numeros, fp, primesFound);
     fp.close();
 
-    t = (clock() - t) / CLOCKS_PER_SEC;
+    tt = (double(clock() - ti)) / CLOCKS_PER_SEC;
+
+    std::cout.precision(2);
+    std::string tUnit = "segundos";
+    if(tt < 1) {
+        tt *= 1000;
+        tUnit.assign("ms");
+        std::cout.precision(0);
+    }
+
     std::cout << std::fixed
-              << std::setprecision(3)
-              << "Se encontrarón `" << primesFound
+              << "Se encontraron `" << primesFound
               << "` numeros primos en `"
-              << (double)(clock() - t) / CLOCKS_PER_SEC
-              << "` " << " segundos\n";
+              << tt << "` " << tUnit << std::endl;
 
     return 0;
 }
