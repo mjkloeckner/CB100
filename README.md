@@ -13,6 +13,8 @@ cuatrimestres anteriores era llamada Algoritmos y Programación 2
 
 ## Librería Termios
 
+> **NOTA**: La cátedra no recomienda utilizar librerías de C en C++
+
 La librería `termios.h` permite cambiar la configuración de las interfaces de
 entrada y salida de la terminal. Esta librería resulta útil en casos en los que
 se quiera hacer un programa interactivo como el que se muestra a continuación
