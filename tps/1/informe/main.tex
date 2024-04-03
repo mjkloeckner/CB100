@@ -161,24 +161,24 @@ números no primos (números compuestos), se pueden expresar como el producto de
 números primos, por ejemplo \code{4 = 2*2} o \code{21 = 3*7}, por lo tanto, si
 un número no es primo, debe tener al menos un factor primo que sea menor o igual
 que su raíz cuadrada, ya que de lo contrario, el producto de los factores
-resultaria en un numero mayor.
+resultaría en un numero mayor.
 
 De la propiedad anterior se deduce que se puede detener la iteración en la lista
-de números cuando se llega a la raiz cuadrado del numero máximo en la lista, ya
-que los números no primos por encima de éste tendran algun factor menor que la
-raiz cuadrada del numero máximo, de este modo se reduce drasticamente el numero
+de números cuando se llega a la raíz cuadrado del numero máximo en la lista, ya
+que los números no primos por encima de éste tendrán algún factor menor que la
+raíz cuadrada del numero máximo, de este modo se reduce drásticamente el numero
 de iteraciones necesarias para descartar los números no primos de la lista.
 
 \section{Desarrollo}
 
-Para la implementacion de la Criba de Eratóstenes, como bien se mencionó en la
+Para la implementación de la aplicación, como bien se mencionó en la
 introducción, se utilizó puramente el lenguaje C++, en particular en su versión
 estándar C98. Para organizar el proceso de compilación se utilizó la herramienta
 \code{make}.
 
 \subsection{Implementación en C++}
 
-El codigo fuente de la aplicacion esta contenido en un solo archivo:
+El código fuente de la aplicación esta contenido en un solo archivo:
 \code{\fileName}.
 
 En la primera parte del archivo se definen dos constantes globales
@@ -213,7 +213,7 @@ void vectorExportToFilePath(
          unsigned int &primesWritten);
 \end{fullgrayverb}
 
-\subsubsection{Funcion \code{main}}
+\subsubsection{Función \code{main}}
 
 La Criba de Eratóstenes opera sobre una lista de números naturales ordenada,
 para representarla se utiliza la librería estándar \code{vector}, de la cual
@@ -242,7 +242,7 @@ cantidad de números primos hallados.
 unsigned int primesFound;
 \end{fullgrayverb}
 
-Para descartar los números no primos del vector \code{numeros} se invoca la
+Para descartar los números no primos del vector \code{numeros} se invoca a la
 función \linebreak\code{vectorDiscardNonPrimes}.
 
 \begin{fullgrayverb}[\mbox{}]
@@ -267,7 +267,7 @@ if (fp.is_open() == false) {
 }
 \end{fullgrayverb}
 
-Para exportar los números primos del vector se invoca la función
+Para exportar los números primos del vector se invoca a la función
 \linebreak\code{vectorExportToFilePath}
 
 \begin{fullgrayverb}[\mbox{}]
@@ -283,13 +283,13 @@ fp.close();
 
 Finalmente se imprime un mensaje al usuario indicando que terminó la impresión,
 y se informa la cantidad de números primos hallados, esto se hace utilizando
-metodos de la librería estándar \code{iostream}.
+métodos de la librería estándar \code{iostream}.
 
 \begin{fullgrayverb}[\mbox{}]
 std::cout << "Se encontraron `" << primesFound << "` números primos\n";
 \end{fullgrayverb}
 
-Por ultimo se termina la ejecución con un codigo \code{0} indicando que el
+Por ultimo se termina la ejecución con un código \code{0} indicando que el
 programa se ejecutó exitosamente.
 
 \begin{fullgrayverb}[\mbox{}]
@@ -311,12 +311,14 @@ numeros[0] = numeros[1] = false;
 \end{fullgrayverb}
 
 Luego itera sobre el vector asignando \code{false} a todos los múltiplos de los
-números primos, hasta llegar a la raíz cuadrada del numero máximo de la lista.
-Para determinar la raíz cuadrada del numero máximo se utiliza la función
-\code{sqrt} de la librería estándar \code{cmath} 
+números primos, hasta llegar a la raíz cuadrada del numero máximo de la lista, o
+lo que es equivalente, hasta que el indice al cuadrado sea menor al numero
+máximo.
+% Para determinar la raíz cuadrada del numero máximo se utiliza la función
+% \code{sqrt} de la librería estándar \code{cmath} 
 
 \begin{fullgrayverb}[\mbox{}]
-for (size_t i = 2; i < std::sqrt(MAXIMO); ++i) {
+for (size_t i = 2; i*i < MAXIMO; ++i) {
     if(vector[i] == true) {
         for (size_t j = i; j <= (MAXIMO/i); ++j) {
             vector[i*j] = false;
@@ -338,7 +340,7 @@ Al comienzo de la función se asigna a la variable \code{primesWritten} cero.
 primesWritten = 0;
 \end{fullgrayverb}
 
-Para la impresion en el archivo, la función recorre el vector en búsqueda de
+Para la impresión en el archivo, la función recorre el vector en búsqueda de
 aquellos casilleros que contengan \code{true}, en los casos afirmativos imprime
 el índice del vector al archivo e incrementa el contenido de la variable
 \code{primesWritten}, los casilleros que contienen \code{false} son ignorados.
@@ -359,7 +361,7 @@ for (size_t i = 2; i < v.size(); ++i) {
 % pero es también muy importante para generar una aplicación robusta y fácil de
 % diagnosticar en caso de fallas.
 
-Para organizar el proceso de compilacion de la aplicación se utiliza la
+Para organizar el proceso de compilación de la aplicación se utiliza la
 herramienta \code{GNU make}, la cual lee un archivo de nombre exclusivo
 \code{Makefile} que posee su propia sintaxis.
 
@@ -393,9 +395,9 @@ aplicación, luego de los dos puntos se indican las dependencias, las cuales se
 expanden a los archivos objeto (los que terminan en \code{.o})
 
 Para compilar los archivos objetos se utiliza la segunda regla, la cual
-corresponde a una \code{pattern rule}, una extension exclusiva de \code{GNU}, 
+corresponde a una \code{pattern rule}, una extensión exclusiva de \code{GNU}, 
 esta \code{pattern rule} compila todos los archivos terminados en \code{.cpp} a
-archivos objeto terminaods en \code{.o}.
+archivos objeto terminados en \code{.o}.
 
 \subsection{Optimizaciones del Compilador}
 
