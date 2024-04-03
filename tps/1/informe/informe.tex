@@ -69,8 +69,6 @@ fontupper={\ttfamily\mystrut}}
 \lhead{\thetitle}
 \cfoot{\thepage}
 
-\def\fileName{primos.cpp}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
@@ -179,7 +177,7 @@ estándar C98. Para organizar el proceso de compilación se utilizó la herramie
 \subsection{Implementación en C++}
 
 El código fuente de la aplicación esta contenido en un solo archivo:
-\code{\fileName}.
+\code{primos.cpp}.
 
 En la primera parte del archivo se definen dos constantes globales
 \code{OUTPUT\_FILE\_PATH}, que representa el nombre del archivo de salida, y
@@ -458,7 +456,7 @@ Github, tendrá que navegar al directorio \code{tps/1}
 
 \subsection{Sistemas basados en UNIX}
 
-Compruebe que este en el mismo directorio que el archivo \code{main.cpp}. Luego,
+Compruebe que este en el mismo directorio que el archivo \code{primos.cpp}. Luego,
 compile el código con el programa \code{make}
 
 \begin{fullgrayverb}
@@ -489,7 +487,7 @@ herramienta \code{make}, para eso ejecute el siguiente comando:
 \newcommand{\myvariable}{\textbf{Hello}}
 
 \begin{fullgrayverb}
-$ g++ -Wall -Wshadow -ansi -std=c++98 -O3 $\fileName$ -o primos
+$ g++ -Wall -Wshadow -ansi -std=c++98 -O3 primos.cpp -o primos
 \end{fullgrayverb}$
 
 
