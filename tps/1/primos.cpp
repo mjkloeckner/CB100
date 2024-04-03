@@ -53,7 +53,7 @@ int main (void) {
     vectorExportToFilePath(numeros, fp, primesFound);
     fp.close();
 
-    tt = (double(clock() - ti)) / CLOCKS_PER_SEC;
+    tt = (double)(clock() - ti) / CLOCKS_PER_SEC;
 
     std::cout.precision(2);
     std::string tUnit = "segundos";
