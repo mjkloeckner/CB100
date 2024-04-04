@@ -197,15 +197,15 @@ los cuales el índice es un numero no primo.
 void vectorDiscardNonPrimes(std::vector<bool> &v);
 \end{fullgrayverb}
 
-Se declara la función \code{vectorExportToFile} la cual recibe como
+Se declara la función \code{vectorPrintToOpenFile} la cual recibe como
 argumento un vector, un archivo abierto y una referencia a una variable. Esta
 función imprime sobre el archivo las posiciones del vector en donde el
 contenido es \code{true}, la cantidad de números impresos los asigna a la
 variable \code{primesWritten}.
 
 \begin{fullgrayverb}[\mbox{}]
-// Se declara la función `vectorExportToFile`
-void vectorExportToFile(
+// Se declara la función `vectorPrintToOpenFile`
+void vectorPrintToOpenFile(
          const std::vector<bool> v,
          std::ofstream &outputFile,
          unsigned int &primesWritten);
@@ -266,10 +266,10 @@ if (outputFile.is_open() == false) {
 \end{fullgrayverb}
 
 Para exportar los números primos del vector se invoca a la función
-\linebreak\code{vectorExportToFile}
+\linebreak\code{vectorPrintToOpenFile}
 
 \begin{fullgrayverb}[\mbox{}]
-vectorExportToFile(numeros, outputFile, primesFound);
+vectorPrintToOpenFile(numeros, outputFile, primesFound);
 \end{fullgrayverb}
 
 Luego de finalizada la impresión en el archivo, se cierra utilizando el método
@@ -325,9 +325,9 @@ for (size_t i = 2; i*i < MAXIMO; ++i) {
 }
 \end{fullgrayverb}
 
-\subsubsection{Función \code{vectorExportToFile}}
+\subsubsection{Función \code{vectorPrintToOpenFile}}
 
-La función \code{vectorExportToFile} recibe como argumento un vector, una
+La función \code{vectorPrintToOpenFile} recibe como argumento un vector, una
 archivo abierto y una referencia a una variable. Luego de invocada la función
 imprime sobre el archivo los índices del vector en los cuales el contenido es
 \code{true}, a la variable que recibe le asigna la cantidad de índices impresos.

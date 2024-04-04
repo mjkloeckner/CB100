@@ -22,7 +22,7 @@ void vectorDiscardNonPrimes(std::vector<bool> &v) {
     }
 }
 
-void vectorExportToFile(
+void vectorPrintToOpenFile(
         const std::vector<bool> v,
         std::ofstream &outputFile,
         unsigned int &primesWritten) {
@@ -52,7 +52,7 @@ int main (void) {
         return -1;
     }
 
-    vectorExportToFile(numeros, outputFile, primesFound);
+    vectorPrintToOpenFile(numeros, outputFile, primesFound);
     outputFile.close();
     totalTime = (double(clock() - startTime)) / CLOCKS_PER_SEC;
 
