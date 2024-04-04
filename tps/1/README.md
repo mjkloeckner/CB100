@@ -8,7 +8,7 @@ El trabajo consiste en una aplicación de consola desarrollada puramente
 con lenguaje C++. La aplicación busca números primos y aquellos que encuentra
 los imprime en un archivo de texto llamado `primos.txt` localizado en el
 directorio desde donde se ejecuta la aplicación. El limite de números a analizar
-por la aplicación queda definido por el usuario en el archivo `main.cpp` con la
+por la aplicación queda definido por el usuario en el archivo `primos.cpp` con la
 variable `MAXIMO`:
 
 ```c++
@@ -44,10 +44,10 @@ configurado WSL siga los pasos para los sistemas basados en UNIX
 
 De manera análoga puede compilar la aplicación directamente, sin la necesidad de
 utilizar la herramienta `make`, para eso debe tener un compilador de C++
-instalado, luego compile el archivo `main.cpp` con el siguiente comando:
+instalado, luego compile el archivo `primos.cpp` con el siguiente comando:
 
 ```
-$ g++ -Wall -Wshadow -pedantic -ansi -std=c++98 -O3 main.cpp -o primos
+$ g++ -Wall -Wshadow -pedantic -ansi -std=c++98 -O3 primos.cpp -o primos
 ```
 
 ## LICENSE
