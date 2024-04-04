@@ -23,50 +23,51 @@ void vectorDiscardNonPrimes(std::vector<bool>& v) {
 
 void vectorExportToFile(
         const std::vector<bool> v,
-        std::ofstream& fp,
+        std::ofstream& outputFile,
         unsigned int &primesWritten) {
 
     primesWritten = 0;
     for (size_t i = 2; i < v.size(); ++i) {
         if(v[i]) {
-            fp << i << std::endl;
+            outputFile << i << std::endl;
             primesWritten++;
         }
     }
 }
 
 int main (void) {
-    unsigned int ti, primesFound;
-    double tt; // total time
-    std::ofstream fp;
+    unsigned int startTime, primesFound;
+    double totalTime;
+    std::ofstream outputFile;
     std::vector<bool> numeros(MAXIMO, true);
+    std::string timeUnit;
 
-    ti = clock();
+    startTime = clock();
     vectorDiscardNonPrimes(numeros);
 
-    fp.open(OUTPUT_FILE_PATH);
-    if (!fp.is_open()) {
+    outputFile.open(OUTPUT_FILE_PATH);
+    if (!outputFile.is_open()) {
         std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH "`\n";
         return -1;
     }
 
-    fp.close();
-    vectorExportToFile(numeros, fp, primesFound);
+    vectorExportToFile(numeros, outputFile, primesFound);
+    outputFile.close();
 
-    tt = (double)(clock() - ti) / CLOCKS_PER_SEC;
+    totalTime = (double)(clock() - startTime) / CLOCKS_PER_SEC;
 
     std::cout.precision(2);
-    std::string tUnit = "segundos";
-    if(tt < 1) {
-        tt *= 1000;
-        tUnit.assign("ms");
+    timeUnit.assign("segundos");
+    if(totalTime < 1) {
+        totalTime *= 1000;
+        timeUnit.assign("ms");
         std::cout.precision(0);
     }
 
     std::cout << std::fixed
               << "Se encontraron `" << primesFound
               << "` números primos en `"
-              << tt << "` " << tUnit << std::endl;
+              << totalTime << "` " << timeUnit << std::endl;
 
     return 0;
 }
