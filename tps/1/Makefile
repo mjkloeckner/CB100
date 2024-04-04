@@ -12,4 +12,4 @@ $(TARGET): $(SRCS)
 	$(CC) $(CLIBS) $(CFLAGS) -o $@ $^
 
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET) primos.txt
