@@ -54,7 +54,7 @@ int main (void) {
 
     vectorExportToFile(numeros, outputFile, primesFound);
     outputFile.close();
-    totalTime = (double)(clock() - startTime) / CLOCKS_PER_SEC;
+    totalTime = (double(clock() - startTime)) / CLOCKS_PER_SEC;
 
     std::cout.precision(2);
     timeUnit.assign("segundos");
