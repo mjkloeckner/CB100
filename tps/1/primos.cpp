@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <vector>
+#include <ctime>
 
 #define OUTPUT_FILE_PATH "primos.txt"
 const unsigned int MAXIMO = 100000000;
