@@ -21,7 +21,7 @@ void vectorDiscardNonPrimes(std::vector<bool>& v) {
     }
 }
 
-void vectorExportToFilePath(
+void vectorExportToFile(
         const std::vector<bool> v,
         std::ofstream& fp,
         unsigned int &primesWritten) {
@@ -50,8 +50,8 @@ int main (void) {
         return -1;
     }
 
-    vectorExportToFilePath(numeros, fp, primesFound);
     fp.close();
+    vectorExportToFile(numeros, fp, primesFound);
 
     tt = (double)(clock() - ti) / CLOCKS_PER_SEC;
 
