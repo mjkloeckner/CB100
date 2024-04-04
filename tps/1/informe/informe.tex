@@ -197,17 +197,17 @@ los cuales el índice es un numero no primo.
 void vectorDiscardNonPrimes(std::vector<bool>& v);
 \end{fullgrayverb}
 
-Se declara la función \code{vectorExportToFilePath} la cual recibe como
+Se declara la función \code{vectorExportToFile} la cual recibe como
 argumento un vector, un archivo abierto y una referencia a una variable. Esta
 función imprime sobre el archivo las posiciones del vector en donde el
 contenido es \code{true}, la cantidad de números impresos los asigna a la
 variable \code{primesWritten}.
 
 \begin{fullgrayverb}[\mbox{}]
-// Se declara la función `vectorExportToFilePath`
-void vectorExportToFilePath(
+// Se declara la función `vectorExportToFile`
+void vectorExportToFile(
          const std::vector<bool> v,
-         std::ofstream& fp,
+         std::ofstream& outputFile,
          unsigned int &primesWritten);
 \end{fullgrayverb}
 
@@ -229,8 +229,8 @@ Para la manipulación del archivo de salida, se utiliza la clase \code{ofstream}
 de la librería estándar \code{fstream}.
 
 \begin{fullgrayverb}[\mbox{}]
-// Se define el objeto fp para representar el archivo de salida
-std::ofstream fp;
+// Se define el objeto `outputFile` para representar el archivo de salida
+std::ofstream outputFile;
 \end{fullgrayverb}
 
 Además se define la variable \code{primesFound} la cual luego contendrá la
@@ -251,32 +251,32 @@ Luego de finalizada la función, se imprime en el archivo de salida los índices
 del vector correspondientes a los casilleros que permanecen con un valor
 \code{true}, ya que éstos representan los números primos.
 
-Utilizando los métodos \code{open} e \code{is\_open} del objeto \code{fp} se
-abre el archivo \code{primos.txt} y se comprueba si hubo algún error, en caso
-afirmativo, se informa al usuario haciendo uso de métodos de la librería
-estándar \code{iostream} y se termina la ejecución inmediatamente con un código
-de error \code{-1}.
+Utilizando los métodos \code{open} e \code{is\_open} del objeto
+\code{outputFile} se abre el archivo \code{primos.txt} y se comprueba si hubo
+algún error, en caso afirmativo, se informa al usuario haciendo uso de métodos
+de la librería estándar \code{iostream} y se termina la ejecución inmediatamente
+con un código de error \code{-1}.
 
 \begin{fullgrayverb}[\mbox{}]
-fp.open(OUTPUT_FILE_PATH);
-if (fp.is_open() == false) {
+outputFile.open(OUTPUT_FILE_PATH);
+if (outputFile.is_open() == false) {
     std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH "`\n";
     return -1;
 }
 \end{fullgrayverb}
 
 Para exportar los números primos del vector se invoca a la función
-\linebreak\code{vectorExportToFilePath}
+\linebreak\code{vectorExportToFile}
 
 \begin{fullgrayverb}[\mbox{}]
-vectorExportToFilePath(numeros, fp, primesFound);
+vectorExportToFile(numeros, outputFile, primesFound);
 \end{fullgrayverb}
 
 Luego de finalizada la impresión en el archivo, se cierra utilizando el método
 \code{close}.
 
 \begin{fullgrayverb}[\mbox{}]
-fp.close();
+outputFile.close();
 \end{fullgrayverb}
 
 Finalmente se imprime un mensaje al usuario indicando que terminó la impresión,
@@ -305,7 +305,7 @@ lo que asigna \code{false} a los índices respectivos directamente.
 
 \begin{fullgrayverb}[\mbox{}]
 // 0 y 1 no son primos
-numeros[0] = numeros[1] = false;
+vector[0] = vector[1] = false;
 \end{fullgrayverb}
 
 Luego itera sobre el vector asignando \code{false} a todos los múltiplos de los
@@ -325,9 +325,9 @@ for (size_t i = 2; i*i < MAXIMO; ++i) {
 }
 \end{fullgrayverb}
 
-\subsubsection{Función \code{vectorExportToFilePath}}
+\subsubsection{Función \code{vectorExportToFile}}
 
-La función \code{vectorExportToFilePath} recibe como argumento un vector, una
+La función \code{vectorExportToFile} recibe como argumento un vector, una
 archivo abierto y una referencia a una variable. Luego de invocada la función
 imprime sobre el archivo los índices del vector en los cuales el contenido es
 \code{true}, a la variable que recibe le asigna la cantidad de índices impresos.
@@ -344,9 +344,9 @@ el índice del vector al archivo e incrementa el contenido de la variable
 \code{primesWritten}, los casilleros que contienen \code{false} son ignorados.
 
 \begin{fullgrayverb}[\mbox{}]
-for (size_t i = 2; i < v.size(); ++i) {
-    if(v[i]) {
-        fp << i << std::endl;
+for (size_t i = 2; i < vector.size(); ++i) {
+    if(vector[i] == true) {
+        outputFile << i << std::endl;
         primesWritten++;
     }
 }
@@ -489,7 +489,6 @@ herramienta \code{make}, para eso ejecute el siguiente comando:
 \begin{fullgrayverb}
 $ g++ -Wall -Wshadow -ansi -std=c++98 -O3 primos.cpp -o primos
 \end{fullgrayverb}$
-
 
 Tenga en cuenta la sintaxis de su compilador ya que puede variar, el comando
 anterior está previsto para \href{https://www.mingw-w64.org/}{MinGW-w64}
