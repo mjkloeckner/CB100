@@ -1,0 +1,549 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{vmargin}
+\usepackage[ddmmyy]{datetime}
+\usepackage{anyfontsize}
+\usepackage{helvet}
+\renewcommand{\familydefault}{phv}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+% \setmarginsrb{leftmargin}{topmargin}{rightmargin}{bottommargin}%
+%          {headheight}{headsep}{footheight}{footskip}
+\setmarginsrb{2.5 cm}{2.25 cm}{2.5 cm}{1.50 cm}
+           {1 cm}{1.25 cm}{1 cm}{1.50 cm}
+
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, % set true if you want colored links
+    linktoc=all,     % set to all if you want sections and subsections linked
+    linkcolor=blue,  % choose some color if you want links to stand out
+    urlcolor=blue,
+}
+
+\usepackage{subfig}
+\usepackage[labelformat=empty]{caption}
+
+\usepackage{fancyvrb}
+\fvset{xleftmargin=\mathindent}
+
+% code blocks
+\usepackage{verbatimbox}
+\newenvironment{fullgrayverb}
+{\verbbox}
+{\endverbbox\par\colorbox{gray!25}{\parbox{\textwidth}{\theverbbox}}\par}
+
+% inline code blocks
+\usepackage{tcolorbox}
+\newcommand\mystrut{\rule[-3pt]{0pt}{12pt}}
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=0pt,
+left=0pt, bottom=0pt, right=0pt, colback=gray!25, colframe=white,
+fontupper={\ttfamily\mystrut}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DATOS GENERALES
+
+\title{Números Primos}          % Titulo del trabajo.
+\author{Martin J. Klöckner}     % Nombre y apellido
+\newcommand{\padron}{123456}    % Padrón
+\newcommand{\tpnumber}{1}       % Número de trabajo práctico
+\date{\today}                   % Fecha (automática)
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\cfoot{\thepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{titlepage}
+    \vspace*{-2.5cm}
+    {\centering
+    \includegraphics[width=1.00\textwidth]{img/logofiuba.png}\\[2.25 cm]}
+    \centering
+    \textsc{\Large CB100}\\[0.2 cm]
+    \textsc{\large Algoritmos y Estructuras de Datos}\\[4 cm]
+    \textcolor{cyan}{{\fontsize{40}{60}\selectfont \bfseries \thetitle}}\\[0.5cm]
+    {\Large \bfseries Trabajo Práctico N$^\circ$\tpnumber}\\[5cm]
+
+
+    \vfill
+    % \vspace{10em}
+    \noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\[0.5cm]
+    \begin{minipage}{.46\textwidth}
+    \textbf{Autor}\\
+    \theauthor
+    \end{minipage}%
+    \begin{minipage}{.34\textwidth}
+    \textbf{Legajo}\\
+    \padron
+    \end{minipage}%
+    \begin{minipage}{.2\textwidth}
+     \begin{flushright}
+        \textbf{Fecha}\\
+        \thedate
+    \end{flushright}
+    \end{minipage}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{
+    \hypersetup{linkcolor=black} % colorlinks=true option is used
+    \tableofcontents
+    \pagebreak
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción}
+
+En este trabajo práctico se desarrolla una aplicación de consola que busca
+números primos hasta un valor máximo determinado por el usuario, cuando
+finaliza, los imprime en un archivo de texto plano en el directorio de ejecución
+de la aplicación.
+
+El lenguaje de programacion utilizado para el desarrollo de la aplicación es C++
+y el algoritmo utilizado para hallar los números primos es la Criba de
+Eratóstenes.
+
+\subsection{Números Primos}
+
+Los números primos por definición son aquellos números positivos que solo son
+divisibles por \code{1} y por si mismos, divisibles en términos de que el resto
+de la división es nulo. El \code{0} y el \code{1} son dos casos particulares en
+los cuales ambos son considerados no primos, el \code{0} por razones obvias, no
+está definida la división por \code{0}, y el \code{1} por que solo es divisible
+por si mismo, lo cual hace que solo sea divisible por un número.
+
+El número \code{7}, por ejemplo, es un número primo, ya que solo es divisible
+por \code{1} y por \code{7}. El número \code{8} no es un número primo, ya que
+ademas de ser divisible por si mismo y por \code{1}, es divisible por \code{2} y
+por \code{4}.
+
+% \subsection{Algoritmo Primitivo para Descartar Números Primos}
+% 
+% El primer algoritmo que surge casi instantáneamente es un algoritmo en el que se
+% itera sobre una lista de números y por cada numero se descartan todos sus
+% múltiplos. Este algoritmo cumple la función de descartar números no primos, pero
+% no es para nada eficiente.
+
+\subsection{Criba de Eratóstenes}
+
+La criba de Eratóstenes es un algoritmo sofisticado y eficiente para descartar
+números no primos de una lista de números. En la Criba de Eratóstenes se itera
+número a número sobre una lista ordenada y finita de números naturales,
+comenzando por el primero, si se trata de un número primo, se buscan todos los
+múltiplos en la lista de números y se descartan, luego se avanza al siguiente
+número que no haya sido descartado, el cual siempre resulta un número primo, y
+se descartan sus múltiplos, así sucesivamente hasta el final de la lista. 
+
+La criba de Eratóstenes se puede optimizar basándose en la propiedad de que los
+números no primos (números compuestos), se pueden expresar como el producto de
+números primos, por ejemplo \code{4 = 2*2} o \code{21 = 3*7}, por lo tanto, si
+un número no es primo, debe tener al menos un factor primo que sea menor o igual
+que su raíz cuadrada, ya que de lo contrario, el producto de los factores
+resultaría en un numero mayor.
+
+De la propiedad anterior se deduce que se puede detener la iteración en la lista
+de números cuando se llega a la raíz cuadrado del numero máximo en la lista, ya
+que los números no primos por encima de éste tendrán algún factor menor que la
+raíz cuadrada del numero máximo, de este modo se reduce drásticamente el numero
+de iteraciones necesarias para descartar los números no primos de la lista.
+
+\section{Desarrollo}
+
+Para la implementación de la aplicación, como bien se mencionó en la
+introducción, se utilizó puramente el lenguaje C++, en particular en su versión
+estándar C98. Para organizar el proceso de compilación se utilizó la herramienta
+\code{make}.
+
+\subsection{Implementación en C++}
+
+El código fuente de la aplicación esta contenido en un solo archivo:
+\code{primos.cpp}.
+
+En la primera parte del archivo se definen dos constantes globales
+\code{OUTPUT\_FILE\_PATH}, que representa el nombre del archivo de salida, y
+\code{MAXIMO} que representa el largo de la lista de números a analizar.
+
+\begin{fullgrayverb}[\mbox{}]
+#define OUTPUT_FILE_PATH "primos.txt"
+const unsigned int MAXIMO = 100000000;
+\end{fullgrayverb}
+
+Luego se declara la función \code{vectorDiscardNonPrimes}, esta función asigna
+el valor \code{false} a los casilleros del vector, que recibe como argumento, en
+los cuales el índice es un numero no primo.
+
+\begin{fullgrayverb}[\mbox{}]
+// Se declara la función `vectorDiscardNonPrimes`
+void vectorDiscardNonPrimes(std::vector<bool> &v);
+\end{fullgrayverb}
+
+Se declara la función \code{vectorPrintToOpenFile} la cual recibe como
+argumento un vector, un archivo abierto y una referencia a una variable. Esta
+función imprime sobre el archivo las posiciones del vector en donde el
+contenido es \code{true}, la cantidad de números impresos los asigna a la
+variable \code{primesWritten}.
+
+\begin{fullgrayverb}[\mbox{}]
+// Se declara la función `vectorPrintToOpenFile`
+void vectorPrintToOpenFile(
+         const std::vector<bool> v,
+         std::ofstream &outputFile,
+         unsigned int &primesWritten);
+\end{fullgrayverb}
+
+\subsubsection{Función \code{main}}
+
+La Criba de Eratóstenes opera sobre una lista de números naturales ordenada,
+para representarla se utiliza la librería estándar \code{vector}, de la cual
+se define un vector de tipo \code{bool} inicialmente con valores \code{true}
+indicando que son todos números primos.
+
+\begin{fullgrayverb}[\mbox{}]
+// Se define un vector de tipo `bool` de largo `MAXIMO`
+// con valores iniciales `true`
+std::vector<bool> numeros(MAXIMO, true);
+\end{fullgrayverb}
+
+\pagebreak
+Para la manipulación del archivo de salida, se utiliza la clase \code{ofstream}
+de la librería estándar \code{fstream}.
+
+\begin{fullgrayverb}[\mbox{}]
+// Se define el objeto `outputFile` para representar el archivo de salida
+std::ofstream outputFile;
+\end{fullgrayverb}
+
+Además se define la variable \code{primesFound} la cual luego contendrá la
+cantidad de números primos hallados.
+
+\begin{fullgrayverb}[\mbox{}]
+unsigned int primesFound;
+\end{fullgrayverb}
+
+Para descartar los números no primos del vector \code{numeros} se invoca a la
+función \linebreak\code{vectorDiscardNonPrimes}.
+
+\begin{fullgrayverb}[\mbox{}]
+vectorDiscardNonPrimes(numeros);
+\end{fullgrayverb}
+
+Luego de finalizada la función, se imprime en el archivo de salida los índices
+del vector correspondientes a los casilleros que permanecen con un valor
+\code{true}, ya que éstos representan los números primos.
+
+Utilizando los métodos \code{open} e \code{is\_open} del objeto
+\code{outputFile} se abre el archivo \code{primos.txt} y se comprueba si hubo
+algún error, en caso afirmativo, se informa al usuario haciendo uso de métodos
+de la librería estándar \code{iostream} y se termina la ejecución inmediatamente
+con un código de error \code{-1}.
+
+\begin{fullgrayverb}[\mbox{}]
+outputFile.open(OUTPUT_FILE_PATH);
+if (outputFile.is_open() == false) {
+    std::cerr << "ERROR: No se pudo abrir `" OUTPUT_FILE_PATH "`\n";
+    return -1;
+}
+\end{fullgrayverb}
+
+Para exportar los números primos del vector se invoca a la función
+\linebreak\code{vectorPrintToOpenFile}
+
+\begin{fullgrayverb}[\mbox{}]
+vectorPrintToOpenFile(numeros, outputFile, primesFound);
+\end{fullgrayverb}
+
+Luego de finalizada la impresión en el archivo, se cierra utilizando el método
+\code{close}.
+
+\begin{fullgrayverb}[\mbox{}]
+outputFile.close();
+\end{fullgrayverb}
+
+Finalmente se imprime un mensaje al usuario indicando que terminó la impresión,
+y se informa la cantidad de números primos hallados, esto se hace utilizando
+métodos de la librería estándar \code{iostream}.
+
+\begin{fullgrayverb}[\mbox{}]
+std::cout << "Se encontraron `" << primesFound << "` números primos\n";
+\end{fullgrayverb}
+
+Por ultimo se termina la ejecución con un código \code{0} indicando que el
+programa se ejecutó exitosamente.
+
+\begin{fullgrayverb}[\mbox{}]
+return 0;
+\end{fullgrayverb}
+
+\subsubsection{Función \code{vectorDiscardNonPrimes}}
+
+La función \code{vectorDiscardNonPrimes} recibe una referencia a un vector de
+tipo \code{bool} como argumento y asigna \code{false} a los casilleros en los
+cuales el índice del mismo es un número no primo. 
+
+La función comienza descartando los casos particulares, \code{0} y \code{1}, por
+lo que asigna \code{false} a los índices respectivos directamente.
+
+\begin{fullgrayverb}[\mbox{}]
+// 0 y 1 no son primos
+vector[0] = vector[1] = false;
+\end{fullgrayverb}
+
+Luego itera sobre el vector asignando \code{false} a todos los múltiplos de los
+números primos, hasta llegar a la raíz cuadrada del numero máximo de la lista, o
+lo que es equivalente, hasta que el indice al cuadrado sea menor al numero
+máximo.
+% Para determinar la raíz cuadrada del numero máximo se utiliza la función
+% \code{sqrt} de la librería estándar \code{cmath} 
+
+\begin{fullgrayverb}[\mbox{}]
+for (size_t i = 2; i*i < MAXIMO; ++i) {
+    if(vector[i] == true) {
+        for (size_t j = i; j <= (MAXIMO/i); ++j) {
+            vector[i*j] = false;
+        }
+    }
+}
+\end{fullgrayverb}
+
+\subsubsection{Función \code{vectorPrintToOpenFile}}
+
+La función \code{vectorPrintToOpenFile} recibe como argumento un vector, una
+archivo abierto y una referencia a una variable. Luego de invocada la función
+imprime sobre el archivo los índices del vector en los cuales el contenido es
+\code{true}, a la variable que recibe le asigna la cantidad de índices impresos.
+
+Al comienzo de la función se asigna a la variable \code{primesWritten} cero.
+
+\begin{fullgrayverb}[\mbox{}]
+primesWritten = 0;
+\end{fullgrayverb}
+
+Para la impresión en el archivo, la función recorre el vector en búsqueda de
+aquellos casilleros que contengan \code{true}, en los casos afirmativos imprime
+el índice del vector al archivo e incrementa el contenido de la variable
+\code{primesWritten}, los casilleros que contienen \code{false} son ignorados.
+
+\begin{fullgrayverb}[\mbox{}]
+for (size_t i = 2; i < vector.size(); ++i) {
+    if(vector[i] == true) {
+        outputFile << i << std::endl;
+        primesWritten++;
+    }
+}
+\end{fullgrayverb}
+
+\subsection{Makefile}
+
+% Si bien es importante la utilización de buenas practicas en el código fuente de
+% la aplicación, muchas veces el proceso de compilación no se tiene en cuenta,
+% pero es también muy importante para generar una aplicación robusta y fácil de
+% diagnosticar en caso de fallas.
+
+Para organizar el proceso de compilación de la aplicación se utiliza la
+herramienta \code{GNU make}, la cual lee un archivo de nombre exclusivo
+\code{Makefile} que posee su propia sintaxis.
+
+El archivo \code{Makefile} utilizado intenta ser reutilizable y de fácil
+modificación, es por esto que al comienzo del mismo se utilizan variables para
+almacenar las principales opciones que el usuario podría querer modificar, por
+ejemplo el nombre del compilador utilizado, el nombre final del archivo, entre
+otras.
+
+\begin{fullgrayverb}[\mbox{}]
+CC := g++
+CFLAGS := -Wall -Wshadow -pedantic -ansi -std=c++98 -O3
+SRCS := $(wildcard *.cpp)
+OBJS := $(SRCS:.cpp=.o)
+TARGET := primos
+\end{fullgrayverb}
+
+Para compilar el programa y enlazar cabeceras, en caso de que haya, se utilizan
+las siguientes reglas:
+
+\begin{fullgrayverb}[\mbox{}]
+$(TARGET): $(OBJS)
+    $(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $< -o $@
+\end{fullgrayverb}
+
+La regla que contiene \code{\$(TARGET)} se expande al nombre final de la
+aplicación, luego de los dos puntos se indican las dependencias, las cuales se
+expanden a los archivos objeto (los que terminan en \code{.o})
+
+Para compilar los archivos objetos se utiliza la segunda regla, la cual
+corresponde a una \code{pattern rule}, una extensión exclusiva de \code{GNU}, 
+esta \code{pattern rule} compila todos los archivos terminados en \code{.cpp} a
+archivos objeto terminados en \code{.o}.
+
+\subsection{Optimizaciones del Compilador}
+
+La mayoría de los compiladores de C++ modernos proporcionan una opción para
+activar optimizaciones. Al utilizar estas optimizaciones el compilador
+intenta eliminar código redundante y optimizar mediante técnicas avanzadas el
+archivo binario final, de este modo se logra reducir el uso de memoria, el
+tiempo de ejecución y por consiguiente el consumo de energía, entre otras cosas.
+
+En el archivo \code{Makefile} de la aplicación por defecto se utiliza el máximo
+de optimizaciones posibles \code{-O3}, de ésta manera se obtiene un archivo
+binario superior en rendimiento que el que se obtendría con las optimizaciones
+desactivadas.
+
+% Teniendo un compilador que proporcione optimizaciones del código resulta
+% conveniente activarla ya que reduce el tiempo de ejecución hasta en un
+% \code{406\%}.
+
+\subsubsection{Tiempo de Ejecución}
+
+En el siguiente bloque se muestra la salida del programa utilizando el máximo de
+optimizaciones posible del compilador \code{-O3}, se puede apreciar en la salida
+del programa el tiempo de ejecución del mismo.
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `11.36` segundos
+\end{fullgrayverb}
+
+Desactivando las optimizaciones del compilador, compilando y ejecutando
+nuevamente la aplicación, se obtiene el siguiente mensaje en la consola:
+
+\begin{fullgrayverb}
+Se encontraron `5761455` números primos en `46.21` segundos
+\end{fullgrayverb}
+
+Comparando los dos resultados, se puede observar que al utilizar las
+optimizaciones de compilador el tiempo de ejecución se reduce en
+aproximadamente \code{75\%}.
+
+% Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
+% en aproximadamente \code{306\%}, dicho de otro modo, utilizando las
+% optimizaciones el tiempo de ejecucion se reduce en aproximadamente \code{75\%}.
+
+\section{Instalación}
+
+Para instalar la aplicación usted debe de disponer de una copia del código
+fuente, si no posee una, puede obtenerla ingresando al
+\href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}, de allí
+podrá descargar una copia, o bien puede clonar el repositorio utilizando
+\code{git} con el siguiente comando:
+
+\begin{fullgrayverb}
+$ git clone https://github.com/mjkloeckner/CB100.git
+\end{fullgrayverb}$
+
+Tenga en cuenta que si clona el Repositorio, o lo descarga del repositorio de
+Github, tendrá que navegar al directorio \code{tps/1}
+
+\subsection{Sistemas basados en UNIX}
+
+Compruebe que este en el mismo directorio que el archivo \code{primos.cpp}. Luego,
+compile el código con el programa \code{make}
+
+\begin{fullgrayverb}
+$ make
+\end{fullgrayverb}$
+
+Luego puede ejecutar la aplicación de la siguiente manera:
+
+\begin{fullgrayverb}
+$ ./primos
+\end{fullgrayverb}$
+
+\pagebreak
+\subsection{Windows}
+
+En el caso de utilizar Windows como sistema operativo, usted puede configurar
+\href{https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux}{WSL}, el cual
+virtualiza un sistema basado en UNIX, para hacerlo puede seguir la
+\href{https://learn.microsoft.com/en-us/windows/wsl/install}{guia oficial de
+Microsoft}. Una vez configurado WSL siga los pasos para los sistemas basados en
+UNIX
+
+De manera análoga si usted dispone de un compilador de C++ puede compilar la
+aplicación directamente desde la consola, sin la necesidad de utilizar la
+herramienta \code{make}, para eso ejecute el siguiente comando:
+
+% Define your variable
+\newcommand{\myvariable}{\textbf{Hello}}
+
+\begin{fullgrayverb}
+$ g++ -Wall -Wshadow -ansi -std=c++98 -O3 primos.cpp -o primos
+\end{fullgrayverb}$
+
+Tenga en cuenta la sintaxis de su compilador ya que puede variar, el comando
+anterior está previsto para \href{https://www.mingw-w64.org/}{MinGW-w64}
+
+Luego de compilado la aplicación usted la puede ejecutar de la siguiente manera 
+
+\begin{fullgrayverb}
+$ ./primos
+\end{fullgrayverb}$
+
+\section{Conclusión}
+
+Luego de finalizar el desarrollo de la aplicación, se puede concluir que la
+combinación de C++ con \code{GNU Make}, resulta muy versátil, y en este caso en
+un alto rendimiento.
+
+El lenguaje C++ es uno de los lenguajes de mayor rendimiento en la lista de
+lenguajes de programación de alto nivel actuales, junto con C, aunque a
+diferencia de éste, C++ ofrece una amplia variedad de librerías estándar, lo que
+mejora su robustez y permite al usuario abstraerse de ciertas implementaciones
+que resultan irrelevantes en ciertos casos, por ejemplo, en el desarrollo de
+esta aplicación, el objecto \code{vector} utilizado para representar la lista de
+números naturales. De no existir la librería estándar \code{vector} uno tendría
+que ensuciarse las manos e implementar un tipo de dato para representar los
+números naturales, ya que no alcanza con los tipos de datos primitivos ofrecidos
+por el lenguaje.
+
+Ademas de ahorrar tiempo al programador, las librerías estándar ofrecen mayor
+seguridad que si se tratase de un tipo de dato creado por el usuario, ya que las
+principales están respaldadas por organizaciones y grupos de estándares como
+ISO, IEC, entre otros.
+
+\pagebreak
+\section{Referencias}
+
+\begin{itemize}
+    \item Deitel H., Deitel P. - C how to Program: With an Introduction to C++
+        (2015)
+    \item
+        \href{https://github.com/mjkloeckner/CB100}{Repositorio de Github}
+    \item
+        \href{https://en.cppreference.com/w/}{C++ Reference}
+    \item
+        \href{https://cplusplus.com/reference/}{Standard C++ Library reference}
+    \item
+        \href{https://en.cppreference.com/w/cpp/container/vector_bool}{
+            std::vector\textless bool\textgreater}
+    \item
+        \href{https://cplusplus.com/reference/fstream/ofstream/}{std::ofstream}
+    \item
+        \href{https://www.mingw-w64.org/}{MinGW-w64}
+    \item
+        \href{https://www.gnu.org/software/make/manual/html_node/index.html}{GNU
+        Make Manual}
+\end{itemize}
+
+\end{document}
+
