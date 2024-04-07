@@ -1,8 +1,9 @@
 # Algoritmos y Estructuras de Datos
 
-En este repositorio usted encontrara mis notas y resoluciones del curso
-Algoritmos y Estructuras de Datos (CB100) cátedra Schmidt. Esta materia en
-cuatrimestres anteriores era llamada Algoritmos y Programación 2
+En este repositorio usted encontrara mis notas y resoluciones de la materia
+Algoritmos y Estructuras de Datos (CB100) cátedra Schmidt. Esta materia es
+equivalente a Algoritmos y Programación 2 en planes de estudios anteriores al
+Plan 2020
 
 ## Recursos Recomendados
 
