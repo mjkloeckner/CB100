@@ -48,9 +48,6 @@
 left=0pt, bottom=0pt, right=0pt, colback=gray!25, colframe=white,
 fontupper={\ttfamily\mystrut}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% DATOS GENERALES
-
 \title{Números Primos}          % Titulo del trabajo.
 \author{Martin J. Klöckner}     % Nombre y apellido
 \newcommand{\padron}{123456}    % Padrón
@@ -69,9 +66,7 @@ fontupper={\ttfamily\mystrut}}
 \lhead{\thetitle}
 \cfoot{\thepage}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
 \begin{titlepage}
     \vspace*{-2.5cm}
     {\centering
@@ -84,7 +79,6 @@ fontupper={\ttfamily\mystrut}}
 
 
     \vfill
-    % \vspace{10em}
     \noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}\\[0.5cm]
     \begin{minipage}{.46\textwidth}
     \textbf{Autor}\\
@@ -102,15 +96,11 @@ fontupper={\ttfamily\mystrut}}
     \end{minipage}
 \end{titlepage}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 {
     \hypersetup{linkcolor=black} % colorlinks=true option is used
     \tableofcontents
     \pagebreak
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introducción}
 
@@ -119,7 +109,7 @@ números primos hasta un valor máximo determinado por el usuario, cuando
 finaliza, los imprime en un archivo de texto plano en el directorio de ejecución
 de la aplicación.
 
-El lenguaje de programacion utilizado para el desarrollo de la aplicación es C++
+El lenguaje de programación utilizado para el desarrollo de la aplicación es C++
 y el algoritmo utilizado para hallar los números primos es la Criba de
 Eratóstenes.
 
@@ -136,13 +126,6 @@ El número \code{7}, por ejemplo, es un número primo, ya que solo es divisible
 por \code{1} y por \code{7}. El número \code{8} no es un número primo, ya que
 ademas de ser divisible por si mismo y por \code{1}, es divisible por \code{2} y
 por \code{4}.
-
-% \subsection{Algoritmo Primitivo para Descartar Números Primos}
-% 
-% El primer algoritmo que surge casi instantáneamente es un algoritmo en el que se
-% itera sobre una lista de números y por cada numero se descartan todos sus
-% múltiplos. Este algoritmo cumple la función de descartar números no primos, pero
-% no es para nada eficiente.
 
 \subsection{Criba de Eratóstenes}
 
@@ -312,8 +295,6 @@ Luego itera sobre el vector asignando \code{false} a todos los múltiplos de los
 números primos, hasta llegar a la raíz cuadrada del numero máximo de la lista, o
 lo que es equivalente, hasta que el indice al cuadrado sea menor al numero
 máximo.
-% Para determinar la raíz cuadrada del numero máximo se utiliza la función
-% \code{sqrt} de la librería estándar \code{cmath} 
 
 \begin{fullgrayverb}[\mbox{}]
 for (size_t i = 2; i*i < MAXIMO; ++i) {
@@ -353,11 +334,6 @@ for (size_t i = 2; i < vector.size(); ++i) {
 \end{fullgrayverb}
 
 \subsection{Makefile}
-
-% Si bien es importante la utilización de buenas practicas en el código fuente de
-% la aplicación, muchas veces el proceso de compilación no se tiene en cuenta,
-% pero es también muy importante para generar una aplicación robusta y fácil de
-% diagnosticar en caso de fallas.
 
 Para organizar el proceso de compilación de la aplicación se utiliza la
 herramienta \code{GNU make}, la cual lee un archivo de nombre exclusivo
@@ -410,10 +386,6 @@ de optimizaciones posibles \code{-O3}, de ésta manera se obtiene un archivo
 binario superior en rendimiento que el que se obtendría con las optimizaciones
 desactivadas.
 
-% Teniendo un compilador que proporcione optimizaciones del código resulta
-% conveniente activarla ya que reduce el tiempo de ejecución hasta en un
-% \code{406\%}.
-
 \subsubsection{Tiempo de Ejecución}
 
 En el siguiente bloque se muestra la salida del programa utilizando el máximo de
@@ -434,10 +406,6 @@ Se encontraron `5761455` números primos en `46.21` segundos
 Comparando los dos resultados, se puede observar que al utilizar las
 optimizaciones de compilador el tiempo de ejecución se reduce en
 aproximadamente \code{75\%}.
-
-% Como se puede observar en el segundo caso, el tiempo de ejecución se incrementa
-% en aproximadamente \code{306\%}, dicho de otro modo, utilizando las
-% optimizaciones el tiempo de ejecucion se reduce en aproximadamente \code{75\%}.
 
 \section{Instalación}
 
@@ -482,9 +450,6 @@ UNIX
 De manera análoga si usted dispone de un compilador de C++ puede compilar la
 aplicación directamente desde la consola, sin la necesidad de utilizar la
 herramienta \code{make}, para eso ejecute el siguiente comando:
-
-% Define your variable
-\newcommand{\myvariable}{\textbf{Hello}}
 
 \begin{fullgrayverb}
 $ g++ -Wall -Wshadow -ansi -std=c++98 -O3 primos.cpp -o primos
