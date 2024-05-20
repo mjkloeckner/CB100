@@ -145,6 +145,7 @@ public:
 int main (void) {
 	Fraction a(1,2);
 	Fraction b(1,3);
+
 	a.print();
 	b.print();
 	a.add(b);
