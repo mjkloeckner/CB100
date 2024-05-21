@@ -10,7 +10,6 @@ private:
 	Channel* prev;
 	unsigned int index;
 	unsigned int volume;
-	unsigned int lastVolume;
 	unsigned int maxVolume;
 	bool mute;
 
@@ -18,7 +17,6 @@ public:
 	Channel() {
 		next = prev = NULL;
 		index = 0;
-		lastVolume = maxVolume = volume = 50; // initialize channel volume at 50%
 		mute = false;
 	}
 
@@ -55,7 +53,6 @@ public:
 	}
 
 	void setVolume(int volume) {
-		lastVolume = this->volume;
 		if(volume > 100) {
 			this->volume = 100;
 		}
@@ -68,10 +65,6 @@ public:
 
 	unsigned int getMaxVolume() {
 		return this->maxVolume;
-	}
-
-	unsigned int getLastVolume() {
-		return this->lastVolume;
 	}
 
 	void setNextChannel(Channel *next) {
