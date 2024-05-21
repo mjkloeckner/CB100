@@ -14,7 +14,7 @@ int main(){
 
     H++;   // incrementa la variable H
     A = F; // el puntero A apunte al primer elemento de F
-           //
+
     C = new int; // se crea un nuevo entero el cual es apuntado por C
 
     (*C) = A[1]; // se asigna el valor del primer elemento de A,
