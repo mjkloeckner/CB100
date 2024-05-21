@@ -14,71 +14,134 @@ private:
 	bool mute;
 
 public:
+	/**
+	 * post: initializes the Channel
+	 */
 	Channel() {
 		next = prev = NULL;
 		index = 0;
+		maxVolume = volume = 50; // initialize channel volume at 50%
 		mute = false;
 	}
 
+	/**
+	 * post: clears memory calling next destructor
+	 */
 	virtual ~Channel() {
 		delete this->next;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: sets the Channel index to `index`
+	 */
 	void setChannelIndex(unsigned int index) {
 		this->index = index;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: toggles the mute bool variable
+	 */
 	void toggleMute() {
 		this->mute = !this->mute;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: sets the Channel mute to `true`
+	 */
 	void setMute() {
 		this->mute = true;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: sets the Channel mute to `false`
+	 */
 	void unsetMute() {
 		this->mute = false;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: returns the `mute` variable status
+	 */
 	bool getMute() {
 		return this->mute;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: returns the `index` variable status
+	 */
 	unsigned int getIndex() {
 		return this->index;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: returns the `volume` variable status
+	 */
 	unsigned int getVolume() {
 		return this->volume;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: sets the Channel volume to `volume`
+	 */
 	void setVolume(int volume) {
 		if(volume > 100) {
 			this->volume = 100;
+			maxVolume = 100;
 		}
 		else if(volume < 0) {
 			this->volume = 0;
 		} else {
 			this->volume = volume;
+			if(volume > (int)this->maxVolume) {
+				maxVolume = volume;
+			}
 		}
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: returns the Channel `maxVolume`
+	 */
 	unsigned int getMaxVolume() {
 		return this->maxVolume;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: sets the Channel `next` to `next`
+	 */
 	void setNextChannel(Channel *next) {
 		this->next = next;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: sets the Channel `prev` to `prev`
+	 */
 	void setPrevChannel(Channel *prev) {
 		this->prev = prev;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: retuns a pointer to the previous Channel
+	 */
 	Channel *getPrev() {
 		return this->prev;
 	}
 
+	/**
+	 * pre: the Channel must be initialized
+	 * post: retuns a pointer to the next Channel
+	 */
 	Channel *getNext() {
 		return this->next;
 	}
@@ -90,6 +153,9 @@ private:
 	Channel *currentChannel;
 
 public:
+	/**
+	 * post: initializes `Television` and all the Channels in `channelList`
+	 */
 	Television() {
 		channelList = new Channel;
 		currentChannel = channelList;
@@ -114,26 +180,46 @@ public:
 		}
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: calls the first `channelList` destructor
+	 */
 	virtual ~Television() {
 		delete this->channelList;
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: returns the `currentChannel`
+	 */
 	Channel *getCurrentChannel() {
 		return this->currentChannel;
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: sets the `currentChannel` to the next channel if is not the last
+	 */
 	void nextChannel() {
 		if(currentChannel->getNext() != NULL) {
 			currentChannel = currentChannel->getNext();
 		}
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: sets the `currentChannel` to the previous channel if is not the first
+	 */
 	void prevChannel() {
 		if(currentChannel->getPrev() != NULL) {
 			currentChannel = currentChannel->getPrev();
 		}
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: sets the `currentChannel` to the channel with index `channelIndex`
+	 */
 	void setChannel(int channelIndex) {
 		if(channelIndex > CHANNELS_MAX) {
 			channelIndex = CHANNELS_MAX;
@@ -141,16 +227,16 @@ public:
 			channelIndex = 0;
 		}
 
-		if(channelIndex < currentChannel->getIndex()) {
+		if(channelIndex < (int)currentChannel->getIndex()) {
 			while(currentChannel->getPrev() != NULL) {
-				if(currentChannel->getIndex() == channelIndex) {
+				if((int)currentChannel->getIndex() == channelIndex) {
 					break;
 				}
 				currentChannel = currentChannel->getPrev();
 			}
-		} else if(channelIndex >= currentChannel->getIndex()) {
+		} else if(channelIndex >= (int)currentChannel->getIndex()) {
 			while(currentChannel->getNext() != NULL) {
-				if(currentChannel->getIndex() == channelIndex) {
+				if((int)currentChannel->getIndex() == channelIndex) {
 					break;
 				}
 				currentChannel = currentChannel->getNext();
@@ -158,34 +244,63 @@ public:
 		}
 	}
 
+
+	/**
+	 * pre: `Television` must be initialized
+	 * post: mutes the `currentChannel`
+	 */
 	void muteChannel() {
 		currentChannel->setMute();
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: unmutes the `currentChannel`
+	 */
 	void unmuteChannel() {
 		currentChannel->unsetMute();
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: toggles the mute for the `currentChannel`
+	 */
 	void toggleMuteChannel() {
 		currentChannel->toggleMute();
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: raises the volume of the `currentChannel`
+	 */
 	void raiseVolume() {
 		currentChannel->setVolume(currentChannel->getVolume() + 10);
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: lowers the volume of the `currentChannel`
+	 */
 	void lowerVolume() {
 		currentChannel->setVolume(currentChannel->getVolume() - 10);
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: sets the volume of the `currentChannel` to `volume`
+	 */
 	void setVolume(unsigned int volume) {
 		currentChannel->setVolume(volume);
 	}
 
+	/**
+	 * pre: `Television` must be initialized
+	 * post: prints the main atributes of `Television` to `stdout`
+	 */
 	void printStatus() {
-		std::cout << "channel: " << this->currentChannel->getIndex()+1<< std::endl;
-		std::cout << "volume:  " << this->currentChannel->getVolume() << "%\n";
-		std::cout << "mute:    "
+		std::cout << "channel:    " << this->currentChannel->getIndex()+1<< std::endl;
+		std::cout << "volume:   " << this->currentChannel->getVolume() << "%\n";
+		std::cout << "mute:   "
 			<< (this->currentChannel->getMute() ? "true" : "false") << std::endl;
 	}
 };
@@ -289,7 +404,6 @@ int main () {
 			break;
 			}
 		case 'q':
-		case EOF:
 			shouldClose = true;
 			break;
 		case 'h':
@@ -303,5 +417,7 @@ int main () {
 			break;
 		}
 	}
+
+	delete tv;
 	return 0;
 }
