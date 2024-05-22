@@ -31,8 +31,8 @@ public:
 template <typename Type>
 class Lista {
 private:
-	Type *next;
-	Type *current;
+	Nodo<Type> *lista;
+	unsigned int length;
 
 public:
 	Lista() {
@@ -81,8 +81,9 @@ public:
 		}
 
 		while(availableImgs->obtenerComentarios() != NULL) {
-			if(availableImgs->obtenerComentarios())
+			if(availableImgs->obtenerComentarios()) {
 				return NULL;
+			}
 		}
 	}
 }; 
