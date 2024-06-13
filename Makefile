@@ -1,6 +1,7 @@
 CC := g++
 CFLAGS := -Wall -Wshadow -pedantic -ansi -std=c++98 -O3
 SRCS := $(wildcard *.cpp)
+LIBS := $(wildcard *.hpp)
 
 TARGET := main
 
@@ -8,7 +9,7 @@ TARGET := main
 
 all: $(TARGET)
 
-$(TARGET): $(SRCS)
+$(TARGET): $(SRCS) $(LIBS)
 	$(CC) $(CLIBS) $(CFLAGS) -o $@ $^
 
 clean:
