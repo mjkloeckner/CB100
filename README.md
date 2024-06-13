@@ -9,9 +9,9 @@ genera un menu de opciones basados en esos datos
 
 El archivo de datos contiene todas las paradas de colectivos de la Ciudad de
 Buenos Aires, el barrio al que pertenece, sus coordenadas y otros datos
-adicionales, y luego muestra un menu con opciones relacionadas a esos datos,
-por ejemplo, que paradas existen en un barrio, o que linea esta más cerca
-de una cierta coordenada
+adicionales, la aplicación analiza esos datos y luego muestra un menu con
+opciones relacionadas a esos datos, por ejemplo, que paradas existen en un
+barrio, o que linea esta más cerca de una cierta coordenada, entre otras
 
 ## Obtención de Datos 
 
