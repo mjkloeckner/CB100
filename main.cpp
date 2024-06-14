@@ -14,6 +14,7 @@ int main (void) {
 	inputFile.open(file_path);
 	if(!inputFile.is_open()) {
 		std::cout << "No se pudo abrir el archivo `" << file_path << "`\n";
+		return 1;
 	}
 
 	std::getline(inputFile, line); // saltea la primer linea
