@@ -57,5 +57,6 @@ UNIX](#sistemas-operativos-basados-en-unix)
 
 ## Integrantes
 
-[Martin J. Klöckner](https://github.com/mjkloeckner)
+[Martin J. Klöckner](https://github.com/mjkloeckner) [Ignacio A. Cettour](https://github.com/IgnacioCettour)
+
 [Camila Anahi Wilverht Rohr]
