@@ -10,7 +10,7 @@ TARGET := main
 all: $(TARGET)
 
 $(TARGET): $(SRCS) $(LIBS)
-	$(CC) $(CLIBS) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
 	rm -f $(TARGET)
