@@ -1,7 +1,7 @@
 CC := g++
 CFLAGS := -Wall -Wshadow -pedantic -ansi -std=c++98 -O3
 SRCS := $(wildcard *.cpp)
-LIBS := $(wildcard *.hpp)
+LIBS := $(wildcard *.h)
 
 TARGET := main
 
