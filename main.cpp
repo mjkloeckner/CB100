@@ -10,8 +10,9 @@
 int main (void) {
 	std::ifstream inputFile;
 	std::istringstream iss;
-	std::string token;
 	std::string line;
+	std::string token;
+	List<std::string> tokens;
 
 	const char *file_path = "paradas-de-colectivo.csv";
 
@@ -24,12 +25,19 @@ int main (void) {
 	std::getline(inputFile, line); // saltea la primer linea
 	while(std::getline(inputFile, line)) {
 		iss.str(line);
-			std::cout << ((token == "") ? "" : token.append("\n"));
 		while(std::getline(iss, token, INPUT_FILE_DELIM)) {
+			tokens.insert(token);
 		}
 		iss.clear();
 	}
 
 	inputFile.close();
+
+	tokens.startCursor();
+	while(tokens.forwardCursor()) {
+		token = tokens.getCursorData();
+		std::cout << ((token == "") ? "" : token.append("\n"));
+	}
+
 	return 0;
 }
