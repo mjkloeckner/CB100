@@ -14,11 +14,11 @@ int main (void) {
 	std::string token;
 	List<std::string> tokens;
 
-	const char *file_path = "paradas-de-colectivo.csv";
+	const char *inputFilePath = "paradas-de-colectivo.csv";
 
-	inputFile.open(file_path);
+	inputFile.open(inputFilePath);
 	if(!inputFile.is_open()) {
-		std::cout << "No se pudo abrir el archivo `" << file_path << "`\n";
+		std::cout << "No se pudo abrir el archivo `" << inputFilePath << "`\n";
 		return 1;
 	}
 
