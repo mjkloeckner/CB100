@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 
+#define INPUT_FILE_DELIM ','
+
 int main (void) {
 	std::ifstream inputFile;
 	std::istringstream iss;
@@ -20,8 +22,8 @@ int main (void) {
 	std::getline(inputFile, line); // saltea la primer linea
 	while(std::getline(inputFile, line)) {
 		iss.str(line);
-		while(std::getline(iss, token, ',')) {
 			std::cout << ((token == "") ? "" : token.append("\n"));
+		while(std::getline(iss, token, INPUT_FILE_DELIM)) {
 		}
 		iss.clear();
 	}
