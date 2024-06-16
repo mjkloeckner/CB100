@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 
+#include "list.h"
+
 #define INPUT_FILE_DELIM ','
 
 int main (void) {
