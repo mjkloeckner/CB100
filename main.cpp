@@ -9,8 +9,8 @@
 
 int main (void) {
 	std::ifstream inputFile;
-	std::istringstream iss;
 	std::string line;
+	std::stringstream lineStream;
 	std::string token;
 	List<std::string> tokens;
 
@@ -24,11 +24,11 @@ int main (void) {
 
 	std::getline(inputFile, line); // saltea la primer linea
 	while(std::getline(inputFile, line)) {
-		iss.str(line);
-		while(std::getline(iss, token, INPUT_FILE_DELIM)) {
+		lineStream.str(line);
+		while(std::getline(lineStream, token, INPUT_FILE_DELIM)) {
 			tokens.insert(token);
 		}
-		iss.clear();
+		lineStream.clear();
 	}
 
 	inputFile.close();
