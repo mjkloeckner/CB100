@@ -62,3 +62,4 @@ UNIX](#sistemas-operativos-basados-en-unix)
 [Ignacio A. Cettour](https://github.com/IgnacioCettour)
 
 Camila Anahi Wilverht Rohr
+[Carlos Reyes](https://github.com/reyesito)
