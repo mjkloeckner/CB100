@@ -14,7 +14,7 @@ std::string Barrio::getNombre() {
 	return this->nombre;
 }
 
-List<Parada*> *Barrio::obtenerParadas() {
+List<Parada*> *Barrio::getParadas() {
 	return this->paradas;
 }
 

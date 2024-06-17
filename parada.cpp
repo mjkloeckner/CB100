@@ -37,8 +37,8 @@ List<Linea*> *Parada::getLineas() {
 	return this->lineas;
 }
 
-void Parada::appendLineas(int numero, bool sentido) {
-	this->lineas->insert(new Linea(numero, sentido))
+void Parada::addLinea(int numero, bool sentido) {
+	this->lineas->insert(new Linea(numero, sentido));
 }
 
 Parada::~Parada() {
