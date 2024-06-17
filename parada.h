@@ -2,7 +2,9 @@
 #define PARADA_H_
 
 #include <string>
-#include <list.h>
+
+#include "list.h"
+#include "linea.h"
 
 class Parada {
 private:
