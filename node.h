@@ -1,5 +1,6 @@
 #ifndef NODE_H_
 #define NODE_H_
+
 #include <iostream>
 
 template <typename Type>
