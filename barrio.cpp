@@ -3,7 +3,7 @@
 Barrio::Barrio(std::string nombre, int comuna) {
 	this->nombre = nombre;
 	this->comuna = comuna;
-	this->paradas = new list<Parada*>(); // crea la lista para las paradas
+	this->paradas = new List<Parada*>(); // crea la lista para las paradas
 }
 
 int Barrio::getComuna() {

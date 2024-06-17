@@ -35,7 +35,7 @@ public:
 	/*
 	 * pos: Devuelve una lista con todos las paradas de ese Barrio
 	 */
-	list<Parada*> *getParadas();
+	List<Parada*> *getParadas();
 
 	/*
 	 * pos: Agrega una para nueva

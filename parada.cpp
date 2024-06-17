@@ -33,7 +33,7 @@ int Parada::getCoord_y() {
 	return this->coord_y;
 }
 
-list<Linea*>* Parada::getLineas() {
+List<Linea*> *Parada::getLineas() {
 	return this->lineas;
 }
 
