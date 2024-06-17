@@ -1,11 +1,4 @@
-/*
- * Parada.cpp
- *
- *  Created on: 16/06/2024
- *      Author: algo2
- */
-
-#include "Parada.h"
+#include "parada.h"
 
 Parada::Parada(string calle, int alturaPlano, string direccion, unsigned int coord_x, unsigned int coord_y) {
 

@@ -1,14 +1,8 @@
-/*
- * Parada.h
- *
- *  Created on: 16/06/2024
- *      Author: algo2
- */
+#ifndef PARADA_H_
+#define PARADA_H_
 
 #include <string>
 #include <list.h>
-#ifndef PARADA_H_
-#define PARADA_H_
 
 class Parada {
 

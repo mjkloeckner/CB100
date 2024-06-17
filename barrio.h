@@ -1,17 +1,10 @@
-/*
- * Barrio.h
-
- *
- *  Created on: 16/06/2024
- *      Author: algo2
- */
-
-#include <string>
-#include <list.h>
-#include <Parada.h>
 #ifndef BARRIO_H_
 #define BARRIO_H_
 
+#include <string>
+
+#include "list.h"
+#include "parada.h"
 
 class Barrio {
 private:

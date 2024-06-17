@@ -1,15 +1,7 @@
-/*
- * Linea.h
- *
- *  Created on: 16/06/2024
- *      Author: algo2
- */
-
-#include <string>
 #ifndef LINEA_H_
 #define LINEA_H_
 
-};
+#include <string>
 
 class Linea {
 private:

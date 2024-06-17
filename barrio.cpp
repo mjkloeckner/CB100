@@ -1,11 +1,4 @@
-/*
- * Barrio.cpp
- *
- *  Created on: 16/06/2024
- *      Author: algo2
- */
-
-#include "Barrio.h"
+#include "barrio.h"
 
 Barrio::Barrio(string nombre, int comuna){
 

@@ -1,11 +1,4 @@
-/*
- * Linea.cpp
- *
- *  Created on: 16/06/2024
- *      Author: algo2
- */
-
-#include "Linea.h"
+#include "linea.h"
 
 Linea::Linea(int numero, bool sentido) {
 
