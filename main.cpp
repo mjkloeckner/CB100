@@ -26,6 +26,11 @@ int main (void) {
 	while(std::getline(inputFile, line)) {
 		lineStream.str(line);
 		while(std::getline(lineStream, token, INPUT_FILE_DELIM)) {
+			while((token[0] == '"') && (token[token.size() - 1] != '"')) {
+				std::string nextToken;
+				std::getline(lineStream, nextToken, INPUT_FILE_DELIM);
+				token += INPUT_FILE_DELIM + nextToken;
+			}
 			tokens.insert(token);
 		}
 		lineStream.clear();
