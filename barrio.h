@@ -40,7 +40,7 @@ public:
 	/*
 	 * pos: Agrega una para nueva
 	 */
-	void addParada(std::string calle, int alturaPlano, std::string direccion, int coord_x, int coord_y);
+	void addParada(std::string calle, int alturaPlano, std::string direccion, double coord_x, double coord_y);
 };
 
 #endif /* BARRIO_H_ */
