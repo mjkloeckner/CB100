@@ -3,7 +3,7 @@
 Parada::Parada(std::string calle,
 		int alturaPlano,
 		std::string direccion,
-		int coord_x, int coord_y) {
+		double coord_x, double coord_y) {
 
 	this->alturaPlano = alturaPlano;
 	this->calle = calle;
@@ -25,11 +25,11 @@ std::string Parada::getDireccion() {
 	return this->direccion;
 }
 
-int Parada::getCoord_X() {
+double Parada::getCoord_X() {
 	return this->coord_x;
 }
 
-int Parada::getCoord_y() {
+double Parada::getCoord_y() {
 	return this->coord_y;
 }
 

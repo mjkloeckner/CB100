@@ -21,7 +21,7 @@ List<Parada*> *Barrio::getParadas() {
 void Barrio::addParada(std::string calle,
 		int alturaPlano,
 		std::string direccion,
-		int coord_x, int coord_y) {
+		double coord_x, double coord_y) {
 
 	this->paradas->insert(new Parada(calle, alturaPlano, direccion, coord_x, coord_y));
 }
