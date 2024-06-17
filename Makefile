@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -Wall -Wshadow -pedantic -ansi -std=c++98 -O3
+CFLAGS := -Wall -pedantic -ansi -std=c++98 -O3
 SRCS := $(wildcard *.cpp)
 LIBS := $(wildcard *.h)
 
