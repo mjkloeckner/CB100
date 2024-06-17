@@ -1,49 +1,47 @@
 #include "parada.h"
 
-Parada::Parada(string calle, int alturaPlano, string direccion, unsigned int coord_x, unsigned int coord_y) {
+Parada::Parada(std::string calle,
+		int alturaPlano,
+		std::string direccion,
+		int coord_x, int coord_y) {
 
 	this->alturaPlano = alturaPlano;
 	this->calle = calle;
 	this->coord_x = coord_x;
 	this->coord_y = coord_y;
 	this->direccion = direccion;
-	this->lineas = new list<Linea*>(); // crea la lista para las lineas
-
+	this->lineas = new List<Linea*>(); // crea la lista para las lineas
 }
 
-string Parada::getCalle(){
+std::string Parada::getCalle() {
 	return this->calle;
 }
 
-int Parada::getAlturaPlano(){
+int Parada::getAlturaPlano() {
 	return this->alturaPlano;
 }
 
-string Parada::getDireccion(){
+std::string Parada::getDireccion() {
 	return this->direccion;
 }
 
-unsigned int Parada::getCoord_X(){
+int Parada::getCoord_X() {
 	return this->coord_x;
 }
 
-unsigned int Parada::getCoord_y(){
+int Parada::getCoord_y() {
 	return this->coord_y;
 }
 
-list<Linea*>* Parada::getLineas(){
+list<Linea*>* Parada::getLineas() {
 	return this->lineas;
 }
 
-void Parada::appendLineas(int numero, bool sentido){
-
-	this->lineas->insert(new Linea(numero,sentido))
-
+void Parada::appendLineas(int numero, bool sentido) {
+	this->lineas->insert(new Linea(numero, sentido))
 }
 
 Parada::~Parada() {
-
 	delete lineas;
-
 }
 

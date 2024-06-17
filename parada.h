@@ -5,27 +5,26 @@
 #include <list.h>
 
 class Parada {
-
 private:
-
-	string calle;
+	std::string calle;
 	int alturaPlano;
-	string direccion;
-	unsigned int coord_x;
-	unsigned int coord_y;
-	list<Linea*>* lineas;	//porque por cada parada hay tambien distintas lineas que tienen sentido y numero
+	std::string direccion;
+	int coord_x, coord_y;
+	List<Linea*> *lineas;  // lineas que tienen sentido y numero
 
 public:
-
 	/*
 	 * post: Deja creado la parada con sus parametros
 	 */
-	Parada(string calle, int alturaPlano, string direccion, unsigned int coord_x, unsigned int coord_y);
+	Parada(std::string calle,
+			int alturaPlano,
+			std::string direccion,
+			int coord_x, int coord_y);
 
 	/*
 	 * post: Devuelve el numero de la calle
 	 */
-	string getCalle();
+	std::string getCalle();
 
 	/*
 	 * post: Devuelve la altura del plano
@@ -35,27 +34,27 @@ public:
 	/*
 	 * post: Devuelve la dirrecion
 	 */
-	string getDireccion();
+	std::string getDireccion();
 
 	/*
 	 * post: Devuelve la coordenada en X de la parada
 	 */
-	unsigned int getCoord_X();
+	int getCoord_X();
 
 	/*
 	 * post: Devuelve la coordenada en Y de la parada
 	 */
-	unsigned int getCoord_y();
+	int getCoord_y();
 
 	/*
 	 * post: Devuelve una lista con las lineas de esa parada
 	 */
-	list<Linea*>* getLineas();
+	List<Linea*> *getLineas();
 
 	/*
 	 * post: Setea las lineas de esa parada
 	 */
-	void appendLineas(int numero, bool sentido);
+	void addLinea(int numero, bool sentido);
 
 	/*
 	 * post: Elimina y vacia la parada y sus lineas

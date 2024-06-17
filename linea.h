@@ -5,12 +5,10 @@
 
 class Linea {
 private:
-
 	int numero;
-	bool sentido; // aca puede ser tambien un enum ?????? un bool con true y false porque en realidad es I o V
+	bool sentido;
 
 public:
-
 	/*
 	 * pre: Recibe como parametro el numero y el sentido de la linea
 	 * post: crea la clase Linea con su numero y sentido
