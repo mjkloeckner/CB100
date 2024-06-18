@@ -41,6 +41,12 @@ public:
 	 * pos: Agrega una para nueva
 	 */
 	void addParada(std::string calle, int alturaPlano, std::string direccion, double coord_x, double coord_y);
+
+	/*
+	 * pos: Devuelve el numero total de paradas que hay en el barrio
+	 */
+	int getSizeListaDeParadas(); //CONSIGNA 1
+
 };
 
 #endif /* BARRIO_H_ */

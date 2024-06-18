@@ -26,6 +26,11 @@ void Barrio::addParada(std::string calle,
 	this->paradas->insert(new Parada(calle, alturaPlano, direccion, coord_x, coord_y));
 }
 
+int Barrio::getSizeListaDeParadas(){  // CONSIGNA 1
+
+	return this->paradas->getSize();
+}
+
 Barrio::~Barrio() {
 	delete paradas;
 }
