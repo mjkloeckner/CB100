@@ -47,6 +47,9 @@ int main (void) {
 
 	int comuna, alturaPlano;
 	double coordX, coordY;
+
+	comuna = alturaPlano = 0;
+	coordX = coordY = 0.0f;
 	std::string barrioName, calle, direccion;
 
 	std::getline(inputFile, line); // saltea la primer linea
@@ -75,8 +78,10 @@ int main (void) {
 					direccion = token;
 					break;
 				case COORD_X:
+					coordX = std::atof(token.c_str());
 					break;
 				case COORD_Y:
+					coordY = std::atof(token.c_str());
 					break;
 				case COMUNA:
 					token.erase(0, 1);
@@ -124,6 +129,5 @@ int main (void) {
 	}
 
 	inputFile.close();
-
 	return 0;
 }
