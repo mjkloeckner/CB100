@@ -4,7 +4,6 @@
 #include <sstream>
 #include <cstdlib>
 
-#include "list.h"
 #include "barrio.h"
 #include "parada.h"
 
@@ -37,7 +36,6 @@ int main (void) {
 	std::string line;
 	std::stringstream lineStream;
 	std::string token;
-	List<std::string> tokens;
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
 
