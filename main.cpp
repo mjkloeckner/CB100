@@ -120,11 +120,13 @@ int main (void) {
 			}
 			field++;
 		}
-		std::cout << "{\n  barrio: " << barrioName << ",\n"
-			<< "  calle: \"" << calle << "\",\n"
-			<< "  comuna: " << comuna << ",\n"
-			<< "  direccion: \"" << direccion << "\",\n"
-			<< "  alturaPlano: " << alturaPlano << "\n}\n";
+		std::cout << "{\n    \"barrio\": " << barrioName << ",\n"
+			<< "    \"calle\": \"" << calle << "\",\n"
+			<< "    \"comuna\": " << comuna << ",\n"
+			<< "    \"direccion\": \"" << direccion << "\",\n"
+			<< "    \"coordenada `x`\": " << coordX << ",\n"
+			<< "    \"coordenada `x`\": " << coordY << ",\n"
+			<< "    \"alturaPlano\": " << alturaPlano << "\n},\n";
 		lineStream.clear();
 	}
 
