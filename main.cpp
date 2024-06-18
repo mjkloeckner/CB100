@@ -124,8 +124,8 @@ int main (void) {
 			<< "    \"calle\": \"" << calle << "\",\n"
 			<< "    \"comuna\": " << comuna << ",\n"
 			<< "    \"direccion\": \"" << direccion << "\",\n"
-			<< "    \"coordenada `x`\": " << coordX << ",\n"
-			<< "    \"coordenada `x`\": " << coordY << ",\n"
+			<< "    \"coordenada x\": " << coordX << ",\n"
+			<< "    \"coordenada y\": " << coordY << ",\n"
 			<< "    \"alturaPlano\": " << alturaPlano << "\n},\n";
 		lineStream.clear();
 	}
