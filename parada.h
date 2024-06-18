@@ -11,7 +11,7 @@ private:
 	std::string calle;
 	int alturaPlano;
 	std::string direccion;
-	double coord_x, coord_y;
+	double coordX, coordY;
 	List<Linea*> *lineas;  // lineas que tienen sentido y numero
 
 public:
@@ -21,7 +21,7 @@ public:
 	Parada(std::string calle,
 			int alturaPlano,
 			std::string direccion,
-			double coord_x, double coord_y);
+			double coordX, double coordY);
 
 	/*
 	 * post: Devuelve el numero de la calle
@@ -41,12 +41,12 @@ public:
 	/*
 	 * post: Devuelve la coordenada en X de la parada
 	 */
-	double getCoord_X();
+	double getCoordX();
 
 	/*
 	 * post: Devuelve la coordenada en Y de la parada
 	 */
-	double getCoord_y();
+	double getCoordY();
 
 	/*
 	 * post: Devuelve una lista con las lineas de esa parada

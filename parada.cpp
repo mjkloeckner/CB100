@@ -3,12 +3,12 @@
 Parada::Parada(std::string calle,
 		int alturaPlano,
 		std::string direccion,
-		double coord_x, double coord_y) {
+		double coordX, double coordY) {
 
 	this->alturaPlano = alturaPlano;
 	this->calle = calle;
-	this->coord_x = coord_x;
-	this->coord_y = coord_y;
+	this->coordX = coordX;
+	this->coordY = coordY;
 	this->direccion = direccion;
 	this->lineas = new List<Linea*>(); // crea la lista para las lineas
 }
@@ -25,12 +25,12 @@ std::string Parada::getDireccion() {
 	return this->direccion;
 }
 
-double Parada::getCoord_X() {
-	return this->coord_x;
+double Parada::getCoordX() {
+	return this->coordX;
 }
 
-double Parada::getCoord_y() {
-	return this->coord_y;
+double Parada::getCoordY() {
+	return this->coordY;
 }
 
 List<Linea*> *Parada::getLineas() {
