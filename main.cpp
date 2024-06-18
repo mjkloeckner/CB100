@@ -66,57 +66,57 @@ int main (void) {
 			}
 
 			switch(field) {
-				case CALLE:
-					calle = token;
-					break;
-				case ALT_PLANO:
-					token.erase(0, 1);
-					token[token.size() - 1] = '\0';
-					alturaPlano = std::atoi(token.c_str());
-					break;
-				case DIRECCION:
-					direccion = token;
-					break;
-				case COORD_X:
-					coordX = std::atof(token.c_str());
-					break;
-				case COORD_Y:
-					coordY = std::atof(token.c_str());
-					break;
-				case COMUNA:
-					token.erase(0, 1);
-					token[token.size() - 1] = '\0';
-					comuna = std::atoi(token.c_str());
-					break;
-				case BARRIO:
-					barrioName = token;
-					break;
-				case LINEA_1:
-					break;
-				case LINEA_1_SENTIDO:
-					break;
-				case LINEA_2:
-					break;
-				case LINEA_2_SENTIDO:
-					break;
-				case LINEA_3:
-					break;
-				case LINEA_3_SENTIDO:
-					break;
-				case LINEA_4:
-					break;
-				case LINEA_4_SENTIDO:
-					break;
-				case LINEA_5:
-					break;
-				case LINEA_5_SENTIDO:
-					break;
-				case LINEA_6:
-					break;
-				case LINEA_6_SENTIDO:
-					break;
-				default:
-					break;
+			case CALLE:
+				calle = token;
+				break;
+			case ALT_PLANO:
+				token.erase(0, 1);
+				token[token.size() - 1] = '\0';
+				alturaPlano = std::atoi(token.c_str());
+				break;
+			case DIRECCION:
+				direccion = token;
+				break;
+			case COORD_X:
+				coordX = std::atof(token.c_str());
+				break;
+			case COORD_Y:
+				coordY = std::atof(token.c_str());
+				break;
+			case COMUNA:
+				token.erase(0, 1);
+				token[token.size() - 1] = '\0';
+				comuna = std::atoi(token.c_str());
+				break;
+			case BARRIO:
+				barrioName = token;
+				break;
+			case LINEA_1:
+				break;
+			case LINEA_1_SENTIDO:
+				break;
+			case LINEA_2:
+				break;
+			case LINEA_2_SENTIDO:
+				break;
+			case LINEA_3:
+				break;
+			case LINEA_3_SENTIDO:
+				break;
+			case LINEA_4:
+				break;
+			case LINEA_4_SENTIDO:
+				break;
+			case LINEA_5:
+				break;
+			case LINEA_5_SENTIDO:
+				break;
+			case LINEA_6:
+				break;
+			case LINEA_6_SENTIDO:
+				break;
+			default:
+				break;
 			}
 			field++;
 		}
