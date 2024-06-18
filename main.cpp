@@ -4,7 +4,6 @@
 #include <sstream>
 #include <cstdlib>
 
-#include "list.h"
 #include "barrio.h"
 #include "parada.h"
 
@@ -37,7 +36,6 @@ int main (void) {
 	std::string line;
 	std::stringstream lineStream;
 	std::string token;
-	List<std::string> tokens;
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
 
@@ -49,6 +47,9 @@ int main (void) {
 
 	int comuna, alturaPlano;
 	double coordX, coordY;
+
+	comuna = alturaPlano = 0;
+	coordX = coordY = 0.0f;
 	std::string barrioName, calle, direccion;
 
 	std::getline(inputFile, line); // saltea la primer linea
@@ -65,67 +66,70 @@ int main (void) {
 			}
 
 			switch(field) {
-				case CALLE:
-					calle = token;
-					break;
-				case ALT_PLANO:
-					token.erase(0, 1);
-					token[token.size() - 1] = '\0';
-					alturaPlano = std::atoi(token.c_str());
-					break;
-				case DIRECCION:
-					direccion = token;
-					break;
-				case COORD_X:
-					break;
-				case COORD_Y:
-					break;
-				case COMUNA:
-					token.erase(0, 1);
-					token[token.size() - 1] = '\0';
-					comuna = std::atoi(token.c_str());
-					break;
-				case BARRIO:
-					barrioName = token;
-					break;
-				case LINEA_1:
-					break;
-				case LINEA_1_SENTIDO:
-					break;
-				case LINEA_2:
-					break;
-				case LINEA_2_SENTIDO:
-					break;
-				case LINEA_3:
-					break;
-				case LINEA_3_SENTIDO:
-					break;
-				case LINEA_4:
-					break;
-				case LINEA_4_SENTIDO:
-					break;
-				case LINEA_5:
-					break;
-				case LINEA_5_SENTIDO:
-					break;
-				case LINEA_6:
-					break;
-				case LINEA_6_SENTIDO:
-					break;
-				default:
-					break;
+			case CALLE:
+				calle = token;
+				break;
+			case ALT_PLANO:
+				token.erase(0, 1);
+				token[token.size() - 1] = '\0';
+				alturaPlano = std::atoi(token.c_str());
+				break;
+			case DIRECCION:
+				direccion = token;
+				break;
+			case COORD_X:
+				coordX = std::atof(token.c_str());
+				break;
+			case COORD_Y:
+				coordY = std::atof(token.c_str());
+				break;
+			case COMUNA:
+				token.erase(0, 1);
+				token[token.size() - 1] = '\0';
+				comuna = std::atoi(token.c_str());
+				break;
+			case BARRIO:
+				barrioName = token;
+				break;
+			case LINEA_1:
+				break;
+			case LINEA_1_SENTIDO:
+				break;
+			case LINEA_2:
+				break;
+			case LINEA_2_SENTIDO:
+				break;
+			case LINEA_3:
+				break;
+			case LINEA_3_SENTIDO:
+				break;
+			case LINEA_4:
+				break;
+			case LINEA_4_SENTIDO:
+				break;
+			case LINEA_5:
+				break;
+			case LINEA_5_SENTIDO:
+				break;
+			case LINEA_6:
+				break;
+			case LINEA_6_SENTIDO:
+				break;
+			default:
+				break;
 			}
 			field++;
 		}
-		std::cout << "{\n  barrio: " << barrioName << ",\n"
-			<< "  calle: \"" << calle << "\",\n"
-			<< "  comuna: " << comuna << ",\n"
-			<< "  direccion: \"" << direccion << "\",\n"
-			<< "  alturaPlano: " << alturaPlano << "\n}\n";
+		std::cout << "{\n    \"barrio\": " << barrioName << ",\n"
+			<< "    \"calle\": \"" << calle << "\",\n"
+			<< "    \"comuna\": " << comuna << ",\n"
+			<< "    \"direccion\": \"" << direccion << "\",\n"
+			<< "    \"coordenada x\": " << coordX << ",\n"
+			<< "    \"coordenada y\": " << coordY << ",\n"
+			<< "    \"alturaPlano\": " << alturaPlano << "\n},\n";
 		lineStream.clear();
 	}
 
 	inputFile.close();
-
 	return 0;
 }
