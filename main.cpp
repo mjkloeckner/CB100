@@ -171,16 +171,8 @@ int main (void) {
 			barrios->insert(barrio);
 		} else {
 			// barrio ya existe
-			// barrio->addParada(...);
+			barrio->addParada(calle, alturaPlano, direccion, coordX, coordY);
 		}
-
-		// std::cout << "{\n    \"barrio\": " << barrioNombre << ",\n"
-		// 	<< "    \"calle\": \"" << calle << "\",\n"
-		// 	<< "    \"comuna\": " << comuna << ",\n"
-		// 	<< "    \"direccion\": \"" << direccion << "\",\n"
-		// 	<< "    \"coordenada x\": " << coordX << ",\n"
-		// 	<< "    \"coordenada y\": " << coordY << ",\n"
-		// 	<< "    \"alturaPlano\": " << alturaPlano << "\n},\n";
 	}
 
 	inputFile.close();
