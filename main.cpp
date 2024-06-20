@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <cstdlib>
+#include <vector>
 
 #include "barrio.h"
 #include "parada.h"
@@ -31,6 +32,27 @@ enum {
 	LINEA_6_SENTIDO
 };
 
+size_t getTokens(std::string line, std::vector<std::string> &tokens) {
+	std::string token;
+	std::stringstream lineStream;
+	size_t field;
+
+	lineStream.clear();
+	lineStream.str(line);
+
+	for(field = CALLE; std::getline(lineStream, token, CSV_DELIM); ++field) {
+		// solucion a `token` es una cadena que contiene CSV_DELIM
+		while((token[0] == '"') && (token[token.size() - 1] != '"')) {
+			std::string nextToken;
+			std::getline(lineStream, nextToken, CSV_DELIM);
+			token += CSV_DELIM + nextToken;
+		}
+		tokens.push_back(token);
+	}
+
+	return field;
+}
+
 void delSurroundingChar(std::string &str, char c) {
 	str.erase(0, 1);
 	str[str.size() - 1] = '\0';
@@ -39,7 +61,7 @@ void delSurroundingChar(std::string &str, char c) {
 int main (void) {
 	std::ifstream inputFile;
 	std::string line, token;
-	std::stringstream lineStream;
+	std::vector<std::string> tokens;
 
 	int comuna, alturaPlano;
 	double coordX, coordY;
@@ -57,17 +79,12 @@ int main (void) {
 	coordX = coordY = 0.0f;
 
 	std::getline(inputFile, line); // saltea la primer linea
+
 	while(std::getline(inputFile, line)) {
-		lineStream.str(line);
-
-		for(size_t field = CALLE; std::getline(lineStream, token, CSV_DELIM); ++field) {
-			// solucion a `token` es una cadena que contiene CSV_DELIM
-			while((token[0] == '"') && (token[token.size() - 1] != '"')) {
-				std::string nextToken;
-				std::getline(lineStream, nextToken, CSV_DELIM);
-				token += CSV_DELIM + nextToken;
-			}
-
+		tokens.clear();
+		fields = getTokens(line, tokens);
+		for(int field = CALLE; field <= fields; ++field) {
+			token = tokens[field];
 			switch(field) {
 			case CALLE:
 				calle = token;
