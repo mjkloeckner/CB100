@@ -17,6 +17,11 @@ public:
 	/*
 	 *pos: deja creado la clase con los parametros dados
 	 */
+	Barrio();
+
+	/*
+	 *pos: deja creado la clase con los parametros dados
+	 */
 	Barrio(std::string nombre, int comuna);
 
 	/*
