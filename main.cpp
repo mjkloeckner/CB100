@@ -79,8 +79,10 @@ int main (void) {
 	std::ifstream inputFile;
 	std::string token, line;
 	std::vector<std::string> tokens;
+	Barrio *barrio;
+	List<Barrio*> *barrios;
 
-	int comuna, alturaPlano;
+	int comuna, alturaPlano, fields;
 	double coordX, coordY;
 	std::string barrioNombre, calle, direccion;
 
@@ -94,6 +96,7 @@ int main (void) {
 
 	comuna = alturaPlano = 0;
 	coordX = coordY = 0.0f;
+	barrios = new List<Barrio*>;
 
 	std::getline(inputFile, line); // saltea la primer linea
 
@@ -158,16 +161,35 @@ int main (void) {
 			}
 		}
 
-		std::cout << "{\n    \"barrio\": " << barrioName << ",\n"
-			<< "    \"calle\": \"" << calle << "\",\n"
-			<< "    \"comuna\": " << comuna << ",\n"
-			<< "    \"direccion\": \"" << direccion << "\",\n"
-			<< "    \"coordenada x\": " << coordX << ",\n"
-			<< "    \"coordenada y\": " << coordY << ",\n"
-			<< "    \"alturaPlano\": " << alturaPlano << "\n},\n";
-		lineStream.clear();
+		barrio = getBarrioPorNombre(barrioNombre, barrios);
+		if(barrio == NULL) {
+			std::cout << "Creando nuevo barrio `" << barrioNombre << "`\n";
+			barrio = new Barrio(barrioNombre, comuna);
+			barrios->insert(barrio);
+		} else {
+			// barrio ya existe
+			// barrio->addParada(...);
+		}
+
+		// std::cout << "{\n    \"barrio\": " << barrioNombre << ",\n"
+		// 	<< "    \"calle\": \"" << calle << "\",\n"
+		// 	<< "    \"comuna\": " << comuna << ",\n"
+		// 	<< "    \"direccion\": \"" << direccion << "\",\n"
+		// 	<< "    \"coordenada x\": " << coordX << ",\n"
+		// 	<< "    \"coordenada y\": " << coordY << ",\n"
+		// 	<< "    \"alturaPlano\": " << alturaPlano << "\n},\n";
 	}
 
 	inputFile.close();
+
+	std::cout << "Total barrios creados: " << barrios->getSize() << std::endl;
+
+	barrios->startCursor();
+	while(barrios->forwardCursor()) {
+		std::cout << "Eliminando barrio `" << barrios->getCursorData()->getNombre() << "`\n";
+		delete barrios->getCursorData();
+	}
+
+	delete barrios;
 	return 0;
 }
