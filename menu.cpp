@@ -39,15 +39,15 @@ void Menu::paradaMasCercanaPorCoordenada(double coordX,double coordY){
 		}
 	}
 
-	std::cout<<"La parada mas cercana esta en: "
-			 <<paradaResultado->getDireccion()
-			 <<std::endl
-			 <<"en la coordenada X: "
-			 <<paradaResultado->getCoordX()
-			 <<std::endl
-			 <<"en la coordenada Y:"
-			 <<paradaResultado->getCoordY()
-			 <<std::endl;
+	std::cout<< "La parada mas cercana esta en: "
+			 << paradaResultado->getDireccion()
+			 << std::endl
+			 << "en la coordenada X: "
+			 << paradaResultado->getCoordX()
+			 << std::endl
+			 << "en la coordenada Y:"
+			 << paradaResultado->getCoordY()
+			 << std::endl;
 }
 
 void Menu::agregarElementosDeLista(List<Parada*>* listaAux,List<Parada*>* listaResultado) {
@@ -82,8 +82,6 @@ void Menu::imprimirParadasPorLinea(List<Parada*>* listaDeParadas) {
 		}
 }
 
-
-
 void Menu::paradasPorLinea(int linea){
 	if(linea >= 0){
 		std::cout<<"La linea no existe, no puede ser menor o igual a cero";
@@ -91,7 +89,7 @@ void Menu::paradasPorLinea(int linea){
 	}
 
 	this->paradasPorCadaLinea = NULL;
-	List<Parada*>* listaAux = new List<Parada*>();
+	List<Parada*> *listaAux = new List<Parada*>();
 
 	this->barrios->startCursor();
 	while(this->barrios->forwardCursor()){
@@ -118,12 +116,6 @@ void Menu::cantidadDeParadasPorLinea(){
 Menu::Menu(int opcion) {
 	this->opcion = opcion;
 	this->barrios = new List<Barrio*>();
-
-	// agregar barrios a la lista con tda archivos(main modularizado)
-	if(opcion < 1 && opcion > 5) {
-		std::cout<<"No se ingreso una opcion valida"<<std::endl;
-		throw "No se ingreso una opcion valida";
-	}
 
 	std::cout << "1) Listado de cantidad de paradas por Barrio"<<std::endl  //HECHO!!!!!!!!!!
 			  << "2) Parada mas cercana a una coordenada ingresada por teclado"<<std::endl //HECHO!!!!!!!!!!
