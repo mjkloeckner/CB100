@@ -6,9 +6,7 @@
 #define CB100_TP2_MAIN_MENU_H_
 
 class Menu {
-
 private:
-
 	int opcion;
 	List<Barrio*>* barrios;
 	double coordX;
@@ -19,11 +17,12 @@ private:
 
 
 public:
+	Menu(int opcion);
 
 	/*
-	 *
+	 * pos: Libera la memoria
 	 */
-	Menu(int opcion);
+	virtual ~Menu();
 
 	/*
 	 * pos: Recorre la lista de barrios e imprime la cantidad de paradas de cada barrio
@@ -59,16 +58,7 @@ public:
 	 */
 	void cantidadDeParadasPorLinea(); //CONSIGNA 4
 
-	/*
-	 *
-	 */
-
 	// HACER EL 5 (PREGUNTAR COMO HACERLO)
-
-	/*
-	 *
-	 */
-	virtual ~Menu();
 };
 
 #endif
