@@ -38,7 +38,6 @@ double Barrio::getDistancia(double x1,double y1,double x2,double y2){ //CONSIGAN
 	return std::sqrt(dX*dX + dY*dY);
 }
 
-
 Parada *Barrio::paradaMasCercana(double coordX, double coordY) { //CONSIGNA 2
 	this->paradas->startCursor();
 	Parada * resultado = NULL;
@@ -72,29 +71,35 @@ bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas ) { //CONS
 			return true;
 		}
 	}
+
 	return false;
 }
 
 List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
+	Parada *paradaActual;
+	List<Parada*> *resultado;
 	std::vector<int> *listaDeLineas;
+
+	resultado = new List<Parada *>;
 
 	this->paradas->startCursor();
 	while(this->paradas->forwardCursor()){
-		Parada *paradaActual = this->paradas->getCursorData();
+		paradaActual = this->paradas->getCursorData();
 
 		listaDeLineas = paradaActual->getLineas();
 
-		if(lineaEnParada(linea, listaDeLineas)){
+		if(lineaEnParada(linea, listaDeLineas)) {
 			resultado->insert(paradaActual);
 		}
 	}
 
-	return resultado;
+	return resultado->getSize() == 0 ? NULL : resultado;
 }
 
 unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
-	List<Parada*> *auxiliar = listaDeParadasPorLinea(linea);
-	return auxiliar->getSize();
+	List<Parada*> *resultado = listaDeParadasPorLinea(linea);
+
+	return resultado == NULL ? 0 : resultado->getSize();
 }
 
 Barrio::~Barrio() {
