@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "barrio.h"
-#include "parada.h"
 
 #define CSV_DELIM ','
 
@@ -78,12 +77,12 @@ Barrio *getBarrioPorNombre(std::string nombre, List<Barrio*> *barrios) {
 
 int main (void) {
 	std::ifstream inputFile;
-	std::string line, token;
+	std::string token, line;
 	std::vector<std::string> tokens;
 
 	int comuna, alturaPlano;
 	double coordX, coordY;
-	std::string barrioName, calle, direccion;
+	std::string barrioNombre, calle, direccion;
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
 

@@ -4,7 +4,7 @@
 Barrio::Barrio(std::string nombre, int comuna) {
 	this->nombre = nombre;
 	this->comuna = comuna;
-	this->paradas = new List<Parada*>(); // crea la lista para las paradas
+	this->paradas = new List<Parada*>; // crea la lista para las paradas
 }
 
 int Barrio::getComuna() {
@@ -65,7 +65,6 @@ Parada *Barrio::paradaMasCercana(double coordX, double coordY) { //CONSIGNA 2
 }
 
 bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas ) { //CONSIGNA 3
-
 	for(size_t i = 0; i < listaDeLineas->size(); ++i) {
 		if((*listaDeLineas)[i] == linea) {
 			return true;
@@ -80,7 +79,7 @@ List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
 	List<Parada*> *resultado;
 	std::vector<int> *listaDeLineas;
 
-	resultado = new List<Parada *>;
+	resultado = new List<Parada*>;
 
 	this->paradas->startCursor();
 	while(this->paradas->forwardCursor()){
@@ -103,5 +102,5 @@ unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
 }
 
 Barrio::~Barrio() {
-	delete paradas;
+	delete this->paradas;
 }

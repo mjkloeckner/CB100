@@ -1,20 +1,17 @@
+#ifndef MENU_H_
+#define MENU_H_
 
 #include "list.h"
 #include "barrio.h"
 #include "parada.h"
-#ifndef CB100_TP2_MAIN_MENU_H_
-#define CB100_TP2_MAIN_MENU_H_
 
 class Menu {
 private:
-	int opcion;
-	List<Barrio*>* barrios;
-	double coordX;
-	double coordY;
-	int linea;
-	List<Parada*>* paradasPorCadaLinea;
-	List<Parada*>* cantidadDeParadasPorCadaLinea;
-
+	int opcion, linea;
+	List<Barrio*> *barrios;
+	double coordX, coordY;
+	List<Parada*> *paradasPorCadaLinea;
+	List<Parada*> *cantidadDeParadasPorCadaLinea;
 
 public:
 	Menu(int opcion);

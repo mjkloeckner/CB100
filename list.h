@@ -42,8 +42,9 @@ public:
 	void startCursor();
 
 	/* pre: el cursor ha sido inicializado
-	 * pos: avanza el cursor al siguiente elemento de la lista, devuelviendo 
-	 *       falso si no quedan nodos por recorrer
+	 * pos: avanza el cursor al siguiente elemento de la lista, devuelviendo
+	 *      falso si no quedan nodos por recorrer
+	 *      recorre la lista en desde el ultimo ingresado al primero
 	 */
 	bool forwardCursor();
 

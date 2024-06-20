@@ -53,9 +53,7 @@ public:
 	/*
 	 * pos: agrega una para nueva
 	 */
-	void addParada(std::string calle,
-			int alturaPlano,
-			std::string direccion,
+	void addParada(std::string calle, int alturaPlano, std::string direccion,
 			double coordX, double coordY);
 
 	/*
