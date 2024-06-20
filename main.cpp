@@ -104,55 +104,58 @@ int main (void) {
 		for(int field = CALLE; field <= fields; ++field) {
 			token = tokens[field];
 			switch(field) {
-			case CALLE:
-				calle = token;
-				break;
-			case ALT_PLANO:
-				delSurroundingChar(token, '"');
-				alturaPlano = std::atoi(token.c_str());
-				break;
-			case DIRECCION:
-				direccion = token;
-				break;
-			case COORD_X:
-				coordX = std::atof(token.c_str());
-				break;
-			case COORD_Y:
-				coordY = std::atof(token.c_str());
-				break;
-			case COMUNA:
-				delSurroundingChar(token, '"');
-				comuna = std::atoi(token.c_str());
-				break;
-			case BARRIO:
-				barrioName = token;
-				break;
-			case LINEA_1:
-				break;
-			case LINEA_1_SENTIDO:
-				break;
-			case LINEA_2:
-				break;
-			case LINEA_2_SENTIDO:
-				break;
-			case LINEA_3:
-				break;
-			case LINEA_3_SENTIDO:
-				break;
-			case LINEA_4:
-				break;
-			case LINEA_4_SENTIDO:
-				break;
-			case LINEA_5:
-				break;
-			case LINEA_5_SENTIDO:
-				break;
-			case LINEA_6:
-				break;
-			case LINEA_6_SENTIDO:
-				break;
-			default:
-				break;
+				case CALLE:
+					calle = token;
+					break;
+				case ALT_PLANO:
+					delSurroundingChar(token, '"');
+					alturaPlano = std::atoi(token.c_str());
+					break;
+				case DIRECCION:
+					direccion = token;
+					break;
+				case COORD_X:
+					coordX = std::atof(token.c_str());
+					break;
+				case COORD_Y:
+					coordY = std::atof(token.c_str());
+					break;
+				case COMUNA:
+					delSurroundingChar(token, '"');
+					comuna = std::atoi(token.c_str());
+					break;
+				case BARRIO:
+					barrioNombre = token;
+					if(barrioNombre == "") {
+						barrioNombre = "NOMBRE SIN DEFINIR";
+					}
+					break;
+				case LINEA_1:
+					break;
+				case LINEA_1_SENTIDO:
+					break;
+				case LINEA_2:
+					break;
+				case LINEA_2_SENTIDO:
+					break;
+				case LINEA_3:
+					break;
+				case LINEA_3_SENTIDO:
+					break;
+				case LINEA_4:
+					break;
+				case LINEA_4_SENTIDO:
+					break;
+				case LINEA_5:
+					break;
+				case LINEA_5_SENTIDO:
+					break;
+				case LINEA_6:
+					break;
+				case LINEA_6_SENTIDO:
+					break;
+				default:
+					break;
 			}
 		}
 
