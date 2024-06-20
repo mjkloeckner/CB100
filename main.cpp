@@ -56,7 +56,25 @@ size_t getTokens(std::string line, std::vector<std::string> &tokens) {
 void delSurroundingChar(std::string &str, char c) {
 	str.erase(0, 1);
 	str[str.size() - 1] = '\0';
-} 
+}
+
+// busca el barrio en la lista de barrios, si no lo encuentra devuelve NULL
+Barrio *getBarrioPorNombre(std::string nombre, List<Barrio*> *barrios) {
+	if(barrios == NULL) {
+		return NULL;
+	}
+
+	Barrio *res = NULL;
+
+	barrios->startCursor();
+	while(barrios->forwardCursor()) {
+		if(barrios->getCursorData()->getNombre() == nombre) {
+			res = barrios->getCursorData();
+		}
+	}
+
+	return res;
+}
 
 int main (void) {
 	std::ifstream inputFile;
