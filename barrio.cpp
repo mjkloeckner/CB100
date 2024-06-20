@@ -106,5 +106,14 @@ unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
 }
 
 Barrio::~Barrio() {
+	Parada *delParada;
+
+	this->paradas->startCursor();
+	while(this->paradas->forwardCursor()){
+		delParada = this->paradas->getCursorData();
+		std::cout << "Eliminando parada `" << delParada->getDireccion() << "`\n";
+		delete delParada;
+	}
+
 	delete this->paradas;
 }
