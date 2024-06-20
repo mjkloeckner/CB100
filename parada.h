@@ -2,9 +2,9 @@
 #define PARADA_H_
 
 #include <string>
+#include <vector>
 
 #include "list.h"
-#include "linea.h"
 
 class Parada {
 private:
@@ -12,7 +12,7 @@ private:
 	int alturaPlano;
 	std::string direccion;
 	double coordX, coordY;
-	List<Linea*> *lineas;  // lineas que tienen sentido y numero
+	std::vector<int> *lineas;
 
 public:
 	/*
@@ -51,12 +51,12 @@ public:
 	/*
 	 * post: Devuelve una lista con las lineas de esa parada
 	 */
-	List<Linea*> *getLineas();
+	std::vector<int> *getLineas();
 
 	/*
 	 * post: Setea las lineas de esa parada
 	 */
-	void addLinea(int numero, bool sentido);
+	void addLinea(int numero);
 
 	/*
 	 * post: Elimina y vacia la parada y sus lineas

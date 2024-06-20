@@ -10,7 +10,7 @@ Parada::Parada(std::string calle,
 	this->coordX = coordX;
 	this->coordY = coordY;
 	this->direccion = direccion;
-	this->lineas = new List<Linea*>(); // crea la lista para las lineas
+	this->lineas = new std::vector<int>();
 }
 
 std::string Parada::getCalle() {
@@ -33,15 +33,14 @@ double Parada::getCoordY() {
 	return this->coordY;
 }
 
-List<Linea*> *Parada::getLineas() {
+std::vector<int> *Parada::getLineas() {
 	return this->lineas;
 }
 
-void Parada::addLinea(int numero, bool sentido) {
-	this->lineas->insert(new Linea(numero, sentido));
+void Parada::addLinea(int numero) {
+	this->lineas->push_back(numero);
 }
 
 Parada::~Parada() {
 	delete lineas;
 }
-

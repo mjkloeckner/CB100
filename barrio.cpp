@@ -65,13 +65,10 @@ Parada *Barrio::paradaMasCercana(double coordX, double coordY) { //CONSIGNA 2
 	return resultado;
 }
 
-bool Barrio::lineaEnParada(int linea,List<Linea*> *listaDeLineas ) { //CONSIGNA 3
-	listaDeLineas->startCursor();
+bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas ) { //CONSIGNA 3
 
-	while(listaDeLineas->forwardCursor()) {
-		Linea *lineaActual = listaDeLineas->getCursorData();
-
-		if(lineaActual->getNumero() == linea) {
+	for(size_t i = 0; i < listaDeLineas->size(); ++i) {
+		if((*listaDeLineas)[i] == linea) {
 			return true;
 		}
 	}
@@ -79,13 +76,13 @@ bool Barrio::lineaEnParada(int linea,List<Linea*> *listaDeLineas ) { //CONSIGNA 
 }
 
 List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
-	List<Parada*> *resultado = NULL;
+	std::vector<int> *listaDeLineas;
 
 	this->paradas->startCursor();
 	while(this->paradas->forwardCursor()){
 		Parada *paradaActual = this->paradas->getCursorData();
 
-		List<Linea*> *listaDeLineas = paradaActual->getLineas();
+		listaDeLineas = paradaActual->getLineas();
 
 		if(lineaEnParada(linea, listaDeLineas)){
 			resultado->insert(paradaActual);
