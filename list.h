@@ -76,6 +76,7 @@ List<Type>::~List() {
 		Node<Type> *delNode = this->first;
 		this->first = delNode->getNext();
 		delete delNode;
+		this->size--;
 	}
 }
 
