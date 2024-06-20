@@ -2,7 +2,6 @@ CC := g++
 CFLAGS := -Wall -pedantic -ansi -std=c++98 -O3
 SRCS := $(wildcard *.cpp)
 OBJS := $(SRCS:.cpp=.o)
-
 TARGET := main
 
 .PHONY: all clean
