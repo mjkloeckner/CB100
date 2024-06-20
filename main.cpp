@@ -7,7 +7,7 @@
 #include "barrio.h"
 #include "parada.h"
 
-#define INPUT_FILE_DELIM ','
+#define CSV_DELIM ','
 
 enum {
 	CALLE,
@@ -31,11 +31,19 @@ enum {
 	LINEA_6_SENTIDO
 };
 
+void delSurroundingChar(std::string &str, char c) {
+	str.erase(0, 1);
+	str[str.size() - 1] = '\0';
+} 
+
 int main (void) {
 	std::ifstream inputFile;
-	std::string line;
+	std::string line, token;
 	std::stringstream lineStream;
-	std::string token;
+
+	int comuna, alturaPlano;
+	double coordX, coordY;
+	std::string barrioName, calle, direccion;
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
 
@@ -45,24 +53,19 @@ int main (void) {
 		return 1;
 	}
 
-	int comuna, alturaPlano;
-	double coordX, coordY;
-
 	comuna = alturaPlano = 0;
 	coordX = coordY = 0.0f;
-	std::string barrioName, calle, direccion;
 
 	std::getline(inputFile, line); // saltea la primer linea
 	while(std::getline(inputFile, line)) {
 		lineStream.str(line);
 
-		size_t field = CALLE;
-		while(std::getline(lineStream, token, INPUT_FILE_DELIM)) {
-			// verifico que si `token` es una cadena y contiene INPUT_FILE_DELIM
+		for(size_t field = CALLE; std::getline(lineStream, token, CSV_DELIM); ++field) {
+			// solucion a `token` es una cadena que contiene CSV_DELIM
 			while((token[0] == '"') && (token[token.size() - 1] != '"')) {
 				std::string nextToken;
-				std::getline(lineStream, nextToken, INPUT_FILE_DELIM);
-				token += INPUT_FILE_DELIM + nextToken;
+				std::getline(lineStream, nextToken, CSV_DELIM);
+				token += CSV_DELIM + nextToken;
 			}
 
 			switch(field) {
@@ -70,8 +73,7 @@ int main (void) {
 				calle = token;
 				break;
 			case ALT_PLANO:
-				token.erase(0, 1);
-				token[token.size() - 1] = '\0';
+				delSurroundingChar(token, '"');
 				alturaPlano = std::atoi(token.c_str());
 				break;
 			case DIRECCION:
@@ -84,8 +86,7 @@ int main (void) {
 				coordY = std::atof(token.c_str());
 				break;
 			case COMUNA:
-				token.erase(0, 1);
-				token[token.size() - 1] = '\0';
+				delSurroundingChar(token, '"');
 				comuna = std::atoi(token.c_str());
 				break;
 			case BARRIO:
@@ -118,8 +119,8 @@ int main (void) {
 			default:
 				break;
 			}
-			field++;
 		}
+
 		std::cout << "{\n    \"barrio\": " << barrioName << ",\n"
 			<< "    \"calle\": \"" << calle << "\",\n"
 			<< "    \"comuna\": " << comuna << ",\n"
