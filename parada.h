@@ -8,11 +8,11 @@
 
 class Parada {
 private:
-	std::string calle;
 	int alturaPlano;
-	std::string direccion;
 	double coordX, coordY;
 	std::vector<int> *lineas;
+	std::string calle, direccion;
+	// List<Linea*> *lineas;  // lineas que tienen sentido y numero
 
 public:
 	/*
