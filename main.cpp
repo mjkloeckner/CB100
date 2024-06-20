@@ -31,6 +31,11 @@ enum {
 	LINEA_6_SENTIDO
 };
 
+void delSurroundingChar(std::string &str, char c) {
+	str.erase(0, 1);
+	str[str.size() - 1] = '\0';
+}
+
 size_t getTokens(std::string line, std::vector<std::string> &tokens) {
 	std::string token;
 	std::stringstream lineStream;
@@ -46,15 +51,13 @@ size_t getTokens(std::string line, std::vector<std::string> &tokens) {
 			std::getline(lineStream, nextToken, CSV_DELIM);
 			token += CSV_DELIM + nextToken;
 		}
+		if(token[0] == '"' && token[token.size() - 1] == '"') {
+			delSurroundingChar(token, '"');
+		}
 		tokens.push_back(token);
 	}
 
 	return field;
-}
-
-void delSurroundingChar(std::string &str, char c) {
-	str.erase(0, 1);
-	str[str.size() - 1] = '\0';
 }
 
 // busca el barrio en la lista de barrios, si no lo encuentra devuelve NULL
