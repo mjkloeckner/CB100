@@ -12,7 +12,10 @@ private:
 	int comuna;
 	List<Parada*> *paradas;
 
-	/*
+
+public:
+
+		/*
 	 * pos: Devuelve la distancia entre la coordenadas dadas
 	 */
 	double getDistancia(double x1,double y1,double x2,double y2);
@@ -21,8 +24,6 @@ private:
 	 */
 	bool lineaEnParada(int linea,List<Linea*>* listaDeLineas );
 
-
-public:
 	/*
 	 *pos: Deja creado la clase con los parametros dados
 	 */
