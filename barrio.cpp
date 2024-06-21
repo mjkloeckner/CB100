@@ -1,6 +1,10 @@
 #include "barrio.h"
 #include <cmath>
 
+Barrio::Barrio() {
+	this->paradas = new List<Parada*>; // crea la lista para las paradas
+}
+
 Barrio::Barrio(std::string nombre, int comuna) {
 	this->nombre = nombre;
 	this->comuna = comuna;
@@ -34,27 +38,21 @@ double Barrio::getDistancia(double x1,double y1,double x2,double y2){ //CONSIGAN
 	return std::sqrt(dX*dX + dY*dY);
 }
 
-Parada *Barrio::paradaMasCercana(double coordX, double coordY) { //CONSIGNA 2
+Parada *Barrio::paradaMasCercana(double coordX, double coordY,List<Parada*>* paradasAux) { //CONSIGNA 2
+	paradasAux->startCursor();
 	double distancia;
 	double distanciaMinima;
 	Parada *resultado, *aux;
 
-	resultado = aux = NULL;
-
-	if(this->paradas->getSize() == 0) {
-		return NULL;
-	}
-
-	this->paradas->startCursor();
-	while(this->paradas->forwardCursor()) {
-		aux = this->paradas->getCursorData();
+	while(paradasAux->forwardCursor()){
+		Parada *aux = paradasAux->getCursorData();
 
 		if(resultado == NULL) {
 			resultado = aux;
 			distanciaMinima = getDistancia(coordX, coordY, aux->getCoordX(), aux->getCoordY());
 		}
 		else {
-			distancia = getDistancia(coordX, coordY, aux->getCoordX(), aux->getCoordY());
+			distancia = getDistancia(coordX,coordY,aux->getCoordX(),aux->getCoordY());
 
 			if(distancia < distanciaMinima) {
 				resultado = aux;
@@ -93,12 +91,7 @@ List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
 		}
 	}
 
-	if(resultado->getSize() == 0) {
-		delete resultado;
-		return NULL;
-	}
-
-	return resultado;
+	return resultado->getSize() == 0 ? NULL : resultado;
 }
 
 unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
