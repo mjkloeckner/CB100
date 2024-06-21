@@ -3,14 +3,14 @@
 Parada::Parada(std::string calle,
 		int alturaPlano,
 		std::string direccion,
-		double coordX, double coordY) {
+		double coordX, double coordY, std::vector<int> lineas) {
 
 	this->alturaPlano = alturaPlano;
 	this->calle = calle;
 	this->coordX = coordX;
 	this->coordY = coordY;
 	this->direccion = direccion;
-	this->lineas = new std::vector<int>();
+	this->lineas = new std::vector<int>(lineas);
 }
 
 std::string Parada::getCalle() {

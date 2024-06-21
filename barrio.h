@@ -59,7 +59,7 @@ public:
 	 * pos: agrega una para nueva
 	 */
 	void addParada(std::string calle, int alturaPlano, std::string direccion,
-			double coordX, double coordY);
+			double coordX, double coordY, std::vector<int> lineas);
 
 	/*
 	 * pos: devuelve el numero total de paradas que hay en el barrio

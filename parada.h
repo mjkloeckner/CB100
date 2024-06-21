@@ -21,7 +21,7 @@ public:
 	Parada(std::string calle,
 			int alturaPlano,
 			std::string direccion,
-			double coordX, double coordY);
+			double coordX, double coordY, std::vector<int> lineas);
 
 	/*
 	 * post: Devuelve el numero de la calle

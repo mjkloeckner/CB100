@@ -88,6 +88,7 @@ int main (void) {
 	int comuna, alturaPlano, fields;
 	double coordX, coordY;
 	std::string barrioNombre, calle, direccion;
+	std::vector<int> lineasEnParada;
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
 
@@ -105,6 +106,7 @@ int main (void) {
 
 	while(std::getline(inputFile, line)) {
 		tokens.clear();
+		lineasEnParada.clear();
 		fields = getTokens(line, tokens);
 		for(int field = CALLE; field <= fields; ++field) {
 			token = tokens[field];
@@ -136,27 +138,23 @@ int main (void) {
 					}
 					break;
 				case LINEA_1:
+				case LINEA_2:
+				case LINEA_3:
+				case LINEA_4:
+				case LINEA_5:
+				case LINEA_6:
+					if(token == "") {
+						break;
+					}
+					int linea;
+					linea = std::atoi(token.c_str());
+					lineasEnParada.push_back(linea);
 					break;
 				case LINEA_1_SENTIDO:
-					break;
-				case LINEA_2:
-					break;
 				case LINEA_2_SENTIDO:
-					break;
-				case LINEA_3:
-					break;
 				case LINEA_3_SENTIDO:
-					break;
-				case LINEA_4:
-					break;
 				case LINEA_4_SENTIDO:
-					break;
-				case LINEA_5:
-					break;
 				case LINEA_5_SENTIDO:
-					break;
-				case LINEA_6:
-					break;
 				case LINEA_6_SENTIDO:
 					break;
 				default:
@@ -168,10 +166,11 @@ int main (void) {
 		if(barrio == NULL) {
 			std::cout << "Creando nuevo barrio `" << barrioNombre << "`\n";
 			barrio = new Barrio(barrioNombre, comuna);
+			barrio->addParada(calle, alturaPlano, direccion, coordX, coordY, lineasEnParada);
 			barrios->insert(barrio);
 		} else {
 			// barrio ya existe
-			barrio->addParada(calle, alturaPlano, direccion, coordX, coordY);
+			barrio->addParada(calle, alturaPlano, direccion, coordX, coordY, lineasEnParada);
 		}
 	}
 
