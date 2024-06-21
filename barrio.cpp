@@ -35,20 +35,26 @@ double Barrio::getDistancia(double x1,double y1,double x2,double y2){ //CONSIGAN
 }
 
 Parada *Barrio::paradaMasCercana(double coordX, double coordY) { //CONSIGNA 2
-	this->paradas->startCursor();
-	Parada * resultado = NULL;
 	double distancia;
 	double distanciaMinima;
+	Parada *resultado, *aux;
 
-	while(this->paradas->forwardCursor()){
-		Parada *aux = this->paradas->getCursorData();
+	resultado = aux = NULL;
+
+	if(this->paradas->getSize() == 0) {
+		return NULL;
+	}
+
+	this->paradas->startCursor();
+	while(this->paradas->forwardCursor()) {
+		aux = this->paradas->getCursorData();
 
 		if(resultado == NULL) {
 			resultado = aux;
-			distanciaMinima = getDistancia(coordX,coordY,aux->getCoordX(),aux->getCoordY());
+			distanciaMinima = getDistancia(coordX, coordY, aux->getCoordX(), aux->getCoordY());
 		}
 		else {
-			distancia = getDistancia(coordX,coordY,aux->getCoordX(),aux->getCoordY());
+			distancia = getDistancia(coordX, coordY, aux->getCoordX(), aux->getCoordY());
 
 			if(distancia < distanciaMinima) {
 				resultado = aux;
@@ -80,7 +86,6 @@ List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
 	this->paradas->startCursor();
 	while(this->paradas->forwardCursor()){
 		paradaActual = this->paradas->getCursorData();
-
 		listaDeLineas = paradaActual->getLineas();
 
 		if(lineaEnParada(linea, listaDeLineas)) {
@@ -88,7 +93,12 @@ List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
 		}
 	}
 
-	return resultado->getSize() == 0 ? NULL : resultado;
+	if(resultado->getSize() == 0) {
+		delete resultado;
+		return NULL;
+	}
+
+	return resultado;
 }
 
 unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
