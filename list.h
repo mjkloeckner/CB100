@@ -71,9 +71,6 @@ public:
 	 *pre * post: remueve de la Lista el elemento en la posición indicada.
 	 */
 	void remove(unsigned int posicion);
-
-
-
 };
 
 template <typename Type>
@@ -135,34 +132,34 @@ Type List<Type>::getCursorData() {
 
 
 template <typename Type> void List<Type>::validarPosicion(unsigned int posicion) {
-    if ((posicion < 1) ||
-        (posicion > this->size + 1)) {
-        throw "La posicion debe estar entre 1 y tamaño + 1";
-    }
+	if ((posicion < 1) ||
+			(posicion > this->size + 1)) {
+		throw "La posicion debe estar entre 1 y tamaño + 1";
+	}
 }
 
 template <typename Type> Node<Type> * List<Type>::obtenerNodo(unsigned int posicion) {
-    //validarPosicion(posicion);
-    Node<Type> * actual = this->first;
-    for(unsigned int i = 1; i < posicion; i++) {
-        actual = actual->getNext();
-    }
-    return actual;
+	//validarPosicion(posicion);
+	Node<Type> * actual = this->first;
+	for(unsigned int i = 1; i < posicion; i++) {
+		actual = actual->getNext();
+	}
+	return actual;
 }
 
 template <typename Type> void List<Type>::remove(unsigned int posicion) {
-    validarPosicion(posicion);
-    Node<Type> * removido;
-    if (posicion == 1) {
-        removido = this->first;
-        this->first = removido->getNext();
-    } else {
-        Node<Type> * anterior = this->obtenerNodo(posicion -1);
-        removido = anterior->getNext();
-        anterior->setNext( removido->getNext());
-    }
-    delete removido;
-    this->size--;
+	validarPosicion(posicion);
+	Node<Type> * removido;
+	if (posicion == 1) {
+		removido = this->first;
+		this->first = removido->getNext();
+	} else {
+		Node<Type> * anterior = this->obtenerNodo(posicion -1);
+		removido = anterior->getNext();
+		anterior->setNext( removido->getNext());
+	}
+	delete removido;
+	this->size--;
 }
 
 #endif /* LIST_H_ */
