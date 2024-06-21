@@ -10,7 +10,7 @@
 #define CSV_DELIM ','
 
 enum {
-	CALLE,
+	CALLE = 0,
 	ALT_PLANO,
 	DIRECCION,
 	COORD_X,
@@ -119,6 +119,9 @@ int main (void) {
 					alturaPlano = std::atoi(token.c_str());
 					break;
 				case DIRECCION:
+					if(token == "") {
+						break;
+					}
 					direccion = token;
 					break;
 				case COORD_X:
