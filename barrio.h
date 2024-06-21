@@ -59,7 +59,7 @@ public:
 	/*
 	 * pos: devuelve la parada mas cercana a una coordenada dada
 	 */
-	Parada *paradaMasCercana(double coordX, double coordY);
+	Parada *paradaMasCercana(double coordX, double coordY, List<Parada*>* paradasAux);
 
 	/*
 	 * pre: recibe el numero de una Linea

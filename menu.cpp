@@ -25,11 +25,11 @@ void Menu::paradaMasCercanaPorCoordenada(double coordX,double coordY){
 		Barrio *barrioAux = this->barrios->getCursorData();
 
 		if(paradaResultado == NULL) {
-			paradaResultado = barrioAux->paradaMasCercana(coordX,coordY);
+			paradaResultado = barrioAux->paradaMasCercana(coordX,coordY,barrioAux->getParadas());
 			distanciaMinima = barrioAux->getDistancia(coordX,coordY,paradaResultado->getCoordX(),paradaResultado->getCoordY());
 		}
 		else {
-			paradaActual= barrioAux->paradaMasCercana(coordX,coordY);
+			paradaActual= barrioAux->paradaMasCercana(coordX,coordY,barrioAux->getParadas());
 			distancia = barrioAux->getDistancia(coordX,coordY,paradaActual->getCoordX(),paradaActual->getCoordY());
 
 			if(distanciaMinima > distancia) {
@@ -99,29 +99,142 @@ void Menu::paradasPorLinea(int linea){
 		agregarElementosDeLista(listaAux, this->paradasPorCadaLinea);
 	}
 
-	imprimirParadasPorLinea(this->paradasPorCadaLinea);
 }
 
-void Menu::cantidadDeParadasPorLinea(){
-	this->barrios->startCursor();
+void Menu::agregarElementoSinRepetir(std::vector<int>* lineas, std::vector<int>* vectorLineasAux){
 
-	while(this->barrios->forwardCursor()) {
-		// TODO: Falta terminar
-		// Barrio * barrioAux = this->barrios->getCursorData();
-		// List<Parada*>* listaParadas = barrioAux->getParadas();
-		break;
+	unsigned int contador = 0;
+	size_t lineaTope = lineas->size();
+
+	for(size_t i=0; i<lineaTope;i++){
+
+		for(size_t j=0; j<vectorLineasAux->size();j++){
+
+			if((*vectorLineasAux)[j] == (*lineas)[i]){
+
+				contador++;
+
+			}
+
+			if(contador == 0){
+				lineas->push_back((*vectorLineasAux)[j]);
+			}
+			contador = 0;
+
+		}
 	}
 }
 
+
+void Menu::lineasPorParada(List<Parada*>* paradas){
+
+	paradas->startCursor();
+	while(paradas->forwardCursor()){
+
+		Parada * paradaAux = paradas->getCursorData();
+
+		std::vector<int>* vectorLineasAux = paradaAux->getLineas();
+
+		agregarElementoSinRepetir(this->lineas, vectorLineasAux);
+
+
+	}
+
+}
+
+void Menu::imprimirCantidadParadasPorLinea(std::vector<int>* lineas){
+
+	for(size_t i=0;i<lineas->size();i++){
+
+		paradasPorLinea((*lineas)[i]);
+		std::cout<<(*lineas)[i]
+			     <<" : "
+				 <<this->paradasPorCadaLinea->getSize()
+				 <<std::endl;
+	}
+}
+
+
+void Menu::cantidadDeParadasPorLinea(){
+
+	this->lineas = NULL;
+	this->barrios->startCursor();
+
+	while(this->barrios->forwardCursor()){
+
+		Barrio * barrioAux = this->barrios->getCursorData();
+
+		lineasPorParada(barrioAux->getParadas());
+
+	}
+
+}
+
+void Menu::removerParadaMasCercana(List<Parada*>*listaAux,Parada * paradaCercana){
+
+	listaAux->startCursor();
+	unsigned int posicion = 0;
+
+	while(listaAux->forwardCursor()){
+
+		posicion ++;
+		Parada * paradaAux = listaAux->getCursorData();
+
+		if(paradaAux == paradaCercana){
+
+			listaAux->remove(posicion);
+
+	 }
+	}
+}
+
+void Menu::listaOrdenadaPorDistancia(List<Parada*>* listaAux,double coordX,double coordY, Barrio * barrioAux){
+
+	List<Parada*>* listaDeParadasCercanas = NULL;
+	size_t tamanioListaAux = listaAux->getSize();
+
+	for(size_t i=0;i<tamanioListaAux;i++){ //probar cuantas iteraciones hacer
+
+		Parada * paradaCercana = barrioAux->paradaMasCercana(coordX,coordY,listaAux);
+		listaDeParadasCercanas->insert(paradaCercana);
+		removerParadaMasCercana(listaAux, paradaCercana);
+
+	}
+
+}
+
+
+void Menu::paradasMasCercanasPorBarrio(std::string barrio,int linea,double coordX,double coordY){
+
+	this->barrios->startCursor();
+	List<Parada*>* listaAux = NULL;
+
+	while(this->barrios->forwardCursor()){
+
+		Barrio * barrioAux = this->barrios->getCursorData();
+
+		if(barrio == barrioAux->getNombre())
+
+			listaAux = barrioAux->listaDeParadasPorLinea(linea);
+
+			listaOrdenadaPorDistancia(listaAux,coordX,coordY, barrioAux);
+
+	}
+
+}
+
+
 Menu::Menu(int opcion) {
 	this->opcion = opcion;
-	this->barrios = new List<Barrio*>();
+	this->barrios = new List<Barrio*>;
+	this->lineas = new std::vector<int>;
+	//inicializar las demas listas!!!!!!!!
 
 	std::cout << "1) Listado de cantidad de paradas por Barrio"<<std::endl  //HECHO!!!!!!!!!!
 			  << "2) Parada mas cercana a una coordenada ingresada por teclado"<<std::endl //HECHO!!!!!!!!!!
 			  << "3) Listado de paradas de una linea de colectivo"<<std::endl //HECHO!!!!!!!!!!
-			  << "4) Listado de cantidad de paradas por linea de colectivo"<<std::endl
-			  << "5) Dado un barrio y linea de colectivo, imprimir las paradas ordenadas por distancia"<<std::endl;
+			  << "4) Listado de cantidad de paradas por linea de colectivo"<<std::endl //HECHO!!!!!!!!!!
+			  << "5) Dado un barrio, linea de colectivo y una coord, imprimir las paradas ordenadas por distancia"<<std::endl;
 
 	switch(opcion) {
 	case 1:
@@ -140,12 +253,28 @@ Menu::Menu(int opcion) {
 		std::cin >> this->linea;
 
 		paradasPorLinea(this->linea);
+		imprimirParadasPorLinea(this->paradasPorCadaLinea);
+
 		break;
 	case 4:
 		cantidadDeParadasPorLinea();
+		imprimirCantidadParadasPorLinea(this->lineas);
 		break;
 	case 5:
-		//completar
+
+		std::cout<<"Indique el Barrio: ";
+		std::cin >> this->barrio;
+		std::cout<<"Indique la Linea: ";
+		std::cin >> this->linea;
+		std::cout<<"Indique la coordenada en X: ";
+		std::cin >> this->coordX;
+		std::cout<<"Indique la coordenada en Y: ";
+		std::cin >> this->coordY;
+
+		paradasMasCercanasPorBarrio(this->barrio,this->linea,this->coordX,this->coordY);
+
+		imprimirParadasPorLinea(this->listaDeParadasCercanas);
+
 		break;
 	default:
 		std::cerr << "Opcion invalida\n";

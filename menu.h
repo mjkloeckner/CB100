@@ -1,6 +1,7 @@
 #ifndef MENU_H_
 #define MENU_H_
 
+#include <vector>
 #include "list.h"
 #include "barrio.h"
 #include "parada.h"
@@ -10,8 +11,9 @@ private:
 	int opcion, linea;
 	List<Barrio*> *barrios;
 	double coordX, coordY;
-	List<Parada*> *paradasPorCadaLinea;
-	List<Parada*> *cantidadDeParadasPorCadaLinea;
+	List<Parada*> *paradasPorCadaLinea, *cantidadDeParadasPorCadaLinea, *listaDeParadasCercanas;
+	std::vector<int> *lineas;
+	std::string barrio;
 
 public:
 	Menu(int opcion);
@@ -50,12 +52,40 @@ public:
 	 */
 	void agregarElementosDeLista(List<Parada*>* listaAux,List<Parada*>* listaResultado);
 	/*
-	 * pre: Recibe como parametro el numero de la linea
-	 * pos: Imprime por pantalla un listado de cantidad de paradas por donde pasa la linea
+	 * pos: Imprime por pantalla un listado de cantidad de paradas por donde pasan todas las lineas
 	 */
 	void cantidadDeParadasPorLinea(); //CONSIGNA 4
 
-	// HACER EL 5 (PREGUNTAR COMO HACERLO)
+	/*
+	 * pos: Agrega lineas sin repetir al vector lineas
+	 */
+	void agregarElementoSinRepetir(std::vector<int>* lineas, std::vector<int>* vectorLineasAux);
+
+	/*
+	 * pos: Recorre una lista de paradas y accede a todas las lineas de las paradas dadas
+	 */
+	void lineasPorParada(List<Parada*>* paradas);
+
+	/*
+	 * pos: Imprime por pantalla la linea y la cantidad de paradas por las que pasa
+	 */
+	void imprimirCantidadParadasPorLinea(std::vector<int>* lineas);
+
+	/*
+	 * pre: Recibe el nombre del Barrio, la linea, y una coordenada
+	 * pos: Agrega las paradas ordenadas por distancia de un barrio con respecto a una coord a la lista de paradas cercanas
+	 */
+	void paradasMasCercanasPorBarrio(std::string barrio,int linea,double coordX,double coordY);
+
+	/*
+	 *
+	 */
+	void listaOrdenadaPorDistancia(List<Parada*>* listaAux,double coordX,double coordY, Barrio * barrioAux);
+
+	/*
+	 *
+	 */
+	void removerParadaMasCercana(List<Parada*>*listaAux,Parada * paradaCercana);
 };
 
 #endif
