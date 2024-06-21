@@ -7,10 +7,6 @@ Barrio::Barrio(std::string nombre, int comuna) {
 	this->paradas = new List<Parada*>; // crea la lista para las paradas
 }
 
-int Barrio::getComuna() {
-	return this->comuna;
-}
-
 std::string Barrio::getNombre() {
 	return this->nombre;
 }
@@ -107,7 +103,7 @@ Barrio::~Barrio() {
 	this->paradas->startCursor();
 	while(this->paradas->forwardCursor()){
 		delParada = this->paradas->getCursorData();
-		std::cout << "Eliminando parada `" << delParada->getDireccion() << "`\n";
+		// std::cout << "Eliminando parada `" << delParada->getDireccion() << "`\n";
 		delete delParada;
 	}
 

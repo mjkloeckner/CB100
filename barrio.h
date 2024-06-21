@@ -36,11 +36,6 @@ public:
 	bool lineaEnParada(int linea, std::vector<int> *listaDeLineas);
 
 	/*
-	 * pos: devuelve el numero de comuna del Barrio
-	 */
-	int getComuna();
-
-	/*
 	 * pos: devuelve el nombre del Barrio
 	 */
 	std::string getNombre();
