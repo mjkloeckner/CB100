@@ -1,10 +1,6 @@
 #include "barrio.h"
 #include <cmath>
 
-Barrio::Barrio() {
-	this->paradas = new List<Parada*>; // crea la lista para las paradas
-}
-
 Barrio::Barrio(std::string nombre, int comuna) {
 	this->nombre = nombre;
 	this->comuna = comuna;
@@ -39,11 +35,13 @@ double Barrio::getDistancia(double x1,double y1,double x2,double y2){ //CONSIGAN
 }
 
 Parada *Barrio::paradaMasCercana(double coordX, double coordY,List<Parada*>* paradasAux) { //CONSIGNA 2
-	paradasAux->startCursor();
 	double distancia;
 	double distanciaMinima;
 	Parada *resultado, *aux;
 
+	resultado = aux = NULL;
+
+	paradasAux->startCursor();
 	while(paradasAux->forwardCursor()){
 		Parada *aux = paradasAux->getCursorData();
 

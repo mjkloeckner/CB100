@@ -11,7 +11,8 @@ void Menu::cantidadDeParadasPorBarrio() {
 				  << barrioAux->getSizeListaDeParadas()
 				  << std::endl;
 		}
-	}
+}
+
 
 void Menu::paradaMasCercanaPorCoordenada(double coordX,double coordY){
 	double distanciaMinima;
