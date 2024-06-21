@@ -102,9 +102,22 @@ List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
 }
 
 unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
-	List<Parada*> *resultado = listaDeParadasPorLinea(linea);
+	Parada *parada;
+	unsigned int cantidadDeParadas;
 
-	return resultado == NULL ? 0 : resultado->getSize();
+	cantidadDeParadas = 0;
+
+	this->paradas->startCursor();
+	while(this->paradas->forwardCursor()) {
+		parada = this->paradas->getCursorData();
+		for(size_t i = 0; i < parada->getLineas()->size(); ++i) {
+			if((*parada->getLineas())[i] == linea) {
+				cantidadDeParadas++;
+			}
+		}
+	}
+
+	return cantidadDeParadas;
 }
 
 Barrio::~Barrio() {
