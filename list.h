@@ -138,7 +138,8 @@ template <typename Type> void List<Type>::validarPosicion(unsigned int posicion)
 	}
 }
 
-template <typename Type> Node<Type> * List<Type>::obtenerNodo(unsigned int posicion) {
+template <typename Type> 
+Node<Type> *List<Type>::obtenerNodo(unsigned int posicion) {
 	//validarPosicion(posicion);
 	Node<Type> * actual = this->first;
 	for(unsigned int i = 1; i < posicion; i++) {
@@ -147,17 +148,20 @@ template <typename Type> Node<Type> * List<Type>::obtenerNodo(unsigned int posic
 	return actual;
 }
 
-template <typename Type> void List<Type>::remove(unsigned int posicion) {
+template <typename Type>
+void List<Type>::remove(unsigned int posicion) {
 	validarPosicion(posicion);
-	Node<Type> * removido;
+	Node<Type> *removido;
+
 	if (posicion == 1) {
 		removido = this->first;
 		this->first = removido->getNext();
 	} else {
-		Node<Type> * anterior = this->obtenerNodo(posicion -1);
+		Node<Type> *anterior = this->obtenerNodo(posicion - 1);
 		removido = anterior->getNext();
 		anterior->setNext( removido->getNext());
 	}
+
 	delete removido;
 	this->size--;
 }
