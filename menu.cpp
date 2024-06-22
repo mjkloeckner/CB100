@@ -384,60 +384,34 @@ double getDistancia(double x1, double y1, double x2, double y2) {
 	return std::sqrt(dX*dX + dY*dY);
 }
 
-// ordenar de mayor distancia a menor
-// 1 -> 8 -> 3 -> 6 -> 8 -> 3 -> 1 -> 2 -> 1
-List<Parada*> *ordenarParadasPorDistanciaACoordenada(
-		List<Parada*> *paradasSinOrdenar, double x, double y) {
+void ordenarParadasPorDistanciaACoordenada(List<Parada*> *paradas, double x, double y) {
+	Node<Parada*> *actual;
+	Node<Parada*> *minimo;
+	Node<Parada*> *siguiente;
+	double distanciaActual, distanciaSiguiente;
 
-	Parada *parada, *paradaMasLejos;
-	List<Parada*> *paradasOrdenada;
+	paradas->startCursor();
+	while(paradas->forwardCursor()) {
+		actual = paradas->getCursor();
+		minimo = actual;
+		siguiente = actual->getNext();
 
-	paradasOrdenada = new List<Parada*>;
+		distanciaActual = getDistancia(actual->getData()->getCoordX(), actual->getData()->getCoordY(), x, y);
 
-	double paradaX, paradaY;
-	double distancia, distanciaMaxima;
-
-	paradaMasLejos = NULL;
-	for(size_t i = 0; i < paradasSinOrdenar->getSize(); ++i) {
-		distanciaMaxima = 0.0f;
-		paradasSinOrdenar->startCursor();
-
-		while(paradasSinOrdenar->forwardCursor()) {
-			parada = paradasSinOrdenar->getCursorData();
-
-			// se inicializa la parada mas lejos al primer parada
-			if(paradaMasLejos == NULL) {
-				paradaMasLejos = parada;
-				distanciaMaxima = getDistancia(paradaMasLejos->getCoordX(), paradaMasLejos->getCoordY(), x, y);
-			} else {
-				distancia = getDistancia(paradaMasLejos->getCoordX(), paradaMasLejos->getCoordY(), x, y);
-				if(paradasOrdenada->getSize() == 0) {
-					if(distancia > distanciaMaxima) {
-						paradaMasLejos = parada;
-						distanciaMaxima = distancia;
-					}
-				} else {
-					bool estaEnListaOrdenada = false;
-					paradasOrdenada->startCursor();
-					while(paradasOrdenada->forwardCursor()) {
-						estaEnListaOrdenada = true;
-						break;
-					}
-					if(estaEnListaOrdenada == false) {
-						if(paradasOrdenada->getCursorData()->getDireccion() != parada->getDireccion()) {
-							paradaMasLejos = parada;
-							distanciaMaxima = distancia;
-						}
-					}
-				}
+		while (siguiente != NULL) {
+			distanciaSiguiente = getDistancia(siguiente->getData()->getCoordX(), siguiente->getData()->getCoordY(), x, y);
+			if (distanciaSiguiente < distanciaActual) {
+				minimo = siguiente;
 			}
+			siguiente = siguiente->getNext();
 		}
 
-		std::cout << paradaMasLejos->getDireccion() << std::endl;
-		paradasOrdenada->insert(paradaMasLejos);
+		if (minimo != actual) {
+			Parada *temp = actual->getData();
+			actual->setData(minimo->getData());
+			minimo->setData(temp);
+		}
 	}
-
-	return paradasOrdenada;
 }
 
 void Menu::cargarDatos() {
@@ -455,7 +429,6 @@ void Menu::cargarDatos() {
 	inputFile.open(inputFilePath);
 	if(!inputFile.is_open()) {
 		std::cout << "No se pudo abrir el archivo `" << inputFilePath << "`\n";
-		// throw 1;
 	}
 
 	std::getline(inputFile, line); // saltea la primer linea
@@ -624,7 +597,7 @@ void Menu::mostrarMenu() {
 				while(paradas->forwardCursor()) {
 					std::cout << "* `" << paradas->getCursorData()->getDireccion() << "`\n";
 				}
-				 break;
+				break;
 			case '4':
 				cantidadDeParadasPorLinea();
 
@@ -646,7 +619,7 @@ void Menu::mostrarMenu() {
 				 * [X] 0: obtener del usuario `barrio`, `linea` y `coordenadas`
 				 * [X] 1: iterar sobre los barrios para hallar el `barrio`
 				 * [X] 2: crear una lista de las paradas en el `barrio` que contienen la `linea`
-				 * [ ] 3: ordenar la lista de menor a mayor con respecto a la distancia a `coordenadas`
+				 * [X] 3: ordenar la lista de menor a mayor con respecto a la distancia a `coordenadas`
 				*/
 
 				// std::cout << "Indique el Barrio: ";
@@ -667,25 +640,24 @@ void Menu::mostrarMenu() {
 				this->coordY = 0.0f;
 
 				Barrio *barrio;
-				List<Parada*> *paradasDeLaLinea, *paradasDeLaLineaOrdenada;
+				List<Parada*> *paradasDeLaLinea;
 
 				barrio = getBarrioPorNombre(barrioNombre);
 
 				paradasDeLaLinea = barrio->listaDeParadasPorLinea(this->linea);
 
-				paradasDeLaLinea->startCursor();
-
 				// ordenar de mayor a menor `paradasDeLaLinea`
-				paradasDeLaLineaOrdenada = ordenarParadasPorDistanciaACoordenada(
-						paradasDeLaLinea, this->coordX, this->coordY);
+				ordenarParadasPorDistanciaACoordenada(paradasDeLaLinea, this->coordX, this->coordY);
 
-				if(paradasDeLaLineaOrdenada == NULL) {
-					std::cout << "Hello, World!\n";
+				double distancia;
+				Parada *actual;
+
+				paradasDeLaLinea->startCursor();
+				while(paradasDeLaLinea->forwardCursor()) {
+					actual = paradasDeLaLinea->getCursorData();
+					distancia = getDistancia(actual->getCoordX(), actual->getCoordY(), this->coordX, this->coordY);
+					std::cout << actual->getDireccion() << " (distancia: `" << distancia << " `)" << std::endl;
 				}
-
-				// while(paradasDeLaLinea->forwardCursor()) {
-				// 	std::cout << paradasDeLaLineaOrdenada->getCursorData()->getDireccion() << std::endl;
-				// }
 
 				// delete paradasDeLaLinea;
 
@@ -704,7 +676,6 @@ void Menu::mostrarMenu() {
 				break;
 		}
 	}
-
 }
 
 Menu::~Menu() { }
