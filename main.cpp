@@ -1,11 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <cstdlib>
-#include <vector>
-
-#include "barrio.h"
 #include "menu.h"
 
 int main (void) {
