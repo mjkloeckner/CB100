@@ -8,7 +8,6 @@
 #include <vector>
 #include <cmath>
 
-
 void Menu::cantidadDeParadasPorBarrio() {
 	this->barrios->startCursor();
 
@@ -21,7 +20,6 @@ void Menu::cantidadDeParadasPorBarrio() {
 				  << std::endl;
 		}
 }
-
 
 Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
 	double distanciaMinima;
@@ -146,22 +144,11 @@ void Menu::lineasPorParada(List<Parada*> *paradas) {
 	Parada *paradaAux;
 	std::vector<int> *vectorLineasAux = new std::vector<int>;
 
-	// vectorLineasAux->push_back(10);
-	// vectorLineasAux->push_back(20);
-	// vectorLineasAux->push_back(30);
-
 	paradas->startCursor();
 	while(paradas->forwardCursor()){
 		paradaAux = paradas->getCursorData();
 
-		// std::cout << "direccion: " << paradaAux->getDireccion() << std::endl;
-
 		vectorLineasAux = paradaAux->getLineas();
-
-		// for(size_t i = 0; i < vectorLineasAux->size(); ++i) {
-		// 	std::cout << (*vectorLineasAux)[i] << std::endl;
-		// }
-
 		agregarElementoSinRepetir(this->lineas, vectorLineasAux);
 	}
 }
@@ -192,77 +179,6 @@ void Menu::cantidadDeParadasPorLinea() {
 		// std::cout << barrioAux->getNombre() << std::endl;
 
 		lineasPorParada(barrioAux->getParadas());
-	}
-}
-
-// 9 -> 8 -> 7 -> 6 -> 5 -> 4 -> 3 -> 2 -> 1
-void Menu::removerParadaMasCercana(List<Parada*> *listaAux, Parada *paradaCercana){
-	Parada *paradaAux;
-	unsigned int posicion = 0;
-
-	listaAux->startCursor();
-	while(listaAux->forwardCursor()) {
-		posicion++;
-		paradaAux = listaAux->getCursorData();
-
-		if(paradaAux == paradaCercana) {
-			listaAux->remove(posicion);
-			std::cout << "Removiendo: `" << paradaAux->getDireccion() << "`\n";
-		}
-	}
-}
-
-// 9 -> 8 -> 7 -> 6 -> 5 -> 4 -> 3 -> 2 -> 1
-void Menu::listaOrdenadaPorDistancia(List<Parada*> *listaDeParadasDeLinea,
-		double coordX, double coordY, Barrio *barrioAux) {
-
-	// listaDeParadasDeLinea -> lista de paradas por linea
-	List<Parada*>* listaDeParadasCercanas;
-	Parada *paradaAux;
-
-	listaDeParadasCercanas = new List<Parada*>;
-	size_t cantidadDeParadas = listaDeParadasDeLinea->getSize();
-
-	// listaDeParadasDeLinea->remove(1);
-	// listaDeParadasDeLinea->startCursor();
-	// while(listaDeParadasDeLinea->forwardCursor()) {
-	// 	std::cout << listaDeParadasDeLinea->getCursorData()->getDireccion() << std::endl;
-	// }
-
-	return;
-	for(size_t i = 1; i < cantidadDeParadas + 1; i++) {
-		// probar cuantas iteraciones hacer
-		Parada *paradaCercana = barrioAux->paradaMasCercana(coordX, coordY, listaDeParadasDeLinea);
-		// std::cout << paradaCercana->getDireccion() << std::endl;
-		listaDeParadasDeLinea->remove(i);
-		// removerParadaMasCercana(listaAux, paradaCercana);
-		imprimirParadasPorLinea(listaDeParadasDeLinea);
-
-		// listaDeParadasDeLinea->startCursor();
-		// while(listaDeParadasDeLinea->forwardCursor()) {
-		// 	std::cout << listaDeParadasDeLinea->getCursorData()->getDireccion() << std::endl;
-		// }
-
-
-		// listaDeParadasCercanas->startCursor();
-		// while(listaDeParadasCercanas->forwardCursor()) {
-		// 	std::cout << listaDeParadasCercanas->getCursorData()->getDireccion() << std::endl;
-		// }
-
-		/*
-		unsigned int posicion = 0;
-
-		listaAux->startCursor();
-		while(listaAux->forwardCursor()) {
-			posicion++;
-			paradaAux = listaAux->getCursorData();
-
-			if(paradaAux == paradaCercana) {
-				listaAux->remove(posicion);
-				std::cout << "Removiendo: `" << paradaAux->getDireccion() << "`\n";
-			}
-		}
-		*/
 	}
 }
 
