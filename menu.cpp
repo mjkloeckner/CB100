@@ -297,62 +297,6 @@ Menu::Menu(int opcion) {
 
 	this->opcion = this->linea = 0;
 	this->coordX = this->coordY = 0.0f;
-
-	/*
-	std::cout << "1) Listado de cantidad de paradas por Barrio"<<std::endl  //HECHO!!!!!!!!!!
-			  << "2) Parada mas cercana a una coordenada ingresada por teclado"<<std::endl //HECHO!!!!!!!!!!
-			  << "3) Listado de paradas de una linea de colectivo"<<std::endl //HECHO!!!!!!!!!!
-			  << "4) Listado de cantidad de paradas por linea de colectivo"<<std::endl //HECHO!!!!!!!!!!
-			  << "5) Dado un barrio, linea de colectivo y una coord, imprimir las paradas ordenadas por distancia"<<std::endl;
-
-	switch(opcion) {
-	case 1:
-		cantidadDeParadasPorBarrio();
-		break;
-	case 2:
-		std::cout<<"Indique la coordenada en X: ";
-		std::cin >> this->coordX;
-		std::cout<<"Indique la coordenada en Y: ";
-		std::cin >> this->coordY;
-
-		paradaMasCercanaPorCoordenada(this->coordX, this->coordY);
-		break;
-	case 3:
-		std::cout<<"Indique la Linea: ";
-		std::cin >> this->linea;
-
-		paradasPorLinea(this->linea);
-		imprimirParadasPorLinea(this->paradasPorCadaLinea);
-
-		break;
-	case 4:
-		cantidadDeParadasPorLinea();
-		imprimirCantidadParadasPorLinea(this->lineas);
-		break;
-	case 5:
-
-		std::cout<<"Indique el Barrio: ";
-		std::cin >> this->barrio;
-		std::cout<<"Indique la Linea: ";
-		std::cin >> this->linea;
-		std::cout<<"Indique la coordenada en X: ";
-		std::cin >> this->coordX;
-		std::cout<<"Indique la coordenada en Y: ";
-		std::cin >> this->coordY;
-
-		paradasMasCercanasPorBarrio(this->barrio,this->linea,this->coordX,this->coordY);
-
-		imprimirParadasPorLinea(this->listaDeParadasCercanasOrdenadas);
-
-		break;
-	default:
-		std::cerr << "Opcion invalida\n";
-		break;
-	}
-La parada esta en: 414 ROMERO
-en la coordenada X: -58.4153
-en la coordenada Y:-34.6522
-	*/
 }
 
 void delSurroundingChar(std::string &str, char c) {
