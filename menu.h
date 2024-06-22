@@ -6,17 +6,41 @@
 #include "barrio.h"
 #include "parada.h"
 
+#define CSV_DELIM ','
+
+enum {
+	CALLE = 0,
+	ALT_PLANO,
+	DIRECCION,
+	COORD_X,
+	COORD_Y,
+	COMUNA,
+	BARRIO,
+	LINEA_1,
+	LINEA_1_SENTIDO,
+	LINEA_2,
+	LINEA_2_SENTIDO,
+	LINEA_3,
+	LINEA_3_SENTIDO,
+	LINEA_4,
+	LINEA_4_SENTIDO,
+	LINEA_5,
+	LINEA_5_SENTIDO,
+	LINEA_6,
+	LINEA_6_SENTIDO
+};
+
+
 class Menu {
 private:
-	int opcion, linea;
+	int linea;
 	List<Barrio*> *barrios;
 	double coordX, coordY;
-	List<Parada*> *paradasPorCadaLinea, *cantidadDeParadasPorCadaLinea, *listaDeParadasCercanas;
+	List<Parada*> *paradasPorCadaLinea, *cantidadDeParadasPorCadaLinea, *listaDeParadasCercanasOrdenadas;
 	std::vector<int> *lineas;
-	std::string barrio;
 
 public:
-	Menu(int opcion);
+	Menu();
 
 	/*
 	 * pos: Libera la memoria
@@ -32,13 +56,14 @@ public:
 	 * pre: Recibe como parametro las coordenadas en X e Y
 	 * pos:	Imprime por pantalla la parada mas cercana a la coordenada dada
 	 */
-	void paradaMasCercanaPorCoordenada(double coordX,double coordY); //CONSIGNA 2 si imprime
+	Parada *paradaMasCercanaPorCoordenada(double coordX,double coordY); //CONSIGNA 2 si imprime
 
 	/*
 	 * pre: Recibe como parametro el numero de la linea
-	 * pos: Imprime por pantalla un listado de paradas por donde pasa la linea
+	 * pos: devuelve una lista de paradas que incluyen la linea
 	 */
-	void paradasPorLinea(int linea); //CONSIGNA 3
+	// void paradasPorLinea(int linea); //CONSIGNA 3
+	List<Parada*> *paradasPorLinea(int linea);
 
 	/*
 	 * pre: Recibe una lista de tipo parada
@@ -86,6 +111,12 @@ public:
 	 *
 	 */
 	void removerParadaMasCercana(List<Parada*>*listaAux,Parada * paradaCercana);
+
+	void cargarDatos();
+
+	void mostrarMenu();
+
+	// List<Parada*> *buscarParadas(int linea);
 };
 
 #endif
