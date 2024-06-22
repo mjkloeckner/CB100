@@ -286,8 +286,7 @@ void Menu::paradasMasCercanasPorBarrio(std::string barrio,
 }
 
 
-Menu::Menu(int opcion) {
-	this->opcion = opcion;
+Menu::Menu() {
 	this->barrios = new List<Barrio*>;
 	this->lineas = new std::vector<int>;
 	this->paradasPorCadaLinea = new List<Parada*>;
@@ -295,7 +294,7 @@ Menu::Menu(int opcion) {
 	this->listaDeParadasCercanasOrdenadas = new List<Parada*>;
 	std::vector<int> *lineas = new std::vector<int>;
 
-	this->opcion = this->linea = 0;
+	this->linea = 0;
 	this->coordX = this->coordY = 0.0f;
 }
 

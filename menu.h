@@ -33,14 +33,14 @@ enum {
 
 class Menu {
 private:
-	int opcion, linea;
+	int linea;
 	List<Barrio*> *barrios;
 	double coordX, coordY;
 	List<Parada*> *paradasPorCadaLinea, *cantidadDeParadasPorCadaLinea, *listaDeParadasCercanasOrdenadas;
 	std::vector<int> *lineas;
 
 public:
-	Menu(int opcion);
+	Menu();
 
 	/*
 	 * pos: Libera la memoria

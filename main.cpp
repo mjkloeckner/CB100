@@ -9,9 +9,9 @@
 #include "menu.h"
 
 int main (void) {
-	Menu *menu = new Menu(1);
-	menu->cargarDatos();
+	Menu *menu = new Menu();
 
+	menu->cargarDatos();
 	menu->mostrarMenu();
 
 	delete menu;
