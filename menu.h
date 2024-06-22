@@ -116,6 +116,11 @@ public:
 
 	void mostrarMenu();
 
+
+	List<Parada*> *buscarParadas(List<Barrio*> *barrios, int linea);
+
+	Barrio *getBarrioPorNombre(std::string nombre);
+
 	// List<Parada*> *buscarParadas(int linea);
 };
 

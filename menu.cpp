@@ -6,6 +6,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <vector>
+#include <cmath>
 
 
 void Menu::cantidadDeParadasPorBarrio() {
@@ -285,7 +286,6 @@ void Menu::paradasMasCercanasPorBarrio(std::string barrio,
 	}
 }
 
-
 Menu::Menu() {
 	this->barrios = new List<Barrio*>;
 	this->lineas = new std::vector<int>;
@@ -327,7 +327,7 @@ size_t getTokens(std::string line, std::vector<std::string> &tokens) {
 	return field;
 }
 
-List<Parada*> *buscarParadas(List<Barrio*> *barrios, int linea) {
+List<Parada*> *Menu::buscarParadas(List<Barrio*> *barrios, int linea) {
 	List<Parada*> *resultado, *paradasPorBarrio;
 	Barrio *barrio;
 
@@ -360,23 +360,85 @@ List<Parada*> *buscarParadas(List<Barrio*> *barrios, int linea) {
 
 
 // busca el barrio en la lista de barrios, si no lo encuentra devuelve NULL
-Barrio *getBarrioPorNombre(std::string nombre, List<Barrio*> *barrios) {
-	if(barrios == NULL) {
-		return NULL;
-	}
+Barrio *Menu::getBarrioPorNombre(std::string nombre) {
+	Barrio *res, *barrio;
 
-	Barrio *res = NULL;
+	res = NULL;
+	this->barrios->startCursor();
 
-	barrios->startCursor();
-	while(barrios->forwardCursor()) {
-		if(barrios->getCursorData()->getNombre() == nombre) {
-			res = barrios->getCursorData();
+	while(this->barrios->forwardCursor()) {
+		barrio = this->barrios->getCursorData();
+		if(barrio->getNombre() == nombre) {
+			res = this->barrios->getCursorData();
+			break;
 		}
 	}
 
 	return res;
 }
 
+double getDistancia(double x1, double y1, double x2, double y2) {
+	double dX = (x2 - x1);
+	double dY = (y2 - y1);
+
+	return std::sqrt(dX*dX + dY*dY);
+}
+
+// ordenar de mayor distancia a menor
+// 1 -> 8 -> 3 -> 6 -> 8 -> 3 -> 1 -> 2 -> 1
+List<Parada*> *ordenarParadasPorDistanciaACoordenada(
+		List<Parada*> *paradasSinOrdenar, double x, double y) {
+
+	Parada *parada, *paradaMasLejos;
+	List<Parada*> *paradasOrdenada;
+
+	paradasOrdenada = new List<Parada*>;
+
+	double paradaX, paradaY;
+	double distancia, distanciaMaxima;
+
+	paradaMasLejos = NULL;
+	for(size_t i = 0; i < paradasSinOrdenar->getSize(); ++i) {
+		distanciaMaxima = 0.0f;
+		paradasSinOrdenar->startCursor();
+
+		while(paradasSinOrdenar->forwardCursor()) {
+			parada = paradasSinOrdenar->getCursorData();
+
+			// se inicializa la parada mas lejos al primer parada
+			if(paradaMasLejos == NULL) {
+				paradaMasLejos = parada;
+				distanciaMaxima = getDistancia(paradaMasLejos->getCoordX(), paradaMasLejos->getCoordY(), x, y);
+			} else {
+				distancia = getDistancia(paradaMasLejos->getCoordX(), paradaMasLejos->getCoordY(), x, y);
+				if(paradasOrdenada->getSize() == 0) {
+					if(distancia > distanciaMaxima) {
+						paradaMasLejos = parada;
+						distanciaMaxima = distancia;
+					}
+				} else {
+					bool estaEnListaOrdenada = false;
+					paradasOrdenada->startCursor();
+					while(paradasOrdenada->forwardCursor()) {
+						estaEnListaOrdenada = true;
+						break;
+					}
+					if(estaEnListaOrdenada == false) {
+						if(paradasOrdenada->getCursorData()->getDireccion() != parada->getDireccion()) {
+							paradaMasLejos = parada;
+							distanciaMaxima = distancia;
+						}
+					}
+				}
+			}
+		}
+
+		std::cout << paradaMasLejos->getDireccion() << std::endl;
+		paradasOrdenada->insert(paradaMasLejos);
+	}
+
+	return paradasOrdenada;
+}
 
 void Menu::cargarDatos() {
 	std::ifstream inputFile;
@@ -458,7 +520,7 @@ void Menu::cargarDatos() {
 			}
 		}
 
-		barrio = getBarrioPorNombre(barrioNombre, barrios);
+		barrio = getBarrioPorNombre(barrioNombre);
 		if(barrio == NULL) {
 			// std::cout << "Creando nuevo barrio `" << barrioNombre << "`\n";
 			barrio = new Barrio(barrioNombre);
@@ -478,7 +540,7 @@ void Menu::mostrarMenu() {
 	std::string opcion;
 	int linea;
 	Barrio *barrioActual;
-	std::string barrio;
+	std::string barrio, barrioNombre;
 
 	while(!terminarPrograma) {
 		std::cout << "`1` Cantidad de paradas por barrio\n";
@@ -580,10 +642,17 @@ void Menu::mostrarMenu() {
 				// imprimirCantidadParadasPorLinea(this->lineas);
 				break;
 			case '5':
+				/* 
+				 * [X] 0: obtener del usuario `barrio`, `linea` y `coordenadas`
+				 * [X] 1: iterar sobre los barrios para hallar el `barrio`
+				 * [X] 2: crear una lista de las paradas en el `barrio` que contienen la `linea`
+				 * [ ] 3: ordenar la lista de menor a mayor con respecto a la distancia a `coordenadas`
+				*/
+
 				// std::cout << "Indique el Barrio: ";
 				// std::cin.ignore(1);
 				// std::getline(std::cin, barrio, '\n');
-				barrio = "CONSTITUCION";
+				barrioNombre = "CONSTITUCION";
 
 				// std::cout<<"Indique la Linea: ";
 				// std::cin >> this->linea;
@@ -597,7 +666,34 @@ void Menu::mostrarMenu() {
 				// std::cin >> this->coordY;
 				this->coordY = 0.0f;
 
-				paradasMasCercanasPorBarrio(barrio,this->linea,this->coordX,this->coordY);
+				Barrio *barrio;
+				List<Parada*> *paradasDeLaLinea, *paradasDeLaLineaOrdenada;
+
+				barrio = getBarrioPorNombre(barrioNombre);
+
+				paradasDeLaLinea = barrio->listaDeParadasPorLinea(this->linea);
+
+				paradasDeLaLinea->startCursor();
+
+				// ordenar de mayor a menor `paradasDeLaLinea`
+				paradasDeLaLineaOrdenada = ordenarParadasPorDistanciaACoordenada(
+						paradasDeLaLinea, this->coordX, this->coordY);
+
+				if(paradasDeLaLineaOrdenada == NULL) {
+					std::cout << "Hello, World!\n";
+				}
+
+				// while(paradasDeLaLinea->forwardCursor()) {
+				// 	std::cout << paradasDeLaLineaOrdenada->getCursorData()->getDireccion() << std::endl;
+				// }
+
+				// delete paradasDeLaLinea;
+
+				// imprimir paradasDeLaLineaOrdenada
+
+				// delete paradasDeLaLineaOrdenada;
+
+				// paradasMasCercanasPorBarrio(barrio,this->linea,this->coordX,this->coordY);
 				// imprimirParadasPorLinea(this->listaDeParadasCercanasOrdenadas);
 				break;
 			case 'q':
