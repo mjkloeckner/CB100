@@ -10,14 +10,13 @@
 class Barrio {
 private:
 	std::string nombre;
-	int comuna;
 	List<Parada*> *paradas;
 
 public:
 	/*
 	 *pos: deja creado la clase con los parametros dados
 	 */
-	Barrio(std::string nombre, int comuna);
+	Barrio(std::string nombre);
 
 	/*
 	 * pos: libera la memoria

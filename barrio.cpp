@@ -1,9 +1,8 @@
 #include "barrio.h"
 #include <cmath>
 
-Barrio::Barrio(std::string nombre, int comuna) {
+Barrio::Barrio(std::string nombre) {
 	this->nombre = nombre;
-	this->comuna = comuna;
 	this->paradas = new List<Parada*>; // crea la lista para las paradas
 }
 
