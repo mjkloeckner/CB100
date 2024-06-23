@@ -38,7 +38,20 @@ private:
 	double coordX, coordY;
 	std::vector<int> *lineas;
 
+private: 
 	double getDistancia(double x1, double y1, double x2, double y2);
+
+	std::string strToLowercase(std::string str);
+
+	void delSurroundingChar(std::string &str, char c);
+
+	size_t getTokens(std::string line, std::vector<std::string> &tokens);
+
+	double gradosARadianes(double grados);
+
+	double getDistanciaEnKilometros(double x1, double y1, double x2, double y2);
+
+	void ordenarParadasPorDistanciaACoordenada(List<Parada*> *paradas, double x, double y);
 
 public:
 	/*
