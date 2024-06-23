@@ -48,11 +48,11 @@ Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
 		barrio = this->barrios->getCursorData();
 
 		if(res == NULL) {
-			res = barrio->paradaMasCercana(coordX, coordY, barrio->getParadas());
+			res = barrio->paradaMasCercana(coordX, coordY);
 			distanciaMin = getDistancia(coordX, coordY, res->getCoordX(), res->getCoordY());
 		}
 		else {
-			parada = barrio->paradaMasCercana(coordX, coordY, barrio->getParadas());
+			parada = barrio->paradaMasCercana(coordX, coordY);
 			distancia = getDistancia(coordX, coordY, parada->getCoordX(), parada->getCoordY());
 
 			if(distanciaMin > distancia) {
