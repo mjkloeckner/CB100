@@ -182,26 +182,6 @@ void Menu::cantidadDeParadasPorLinea() {
 	}
 }
 
-void Menu::paradasMasCercanasPorBarrio(std::string barrio,
-		int linea, double coordX, double coordY) {
-
-	List<Parada*>* listaAux;
-	listaAux = new List<Parada*>;
-
-	this->barrios->startCursor();
-	while(this->barrios->forwardCursor()) {
-		Barrio * barrioAux = this->barrios->getCursorData();
-
-		// std::cout << "analizando: `" <<  barrioAux->getNombre() << "`\n";
-
-		if(barrio == barrioAux->getNombre()) {
-			std::cout << "se encontro barrio con el mismo nombre\n";
-			listaAux = barrioAux->listaDeParadasPorLinea(linea);
-			listaOrdenadaPorDistancia(listaAux, coordX, coordY, barrioAux);
-		}
-	}
-}
-
 Menu::Menu() {
 	this->barrios = new List<Barrio*>;
 	this->lineas = new std::vector<int>;
