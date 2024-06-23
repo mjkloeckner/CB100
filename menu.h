@@ -85,7 +85,8 @@ public:
 
 	/*
 	 * pos: Muestra por pantalla las opciones a elegir del menú y recibe un parametro. En base al parametro, ejecuta una funcion
-	 */
+	 *      Esto ocurre hasta que el usuario ingrese la letra "q" cuando esta en el menu de opciones 
+  	*/
 	void mostrarMenu();
 
 	/*
