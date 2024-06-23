@@ -308,20 +308,22 @@ void ordenarParadasPorDistanciaACoordenada(List<Parada*> *paradas, double x, dou
 	Node<Parada*> *actual, *min, *sig;
 	Parada *tmp;
 
-	double distActual, distSig;
+	double distMin, distSig;
 
 	paradas->startCursor();
 	while(paradas->forwardCursor()) {
 		actual = paradas->getCursor();
 		min = actual;
+
+		distMin = getDistanciaEnKilometros(min->getData()->getCoordX(), min->getData()->getCoordY(), x, y);
+
 		sig = actual->getNext();
-
-		distActual = getDistancia(actual->getData()->getCoordX(), actual->getData()->getCoordY(), x, y);
-
 		while (sig != NULL) {
-			distSig = getDistancia(sig->getData()->getCoordX(), sig->getData()->getCoordY(), x, y);
-			if (distSig < distActual) {
+			distSig = getDistanciaEnKilometros(sig->getData()->getCoordX(), sig->getData()->getCoordY(), x, y);
+
+			if (distSig < distMin) {
 				min = sig;
+				distMin = distSig;
 			}
 			sig = sig->getNext();
 		}
@@ -427,7 +429,7 @@ void Menu::cargarDatos() {
 
 void Menu::mostrarMenu() {
 	bool terminarPrograma = false;
-	int linea;
+	unsigned int linea;
 	double lat, lon; // lat -> Y; lon -> X;
 	double distanciaEnKm;
 
@@ -615,7 +617,7 @@ void Menu::mostrarMenu() {
 				paradasDeLaLinea->startCursor();
 				while(paradasDeLaLinea->forwardCursor()) {
 					actual = paradasDeLaLinea->getCursorData();
-					distanciaEnKm = getDistanciaEnKilometros(lon, lat, actual->getCoordX(), actual->getCoordY());
+					distanciaEnKm = getDistanciaEnKilometros(lon, lat, actual->getCoordY(), actual->getCoordX());
 
 					std::string coord;
 					coord += actual->getCoordX();
