@@ -425,13 +425,13 @@ void Menu::mostrarMenu() {
 	std::string barrio, barrioNombre, lineaAImprimir, distanciaUnidad;
 
 	while(!terminarPrograma) {
-		std::cout << "`1` Cantidad de paradas por barrio\n";
-		std::cout << "`2` Parada mas cercana a una coordenada\n";
-		std::cout << "`3` Listado de paradas de una linea de colectivo\n";
-		std::cout << "`4` Listado de cantidad de paradas por linea de colectivo\n";
-		std::cout << "`5` Listado de paradas de una linea mas cercano a una coordenada\n";
-		std::cout << "`b` Imprimir barrios\n";
-		std::cout << "`q` Salir\n";
+		std::cout << "`\033[1m1\033[22m` Cantidad de paradas por barrio\n";
+		std::cout << "`\033[1m2\033[22m` Parada mas cercana a una coordenada\n";
+		std::cout << "`\033[1m3\033[22m` Listado de paradas de una linea de colectivo\n";
+		std::cout << "`\033[1m4\033[22m` Listado de cantidad de paradas por linea de colectivo\n";
+		std::cout << "`\033[1m5\033[22m` Listado de paradas de una linea mas cercano a una coordenada\n";
+		std::cout << "`\033[1mb\033[22m` Imprimir barrios\n";
+		std::cout << "`\033[1mq\033[22m` Salir\n";
 		std::cout << "opcion> ";
 
 		opcion.clear();
@@ -582,7 +582,6 @@ void Menu::mostrarMenu() {
 				List<Parada*> *paradasDeLaLinea;
 
 				barrio = getBarrioPorNombre(barrioNombre);
-
 				paradasDeLaLinea = barrio->listaDeParadasPorLinea(this->linea);
 
 				// ordenar de mayor a menor `paradasDeLaLinea`
@@ -604,12 +603,6 @@ void Menu::mostrarMenu() {
 								<< ")" << std::endl;
 				}
 
-				// imprimir paradasDeLaLineaOrdenada
-
-				// delete paradasDeLaLineaOrdenada;
-
-				// paradasMasCercanasPorBarrio(barrio,this->linea,this->coordX,this->coordY);
-				// imprimirParadasPorLinea(this->listaDeParadasCercanasOrdenadas);
 				delete paradasDeLaLinea;
 				break;
 			case 'q':
