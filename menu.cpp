@@ -9,6 +9,8 @@
 #include <cmath>
 #include <iomanip>
 
+double getDistancia(double x1, double y1, double x2, double y2);
+
 void Menu::imprimirCantidadDeParadasPorBarrio() {
 	Barrio *barrio;
 
@@ -34,40 +36,32 @@ void Menu::imprimirCantidadDeParadasPorBarrio() {
 }
 
 Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
-	double distanciaMinima;
+	double distanciaMin;
 	double distancia;
 
-	Parada *paradaResultado = NULL;
-	Parada *paradaActual = NULL;
+	Parada *res, *parada;
+	Barrio *barrio;
 
+	res = NULL;
 	this->barrios->startCursor();
 	while(this->barrios->forwardCursor()) {
-		Barrio *barrioAux = this->barrios->getCursorData();
+		barrio = this->barrios->getCursorData();
 
-		if(paradaResultado == NULL) {
-			paradaResultado = barrioAux->paradaMasCercana(
-					coordX, coordY, barrioAux->getParadas());
-
-			distanciaMinima = barrioAux->getDistancia(
-					coordX, coordY,
-					paradaResultado->getCoordX(),paradaResultado->getCoordY());
+		if(res == NULL) {
+			res = barrio->paradaMasCercana(coordX, coordY, barrio->getParadas());
+			distanciaMin = getDistancia(coordX, coordY, res->getCoordX(), res->getCoordY());
 		}
 		else {
-			paradaActual= barrioAux->paradaMasCercana(
-					coordX, coordY, barrioAux->getParadas());
+			parada = barrio->paradaMasCercana(coordX, coordY, barrio->getParadas());
+			distancia = getDistancia(coordX, coordY, parada->getCoordX(), parada->getCoordY());
 
-			distancia = barrioAux->getDistancia(
-					coordX, coordY,
-					paradaActual->getCoordX(), paradaActual->getCoordY());
-
-			if(distanciaMinima > distancia) {
-				distanciaMinima = distancia;
-				paradaResultado = paradaActual;
+			if(distanciaMin > distancia) {
+				distanciaMin = distancia;
+				res = parada;
 			}
 		}
 	}
-
-	return paradaResultado;
+	return res;
 }
 
 void Menu::agregarElementosDeLista(List<Parada*>* listaAux, List<Parada*>* listaResultado) {
