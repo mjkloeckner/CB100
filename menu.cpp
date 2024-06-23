@@ -319,7 +319,7 @@ void Menu::cargarDatos() {
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
 
-	int alturaPlano, fields;
+	int fields, linea;
 	std::string barrioNombre, calle, direccion;
 
 	inputFile.open(inputFilePath);
@@ -341,8 +341,6 @@ void Menu::cargarDatos() {
 					calle = token;
 					break;
 				case ALT_PLANO:
-					delSurroundingChar(token, '"');
-					alturaPlano = std::atoi(token.c_str());
 					break;
 				case DIRECCION:
 					if(token == "") {
@@ -373,7 +371,6 @@ void Menu::cargarDatos() {
 					if(token == "") {
 						break;
 					}
-					int linea;
 					linea = std::atoi(token.c_str());
 					lineasEnParada.push_back(linea);
 					break;
@@ -393,11 +390,11 @@ void Menu::cargarDatos() {
 		if(barrio == NULL) {
 			// std::cout << "Creando nuevo barrio `" << barrioNombre << "`\n";
 			barrio = new Barrio(barrioNombre);
-			barrio->addParada(calle, alturaPlano, direccion, coordX, coordY, lineasEnParada);
+			barrio->addParada(calle, direccion, coordX, coordY, lineasEnParada);
 			barrios->insert(barrio);
 		} else {
 			// barrio ya existe
-			barrio->addParada(calle, alturaPlano, direccion, coordX, coordY, lineasEnParada);
+			barrio->addParada(calle, direccion, coordX, coordY, lineasEnParada);
 		}
 	}
 
