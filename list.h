@@ -64,7 +64,7 @@ public:
 
 	void validarPosicion(unsigned int posicion);
 
-	Node<Type> * obtenerNodo(unsigned int posicion);
+	Node<Type> *obtenerNodo(unsigned int posicion);
 
 	/*
 	 *pre : posición pertenece al intervalo: [1, contarElementos()]

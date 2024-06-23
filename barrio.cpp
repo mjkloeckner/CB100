@@ -15,11 +15,10 @@ List<Parada*> *Barrio::getParadas() {
 }
 
 void Barrio::addParada(std::string calle,
-		int alturaPlano,
 		std::string direccion,
 		double coordX, double coordY, std::vector<int> lineas) {
 
-	this->paradas->insert(new Parada(calle, alturaPlano, direccion, coordX, coordY, lineas));
+	this->paradas->insert(new Parada(calle, direccion, coordX, coordY, lineas));
 }
 
 int Barrio::getSizeListaDeParadas() {  // CONSIGNA 1

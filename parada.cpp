@@ -1,11 +1,9 @@
 #include "parada.h"
 
 Parada::Parada(std::string calle,
-		int alturaPlano,
 		std::string direccion,
 		double coordX, double coordY, std::vector<int> lineas) {
 
-	this->alturaPlano = alturaPlano;
 	this->calle = calle;
 	this->coordX = coordX;
 	this->coordY = coordY;
@@ -15,10 +13,6 @@ Parada::Parada(std::string calle,
 
 std::string Parada::getCalle() {
 	return this->calle;
-}
-
-int Parada::getAlturaPlano() {
-	return this->alturaPlano;
 }
 
 std::string Parada::getDireccion() {

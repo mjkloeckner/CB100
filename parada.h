@@ -8,7 +8,6 @@
 
 class Parada {
 private:
-	int alturaPlano;
 	double coordX, coordY;
 	std::vector<int> *lineas;
 	std::string calle, direccion;
@@ -19,7 +18,6 @@ public:
 	 * post: Deja creado la parada con sus parametros
 	 */
 	Parada(std::string calle,
-			int alturaPlano,
 			std::string direccion,
 			double coordX, double coordY, std::vector<int> lineas);
 
@@ -27,11 +25,6 @@ public:
 	 * post: Devuelve el numero de la calle
 	 */
 	std::string getCalle();
-
-	/*
-	 * post: Devuelve la altura del plano
-	 */
-	int getAlturaPlano();
 
 	/*
 	 * post: Devuelve la dirrecion
