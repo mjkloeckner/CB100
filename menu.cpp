@@ -8,6 +8,7 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
+#include <cctype>
 
 double getDistancia(double x1, double y1, double x2, double y2);
 
@@ -182,6 +183,15 @@ Menu::Menu() {
 	this->coordX = this->coordY = 0.0f;
 }
 
+std::string strToLowercase(std::string str) {
+	std::string res;
+	for(size_t i = 0; i < str.size(); ++i) {
+		res += std::tolower(str[i]);
+	}
+
+	return res;
+}
+
 void delSurroundingChar(std::string &str, char c) {
 	str.erase(0, 1);
 	str[str.size() - 1] = '\0';
@@ -252,7 +262,7 @@ Barrio *Menu::getBarrioPorNombre(std::string nombre) {
 
 	while(this->barrios->forwardCursor()) {
 		barrio = this->barrios->getCursorData();
-		if(barrio->getNombre() == nombre) {
+		if(strToLowercase(barrio->getNombre()) == strToLowercase(nombre)) {
 			res = this->barrios->getCursorData();
 			break;
 		}
