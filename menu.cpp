@@ -67,8 +67,8 @@ Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
 void Menu::agregarElementoSinRepetir(std::vector<int> *lineas, std::vector<int> *vectorLineasAux) {
 	size_t lineaTope = vectorLineasAux->size();
 
-	bool seRepite = false;
 	for(size_t i = 0; i < lineaTope; i++) {
+		bool seRepite = false;
 		for(size_t j = 0; j < lineas->size(); j++) {
 			if((*vectorLineasAux)[i] == (*lineas)[j]) {
 				seRepite = true;
@@ -82,7 +82,7 @@ void Menu::agregarElementoSinRepetir(std::vector<int> *lineas, std::vector<int> 
 
 void Menu::lineasPorParada(List<Parada*> *paradas) {
 	Parada *paradaAux;
-	std::vector<int> *vectorLineasAux = new std::vector<int>;
+	std::vector<int> *vectorLineasAux;
 
 	paradas->startCursor();
 	while(paradas->forwardCursor()){
@@ -135,6 +135,7 @@ size_t getTokens(std::string line, std::vector<std::string> &tokens) {
 
 	lineStream.clear();
 	lineStream.str(line);
+	token.clear();
 
 	for(field = CALLE; std::getline(lineStream, token, CSV_DELIM); ++field) {
 		// solucion a `token` es una cadena que contiene CSV_DELIM
@@ -444,6 +445,7 @@ void Menu::mostrarMenu() {
 				while(paradas->forwardCursor()) {
 					std::cout << " · " << paradas->getCursorData()->getDireccion() << "\n";
 				}
+				delete paradas;
 				break;
 			case '4':
 				cantidadDeParadasPorLinea();
@@ -459,11 +461,12 @@ void Menu::mostrarMenu() {
 				std::cout << std::left << std::setw(38) << std::left << "=" << std::endl;
 				std::cout.fill('.');
 
+				paradas = NULL;
 				for(size_t i = 0; i < this->lineas->size(); ++i) {
 					paradas = buscarParadas(barrios, (*this->lineas)[i]);
 					if(paradas == NULL) {
 						std::cout << "no hay paradas de la linea indicada\n";
-						break;
+						continue;
 					}
 
 					std::ostringstream sstream;
@@ -476,6 +479,9 @@ void Menu::mostrarMenu() {
 				}
 
 				std::cout << std::endl;
+				if(paradas != NULL) {
+					delete paradas;
+				}
 				break;
 			case '5':
 				std::cout << "barrio> ";
@@ -554,4 +560,15 @@ void Menu::mostrarMenu() {
 	}
 }
 
-Menu::~Menu() { }
+Menu::~Menu() {
+	Barrio *delBarrio;
+
+	this->barrios->startCursor();
+	while(this->barrios->forwardCursor()){
+		delBarrio = this->barrios->getCursorData();
+		delete delBarrio;
+	}
+
+	delete this->barrios;
+	delete this->lineas;
+}
