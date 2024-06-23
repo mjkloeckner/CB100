@@ -32,27 +32,29 @@ double Barrio::getDistancia(double x1,double y1,double x2,double y2){ //CONSIGAN
 	return std::sqrt(dX*dX + dY*dY);
 }
 
-Parada *Barrio::paradaMasCercana(double coordX, double coordY,List<Parada*>* paradasAux) { //CONSIGNA 2
+// lon -> X; lat -> Y;
+Parada *Barrio::paradaMasCercana(double lon, double lat) { //CONSIGNA 2
 	double distancia;
-	double distanciaMinima;
+	double distanciaMin;
+
 	Parada *resultado, *aux;
 
 	resultado = aux = NULL;
 
-	paradasAux->startCursor();
-	while(paradasAux->forwardCursor()){
-		Parada *aux = paradasAux->getCursorData();
+	this->paradas->startCursor();
+	while(this->paradas->forwardCursor()){
+		aux = this->paradas->getCursorData();
 
 		if(resultado == NULL) {
 			resultado = aux;
-			distanciaMinima = getDistancia(coordX, coordY, aux->getCoordX(), aux->getCoordY());
+			distanciaMin = getDistancia(lon, lat, aux->getCoordX(), aux->getCoordY());
 		}
 		else {
-			distancia = getDistancia(coordX,coordY,aux->getCoordX(),aux->getCoordY());
+			distancia = getDistancia(lon, lat, aux->getCoordX(),aux->getCoordY());
 
-			if(distancia < distanciaMinima) {
+			if(distancia < distanciaMin) {
 				resultado = aux;
-				distanciaMinima = distancia;
+				distanciaMin = distancia;
 			}
 		}
 	}
@@ -60,7 +62,11 @@ Parada *Barrio::paradaMasCercana(double coordX, double coordY,List<Parada*>* par
 	return resultado;
 }
 
-bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas ) { //CONSIGNA 3
+bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas) { //CONSIGNA 3
+	if(listaDeLineas == NULL) {
+		return false;
+	}
+
 	for(size_t i = 0; i < listaDeLineas->size(); ++i) {
 		if((*listaDeLineas)[i] == linea) {
 			return true;
@@ -71,7 +77,7 @@ bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas ) { //CONS
 }
 
 List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
-	Parada *paradaActual;
+	Parada *parada;
 	List<Parada*> *resultado;
 	std::vector<int> *listaDeLineas;
 
@@ -79,15 +85,20 @@ List<Parada*> *Barrio::listaDeParadasPorLinea(int linea) { //CONSIGNA 3
 
 	this->paradas->startCursor();
 	while(this->paradas->forwardCursor()){
-		paradaActual = this->paradas->getCursorData();
-		listaDeLineas = paradaActual->getLineas();
+		parada = this->paradas->getCursorData();
+		listaDeLineas = parada->getLineas();
 
 		if(lineaEnParada(linea, listaDeLineas)) {
-			resultado->insert(paradaActual);
+			resultado->insert(parada);
 		}
 	}
 
-	return resultado->getSize() == 0 ? NULL : resultado;
+	if(resultado->getSize() == 0) {
+		delete resultado;
+		return NULL;
+	}
+
+	return resultado;
 }
 
 unsigned int Barrio::getCantidadDeParadasPorLinea(int linea) { //CONSIGNA 4
