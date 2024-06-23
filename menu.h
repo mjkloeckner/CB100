@@ -41,6 +41,10 @@ private:
 	double getDistancia(double x1, double y1, double x2, double y2);
 
 public:
+	/*
+	 * pos: Crea una lista de Barrios y un vector de Lineas en el heap
+  		Inicializa la linea,coordX, y la coordY en 0
+	 */
 	Menu();
 
 	/*
@@ -74,12 +78,25 @@ public:
 	 */
 	void lineasPorParada(List<Parada*>* paradas);
 
+	/*
+	 * pos: Abre el archivo "paradas-de-colectivo.csv"
+	 */
 	void cargarDatos();
 
+	/*
+	 * pos: Muestra por pantalla las opciones a elegir del menú y recibe un parametro. En base al parametro, ejecuta una funcion
+	 */
 	void mostrarMenu();
 
+	/*
+ 	 * pre: Recibe una lista de Barrios y una Linea
+	 * pos: Devuelve una lista de Paradas de todos los Barrios que tengan a la Linea
+	 */
 	List<Parada*> *buscarParadas(List<Barrio*> *barrios, int linea);
 
+	/*
+	 * pos: Busca el barrio en la lista de barrios, si no lo encuentra devuelve NULL
+	 */
 	Barrio *getBarrioPorNombre(std::string nombre);
 };
 
