@@ -9,6 +9,8 @@
 #include <cmath>
 #include <iomanip>
 
+double getDistancia(double x1, double y1, double x2, double y2);
+
 void Menu::imprimirCantidadDeParadasPorBarrio() {
 	Barrio *barrio;
 
@@ -34,40 +36,32 @@ void Menu::imprimirCantidadDeParadasPorBarrio() {
 }
 
 Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
-	double distanciaMinima;
+	double distanciaMin;
 	double distancia;
 
-	Parada *paradaResultado = NULL;
-	Parada *paradaActual = NULL;
+	Parada *res, *parada;
+	Barrio *barrio;
 
+	res = NULL;
 	this->barrios->startCursor();
 	while(this->barrios->forwardCursor()) {
-		Barrio *barrioAux = this->barrios->getCursorData();
+		barrio = this->barrios->getCursorData();
 
-		if(paradaResultado == NULL) {
-			paradaResultado = barrioAux->paradaMasCercana(
-					coordX, coordY, barrioAux->getParadas());
-
-			distanciaMinima = barrioAux->getDistancia(
-					coordX, coordY,
-					paradaResultado->getCoordX(),paradaResultado->getCoordY());
+		if(res == NULL) {
+			res = barrio->paradaMasCercana(coordX, coordY, barrio->getParadas());
+			distanciaMin = getDistancia(coordX, coordY, res->getCoordX(), res->getCoordY());
 		}
 		else {
-			paradaActual= barrioAux->paradaMasCercana(
-					coordX, coordY, barrioAux->getParadas());
+			parada = barrio->paradaMasCercana(coordX, coordY, barrio->getParadas());
+			distancia = getDistancia(coordX, coordY, parada->getCoordX(), parada->getCoordY());
 
-			distancia = barrioAux->getDistancia(
-					coordX, coordY,
-					paradaActual->getCoordX(), paradaActual->getCoordY());
-
-			if(distanciaMinima > distancia) {
-				distanciaMinima = distancia;
-				paradaResultado = paradaActual;
+			if(distanciaMin > distancia) {
+				distanciaMin = distancia;
+				res = parada;
 			}
 		}
 	}
-
-	return paradaResultado;
+	return res;
 }
 
 void Menu::agregarElementosDeLista(List<Parada*>* listaAux, List<Parada*>* listaResultado) {
@@ -267,6 +261,33 @@ Barrio *Menu::getBarrioPorNombre(std::string nombre) {
 	return res;
 }
 
+double gradosARadianes(double grados) {
+	return grados * M_PI / 180.0;
+}
+
+// lat -> y; lon -> x;
+// calcula la distancia en km entre dos coordenadas usando la formula de Lambert
+double getDistanciaEnKilometros(double x1, double y1, double x2, double y2) {
+	const double R = 6371.0;  // Radius of the Earth in kilometers
+
+	// Convert latitude and longitude from degrees to radians
+	double x1Rad = gradosARadianes(x1);
+	double y1Rad = gradosARadianes(y1);
+	double x2Rad = gradosARadianes(x2);
+	double y2Rad = gradosARadianes(y2);
+
+	// Calculate differences in radians
+	double dLon = x2Rad - x1Rad;
+	double dLat = y2Rad - y1Rad;
+
+	// Apply Lambert's formula
+	double a = sin(dLat / 2) * sin(dLat / 2) + cos(y1Rad) * cos(y2Rad) * sin(dLon / 2) * sin(dLon / 2);
+	double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+	double distancia = R * c;
+
+	return distancia;
+}
+
 double getDistancia(double x1, double y1, double x2, double y2) {
 	double dX = (x2 - x1);
 	double dY = (y2 - y1);
@@ -400,16 +421,17 @@ void Menu::mostrarMenu() {
 	std::string opcion;
 	int linea;
 	double lat, lon; // lat -> Y; lon -> X;
-	std::string barrio, barrioNombre, lineaAImprimir;
+	double distanciaEnKm;
+	std::string barrio, barrioNombre, lineaAImprimir, distanciaUnidad;
 
 	while(!terminarPrograma) {
-		std::cout << "`1` Cantidad de paradas por barrio\n";
-		std::cout << "`2` Parada mas cercana a una coordenada\n";
-		std::cout << "`3` Listado de paradas de una linea de colectivo\n";
-		std::cout << "`4` Listado de cantidad de paradas por linea de colectivo\n";
-		std::cout << "`5` Listado de paradas de una linea mas cercano a una coordenada\n";
-		std::cout << "`b` Imprimir barrios\n";
-		std::cout << "`q` Salir\n";
+		std::cout << "`\033[1m1\033[22m` Cantidad de paradas por barrio\n";
+		std::cout << "`\033[1m2\033[22m` Parada mas cercana a una coordenada\n";
+		std::cout << "`\033[1m3\033[22m` Listado de paradas de una linea de colectivo\n";
+		std::cout << "`\033[1m4\033[22m` Listado de cantidad de paradas por linea de colectivo\n";
+		std::cout << "`\033[1m5\033[22m` Listado de paradas de una linea mas cercano a una coordenada\n";
+		std::cout << "`\033[1mb\033[22m` Imprimir barrios\n";
+		std::cout << "`\033[1mq\033[22m` Salir\n";
 		std::cout << "opcion> ";
 
 		opcion.clear();
@@ -430,6 +452,7 @@ void Menu::mostrarMenu() {
 				imprimirCantidadDeParadasPorBarrio();
 				break;
 			case '2':
+				// TODO: verificar que `latitud` y `longitud` sean validas
 				do {
 					std::cin.clear();
 					std::string line;
@@ -455,8 +478,19 @@ void Menu::mostrarMenu() {
 					break;
 				}
 
-				std::cout << "La parada mas cercana esta en: `" << parada->getDireccion()
-						<< "` (" << parada->getCoordX() << ", " << parada->getCoordY() << ")\n";
+				distanciaEnKm = getDistanciaEnKilometros(lon, lat, parada->getCoordY(), parada->getCoordX());
+
+				if(distanciaEnKm < 1) {
+					distanciaEnKm *= 1000.0f;
+					distanciaUnidad.assign("metros");
+				} else {
+					distanciaUnidad.assign("kilometros");
+				}
+
+				std::cout << "Parada mas cercana: `" << parada->getDireccion()
+						<< "` (" << parada->getCoordX() << ", " << parada->getCoordY()
+						<< ") a " << std::fixed << std::setprecision(2) << distanciaEnKm
+						<< " " << distanciaUnidad << "\n";
 				break;
 			case '3':
 				List<Parada*> *paradas;
@@ -534,44 +568,42 @@ void Menu::mostrarMenu() {
 
 				// std::cout<<"Indique la Linea: ";
 				// std::cin >> this->linea;
-				this->linea = 154;
+				this->linea = 12;
 
 				// std::cout<<"Indique la coordenada en X: ";
 				// std::cin >> lon;
-				lon = 0.0f;
+				lon = -58.0f;
 
 				// std::cout<<"Indique la coordenada en Y: ";
 				// std::cin >> lat;
-				lat = 0.0f;
+				lat = -34.0f;
 
 				Barrio *barrio;
 				List<Parada*> *paradasDeLaLinea;
 
 				barrio = getBarrioPorNombre(barrioNombre);
-
 				paradasDeLaLinea = barrio->listaDeParadasPorLinea(this->linea);
 
 				// ordenar de mayor a menor `paradasDeLaLinea`
 				ordenarParadasPorDistanciaACoordenada(paradasDeLaLinea, lon, lat);
 
-				double distancia;
 				Parada *actual;
 
 				paradasDeLaLinea->startCursor();
 				while(paradasDeLaLinea->forwardCursor()) {
 					actual = paradasDeLaLinea->getCursorData();
-					distancia = getDistancia(actual->getCoordX(), actual->getCoordY(), lon, lat);
-					std::cout << actual->getDireccion() << " (distancia: `" << distancia << " `)" << std::endl;
+					// distancia = getDistancia(actual->getCoordX(), actual->getCoordY(), lon, lat);
+					distanciaEnKm = getDistanciaEnKilometros(lon, lat, actual->getCoordY(), actual->getCoordX());
+
+					std::cout.fill('.');
+					std::cout << std::left << std::setw(25) << actual->getDireccion()
+								<< std::right << std::setw(20)
+								<< std::fixed << std::setprecision(2)
+								<< distanciaEnKm << "  (" << actual->getCoordX() << ", " << actual->getCoordY()
+								<< ")" << std::endl;
 				}
 
-				// delete paradasDeLaLinea;
-
-				// imprimir paradasDeLaLineaOrdenada
-
-				// delete paradasDeLaLineaOrdenada;
-
-				// paradasMasCercanasPorBarrio(barrio,this->linea,this->coordX,this->coordY);
-				// imprimirParadasPorLinea(this->listaDeParadasCercanasOrdenadas);
+				delete paradasDeLaLinea;
 				break;
 			case 'q':
 				terminarPrograma = true;
