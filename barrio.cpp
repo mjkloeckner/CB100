@@ -62,7 +62,11 @@ Parada *Barrio::paradaMasCercana(double lon, double lat) { //CONSIGNA 2
 	return resultado;
 }
 
-bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas ) { //CONSIGNA 3
+bool Barrio::lineaEnParada(int linea, std::vector<int> *listaDeLineas) { //CONSIGNA 3
+	if(listaDeLineas == NULL) {
+		return false;
+	}
+
 	for(size_t i = 0; i < listaDeLineas->size(); ++i) {
 		if((*listaDeLineas)[i] == linea) {
 			return true;
