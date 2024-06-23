@@ -8,9 +8,9 @@
 #include <vector>
 #include <cmath>
 
-void Menu::cantidadDeParadasPorBarrio() {
-	this->barrios->startCursor();
+void Menu::imprimirCantidadDeParadasPorBarrio() {
 
+	this->barrios->startCursor();
 	while(this->barrios->forwardCursor()) {
 		Barrio * barrioAux = this->barrios->getCursorData();
 		std::cout << "La cantidad de paradas que hay en el barrio "
@@ -100,7 +100,6 @@ void Menu::imprimirParadasPorLinea(List<Parada*> *listaDeParadas) {
 }
 
 List<Parada*> *Menu::paradasPorLinea(int linea) {
-	// this->paradasPorCadaLinea = NULL;
 	List<Parada*> *listaAux = new List<Parada*>;
 	List<Parada*> *resultado = new List<Parada*>;
 
@@ -122,7 +121,6 @@ List<Parada*> *Menu::paradasPorLinea(int linea) {
 }
 
 void Menu::agregarElementoSinRepetir(std::vector<int> *lineas, std::vector<int> *vectorLineasAux) {
-	unsigned int contador = 0;
 	size_t lineaTope = vectorLineasAux->size();
 
 	bool seRepite = false;
@@ -154,7 +152,6 @@ void Menu::lineasPorParada(List<Parada*> *paradas) {
 }
 
 void Menu::imprimirCantidadParadasPorLinea(std::vector<int>* lineas){
-	// std::cout << "lineas->size(): " << lineas->size() << std::endl;
 	List<Parada*> *paradas;
 
 	for(size_t i=0; i < lineas->size(); i++) {
@@ -169,26 +166,21 @@ void Menu::imprimirCantidadParadasPorLinea(std::vector<int>* lineas){
 }
 
 void Menu::cantidadDeParadasPorLinea() {
-	Barrio *barrioAux;
+	Barrio *barrio;
 
 	this->lineas->clear();
 	this->barrios->startCursor();
 
 	while(this->barrios->forwardCursor()){
-		barrioAux = this->barrios->getCursorData();
-		// std::cout << barrioAux->getNombre() << std::endl;
+		barrio = this->barrios->getCursorData();
 
-		lineasPorParada(barrioAux->getParadas());
+		lineasPorParada(barrio->getParadas());
 	}
 }
 
 Menu::Menu() {
 	this->barrios = new List<Barrio*>;
 	this->lineas = new std::vector<int>;
-	this->paradasPorCadaLinea = new List<Parada*>;
-	this->cantidadDeParadasPorCadaLinea = new List<Parada*>;
-	this->listaDeParadasCercanasOrdenadas = new List<Parada*>;
-	std::vector<int> *lineas = new std::vector<int>;
 
 	this->linea = 0;
 	this->coordX = this->coordY = 0.0f;
@@ -433,7 +425,7 @@ void Menu::mostrarMenu() {
 				std::cout << std::endl;
 				break;
 			case '1':
-				cantidadDeParadasPorBarrio();
+				imprimirCantidadDeParadasPorBarrio();
 				break;
 			case '2':
 				/*
@@ -564,7 +556,7 @@ void Menu::mostrarMenu() {
 			case 'q':
 				terminarPrograma = true;
 				break;
-			default: 
+			default:
 				std::cout << "opcion `" << opcion[0] << "` no definida\n";
 				break;
 		}

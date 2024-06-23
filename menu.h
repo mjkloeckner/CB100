@@ -36,7 +36,6 @@ private:
 	int linea;
 	List<Barrio*> *barrios;
 	double coordX, coordY;
-	List<Parada*> *paradasPorCadaLinea, *cantidadDeParadasPorCadaLinea, *listaDeParadasCercanasOrdenadas;
 	std::vector<int> *lineas;
 
 public:
@@ -50,7 +49,7 @@ public:
 	/*
 	 * pos: Recorre la lista de barrios e imprime la cantidad de paradas de cada barrio
 	 */
-	void cantidadDeParadasPorBarrio(); // CONSIGA 1
+	void imprimirCantidadDeParadasPorBarrio(); // CONSIGA 1
 
 	/*
 	 * pre: Recibe como parametro las coordenadas en X e Y
