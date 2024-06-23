@@ -432,7 +432,7 @@ void Menu::mostrarMenu() {
 	bool terminarPrograma = false;
 	int linea;
 	double lat, lon; // lat -> Y; lon -> X;
-	double distancia, distanciaEnKm;
+	double distanciaEnKm;
 
 	std::string opcion, barrioNombre, lineaAImprimir, distanciaUnidad;
 	List<Parada*> *paradas, *paradasDeLaLinea;
@@ -530,9 +530,6 @@ void Menu::mostrarMenu() {
 				while(paradas->forwardCursor()) {
 					std::cout << " · " << paradas->getCursorData()->getDireccion() << "\n";
 				}
-
-				// paradasPorLinea(this->linea);
-				// imprimirParadasPorLinea(this->paradasPorCadaLinea);
 				break;
 			case '4':
 				cantidadDeParadasPorLinea();
@@ -565,15 +562,11 @@ void Menu::mostrarMenu() {
 				}
 
 				std::cout << std::endl;
-
-				// imprimirCantidadParadasPorLinea(this->lineas);
 				break;
 			case '5':
-				// std::cout << "barrio> ";
-				// std::cin >> barrioNombre;
-				barrioNombre.assign("CONSTITUCION");
+				std::cout << "barrio> ";
+				std::cin >> barrioNombre;
 
-				/*
 				do {
 					std::cin.clear();
 					std::string line;
@@ -599,7 +592,6 @@ void Menu::mostrarMenu() {
 					std::cin >> lon;
 				} while(std::cin.fail());
 
-				*/
 				if((barrio = getBarrioPorNombre(barrioNombre)) == NULL) {
 					std::cout << "No se encontro el barrio `" << barrioNombre << "`\n";
 					break;
@@ -630,13 +622,10 @@ void Menu::mostrarMenu() {
 				paradasDeLaLinea->startCursor();
 				while(paradasDeLaLinea->forwardCursor()) {
 					actual = paradasDeLaLinea->getCursorData();
-					distancia = getDistancia(actual->getCoordX(), actual->getCoordY(), lon, lat);
 					distanciaEnKm = getDistanciaEnKilometros(lon, lat, actual->getCoordX(), actual->getCoordY());
 
 					std::string coord;
 					coord += actual->getCoordX();
-					// coord += "(";
-					// coord += actual->getCoordY();
 
 					std::cout.fill('.');
 					std::cout << std::left << std::setw(33) << actual->getDireccion()
