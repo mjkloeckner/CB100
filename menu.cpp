@@ -7,18 +7,30 @@
 #include <cstdlib>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 
 void Menu::imprimirCantidadDeParadasPorBarrio() {
+	Barrio *barrio;
 
+	std::cout << std::endl;
+	std::cout << std::setw(10);
+	std::cout.fill(' ');
+
+	std::cout << std::left << std::setw(18) << std::left << "Barrio";
+	std::cout << std::right << std::setw(20) << "Cantidad de Paradas" << std::endl;
+	std::cout.fill('=');
+	std::cout << std::left << std::setw(38) << std::left << "=" << std::endl;
+
+	std::cout.fill('.');
 	this->barrios->startCursor();
 	while(this->barrios->forwardCursor()) {
-		Barrio * barrioAux = this->barrios->getCursorData();
-		std::cout << "La cantidad de paradas que hay en el barrio "
-				  << barrioAux->getNombre()
-				  << " es: "
-				  << barrioAux->getSizeListaDeParadas()
-				  << std::endl;
-		}
+		barrio = this->barrios->getCursorData();
+		std::cout << std::left << std::setw(18) << barrio->getNombre()
+				 << std::right << std::setw(20) << barrio->getSizeListaDeParadas()
+				 << std::endl;
+	}
+
+	std::cout << std::endl;
 }
 
 Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
@@ -54,16 +66,6 @@ Parada *Menu::paradaMasCercanaPorCoordenada(double coordX, double coordY) {
 			}
 		}
 	}
-
-	std::cout<< "La parada mas cercana esta en: "
-			 << paradaResultado->getDireccion()
-			 << std::endl
-			 << "en la coordenada X: "
-			 << paradaResultado->getCoordX()
-			 << std::endl
-			 << "en la coordenada Y:"
-			 << paradaResultado->getCoordY()
-			 << std::endl;
 
 	return paradaResultado;
 }
@@ -397,8 +399,8 @@ void Menu::mostrarMenu() {
 	bool terminarPrograma = false;
 	std::string opcion;
 	int linea;
-	Barrio *barrioActual;
-	std::string barrio, barrioNombre;
+	double lat, lon; // lat -> Y; lon -> X;
+	std::string barrio, barrioNombre, lineaAImprimir;
 
 	while(!terminarPrograma) {
 		std::cout << "`1` Cantidad de paradas por barrio\n";
@@ -428,74 +430,92 @@ void Menu::mostrarMenu() {
 				imprimirCantidadDeParadasPorBarrio();
 				break;
 			case '2':
-				/*
-				double x, y;
+				do {
+					std::cin.clear();
+					std::string line;
+					std::getline(std::cin, line);
+					std::cout << "latitud> ";
+					std::cin >> lat;
+				} while(std::cin.fail());
 
-				std::cout << "latitud> ";
-				opcion.clear();
-				std::cin >> opcion;
-				y = std::atof(opcion.c_str());
+				do {
+					std::cin.clear();
+					std::string line;
+					std::getline(std::cin, line);
+					std::cout << "longitud> ";
+					std::cin >> lon;
+				} while(std::cin.fail());
 
-				std::cout << "longitud> ";
-				opcion.clear();
-				std::cin >> opcion;
-				x = std::atof(opcion.c_str());
-				
-				std::cout << "latitud: " << y << "; longitud: " << x << std::endl;
+				std::cout << "latitud: " << lat << "; longitud: " << lon << "\n";
 
 				Parada *parada;
-				parada = paradaMasCercanaPorCoordenada(x, y);
+				parada = paradaMasCercanaPorCoordenada(lon, lat);
 				if(parada == NULL) {
-					std::cout << "NULL POINTER";
+					std::cout << "Parada inaccessible";
 					break;
 				}
-				std::cout << parada->getDireccion()
-					<< " (" << parada->getCoordX() << ", " << parada->getCoordY() << ")\n";
-				*/
-				std::cout<<"Indique la coordenada en X: ";
-				std::cin >> this->coordX;
-				std::cout<<"Indique la coordenada en Y: ";
-				std::cin >> this->coordY;
 
-				paradaMasCercanaPorCoordenada(this->coordX, this->coordY);
+				std::cout << "La parada mas cercana esta en: `" << parada->getDireccion()
+						<< "` (" << parada->getCoordX() << ", " << parada->getCoordY() << ")\n";
 				break;
 			case '3':
-				// std::cout<<"Indique la Linea: ";
-				// std::cin >> this->linea;
-
-				// paradasPorLinea(this->linea);
-				// imprimirParadasPorLinea(this->paradasPorCadaLinea);
-
 				List<Parada*> *paradas;
 
-				std::cout << "linea> ";
-				opcion.clear();
-				std::cin >> linea;
+				do {
+					std::cin.clear();
+					std::string line;
+					std::getline(std::cin, line);
+					std::cout << "linea> ";
+					std::cin >> linea;
+				} while(std::cin.fail());
+
 				paradas = buscarParadas(barrios, linea);
 				if(paradas == NULL) {
 					std::cout << "no hay paradas de la linea indicada\n";
 					break;
 				}
-				std::cout << "se encontraron `" << paradas->getSize() << "` paradas de la linea indicada\n";
+				std::cout << "La linea `" << linea << "` tiene `"
+					<< paradas->getSize() << "` paradas en CABA\n";
 
 				paradas->startCursor();
 				while(paradas->forwardCursor()) {
-					std::cout << "* `" << paradas->getCursorData()->getDireccion() << "`\n";
+					std::cout << " · " << paradas->getCursorData()->getDireccion() << "\n";
 				}
+
+				// paradasPorLinea(this->linea);
+				// imprimirParadasPorLinea(this->paradasPorCadaLinea);
 				break;
 			case '4':
 				cantidadDeParadasPorLinea();
 
-				// List<Parada*> *paradas;
+				std::cout << std::endl;
+				std::cout << std::setw(10);
+				std::cout.fill(' ');
+
+				std::cout << std::left << std::setw(18) << std::left << "Linea";
+				std::cout << std::right << std::setw(20) << "Cantidad de Paradas" << std::endl;
+				std::cout.fill('=');
+
+				std::cout << std::left << std::setw(38) << std::left << "=" << std::endl;
+				std::cout.fill('.');
+
 				for(size_t i = 0; i < this->lineas->size(); ++i) {
 					paradas = buscarParadas(barrios, (*this->lineas)[i]);
 					if(paradas == NULL) {
 						std::cout << "no hay paradas de la linea indicada\n";
 						break;
 					}
-					std::cout << "se encontraron `" << paradas->getSize()
-						<< "` paradas de la linea `" << (*this->lineas)[i] << " ` \n";
+
+					std::ostringstream sstream;
+					sstream << "Linea " << (*this->lineas)[i];
+					lineaAImprimir = sstream.str();
+
+					std::cout << std::left << std::setw(18) << lineaAImprimir
+							 << std::right << std::setw(20) << paradas->getSize()
+							 << std::endl;
 				}
+
+				std::cout << std::endl;
 
 				// imprimirCantidadParadasPorLinea(this->lineas);
 				break;
@@ -517,12 +537,12 @@ void Menu::mostrarMenu() {
 				this->linea = 154;
 
 				// std::cout<<"Indique la coordenada en X: ";
-				// std::cin >> this->coordX;
-				this->coordX = 0.0f;
+				// std::cin >> lon;
+				lon = 0.0f;
 
 				// std::cout<<"Indique la coordenada en Y: ";
-				// std::cin >> this->coordY;
-				this->coordY = 0.0f;
+				// std::cin >> lat;
+				lat = 0.0f;
 
 				Barrio *barrio;
 				List<Parada*> *paradasDeLaLinea;
@@ -532,7 +552,7 @@ void Menu::mostrarMenu() {
 				paradasDeLaLinea = barrio->listaDeParadasPorLinea(this->linea);
 
 				// ordenar de mayor a menor `paradasDeLaLinea`
-				ordenarParadasPorDistanciaACoordenada(paradasDeLaLinea, this->coordX, this->coordY);
+				ordenarParadasPorDistanciaACoordenada(paradasDeLaLinea, lon, lat);
 
 				double distancia;
 				Parada *actual;
@@ -540,7 +560,7 @@ void Menu::mostrarMenu() {
 				paradasDeLaLinea->startCursor();
 				while(paradasDeLaLinea->forwardCursor()) {
 					actual = paradasDeLaLinea->getCursorData();
-					distancia = getDistancia(actual->getCoordX(), actual->getCoordY(), this->coordX, this->coordY);
+					distancia = getDistancia(actual->getCoordX(), actual->getCoordY(), lon, lat);
 					std::cout << actual->getDireccion() << " (distancia: `" << distancia << " `)" << std::endl;
 				}
 
