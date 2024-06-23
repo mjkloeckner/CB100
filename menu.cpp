@@ -280,19 +280,16 @@ double gradosARadianes(double grados) {
 // lat -> y; lon -> x;
 // calcula la distancia en km entre dos coordenadas usando la formula de Lambert
 double getDistanciaEnKilometros(double x1, double y1, double x2, double y2) {
-	const double R = 6371.0;  // Radius of the Earth in kilometers
+	const double R = 6371.0;  // radio de la tierra
 
-	// Convert latitude and longitude from degrees to radians
 	double x1Rad = gradosARadianes(x1);
 	double y1Rad = gradosARadianes(y1);
 	double x2Rad = gradosARadianes(x2);
 	double y2Rad = gradosARadianes(y2);
 
-	// Calculate differences in radians
 	double dLon = x2Rad - x1Rad;
 	double dLat = y2Rad - y1Rad;
 
-	// Apply Lambert's formula
 	double a = sin(dLat / 2) * sin(dLat / 2) + cos(y1Rad) * cos(y2Rad) * sin(dLon / 2) * sin(dLon / 2);
 	double c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	double distancia = R * c;
@@ -596,10 +593,6 @@ void Menu::mostrarMenu() {
 					std::cout << "No se encontro el barrio `" << barrioNombre << "`\n";
 					break;
 				}
-
-				linea = 12;
-				lat = -54.0;
-				lon = -34.0;
 
 				paradasDeLaLinea = barrio->listaDeParadasPorLinea(linea);
 				if(paradasDeLaLinea == NULL) {
