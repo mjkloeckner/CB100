@@ -3,7 +3,9 @@
 int main (void) {
 	Menu *menu = new Menu();
 
-	menu->cargarDatos();
+	if(menu->cargarDatos() < 0) {
+		return -1;
+	}
 	menu->mostrarMenu();
 
 	delete menu;

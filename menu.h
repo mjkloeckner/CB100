@@ -80,7 +80,7 @@ public:
 	/*
 	 * pos: Abre el archivo "paradas-de-colectivo.csv"
 	 */
-	void cargarDatos();
+	int cargarDatos();
 
 	/*
 	 * pos: Muestra por pantalla las opciones a elegir del menú y recibe un parametro. En base al parametro, ejecuta una funcion

@@ -262,7 +262,7 @@ void ordenarParadasPorDistanciaACoordenada(List<Parada*> *paradas, double x, dou
 	}
 }
 
-void Menu::cargarDatos() {
+int Menu::cargarDatos() {
 	std::ifstream inputFile;
 	std::string token, line;
 	std::vector<std::string> tokens;
@@ -278,6 +278,7 @@ void Menu::cargarDatos() {
 	inputFile.open(inputFilePath);
 	if(!inputFile.is_open()) {
 		std::cout << "No se pudo abrir el archivo `" << inputFilePath << "`\n";
+		return -1;
 	}
 
 	coordX = coordY = 0.0f;
