@@ -109,9 +109,6 @@ void Menu::cantidadDeParadasPorLinea() {
 Menu::Menu() {
 	this->barrios = new List<Barrio*>;
 	this->lineas = new std::vector<int>;
-
-	this->linea = 0;
-	this->coordX = this->coordY = 0.0f;
 }
 
 std::string strToLowercase(std::string str) {
@@ -270,6 +267,7 @@ void Menu::cargarDatos() {
 	std::string token, line;
 	std::vector<std::string> tokens;
 	std::vector<int> lineasEnParada;
+	float coordX, coordY;
 	Barrio *barrio;
 
 	const char *inputFilePath = "paradas-de-colectivo.csv";
@@ -281,6 +279,8 @@ void Menu::cargarDatos() {
 	if(!inputFile.is_open()) {
 		std::cout << "No se pudo abrir el archivo `" << inputFilePath << "`\n";
 	}
+
+	coordX = coordY = 0.0f;
 
 	std::getline(inputFile, line); // saltea la primer linea
 

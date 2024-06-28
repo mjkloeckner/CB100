@@ -33,9 +33,7 @@ enum {
 
 class Menu {
 private:
-	int linea;
 	List<Barrio*> *barrios;
-	double coordX, coordY;
 	std::vector<int> *lineas;
 
 private: 
