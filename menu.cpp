@@ -354,6 +354,7 @@ int Menu::cargarDatos() {
 	}
 
 	inputFile.close();
+	return 0;
 }
 
 void Menu::mostrarMenu() {
