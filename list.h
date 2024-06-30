@@ -98,24 +98,24 @@ void List<Type>::insert(Type element) {
 	this->size++;
 }
 
-template<class Type>
+template<typename Type>
 void List<Type>::startCursor() {
 	this->cursor = NULL;
 }
 
-template<class Type>
+template<typename Type>
 bool List<Type>::forwardCursor() {
 	this->cursor = this->cursor == NULL ? this->first : this->cursor->getNext();
 
 	return (this->cursor != NULL);
 }
 
-template<class Type>
+template<typename Type>
 Node<Type> *List<Type>::getCursor() {
 	return this->cursor;
 }
 
-template<class Type>
+template<typename Type>
 Type List<Type>::getCursorData() {
 	return this->cursor->getData();
 }
