@@ -45,7 +45,7 @@
 \newfontfamily\titlefont{Inter}[
 UprightFont     =   *-Regular,
 BoldFont        =   *-ExtraBold,
-Scale           =   1.0
+Scale           =   0.90
 ]
 
 \newfontfamily\sectionsfont{Inter}[
@@ -53,8 +53,7 @@ UprightFont     =   *-Regular,
 BoldFont        =   *-Bold,
 ]
 
-% \setmathfont{Fira Math}
-\setmathfont[Scale=1.0]{Fira Math}
+\setmathfont[Scale=1.05]{Fira Math}
 
 \usepackage{xcolor}
 \definecolor{ugrey}{HTML}{333333}
@@ -248,10 +247,5 @@ BoldFont        =   *-Bold,
 
 % Reduce space around displayed equations safely
 \makeatletter
-\setlength{\abovedisplayskip}{6pt}      % space above display math
-\setlength{\belowdisplayskip}{6pt}      % space below display math
-\setlength{\abovedisplayshortskip}{4pt} % space above short display math
-\setlength{\belowdisplayshortskip}{4pt} % space below short display math
-
-\setlength{\jot}{4pt} % space between lines in align environments (default ~6pt)
+\setlength{\jot}{8pt} % valor por defecto es 3pt aproximadamente
 \makeatother

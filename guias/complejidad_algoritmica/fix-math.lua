@@ -1,4 +1,17 @@
--- removes all `$$` surrounding align contexts
+-- removes all `$$` surrounding \begin{align} and \begin{align*} contexts; also
+-- modifies the space after and before equations by adding \vspace{...}
+--
+-- \begin{align} .. \end{align} adds more vertical space before and after than 
+-- $$ .. $$ (or \[ \] in latex notation)
+
+local eq_before_space = "-1em"
+local eq_after_space = "0em"
+local eq_align_before_space "-0.75em"
+local eq_align_after_space "-0.75em"
+
+local function vspace(amount)
+  return pandoc.RawBlock('latex', '\\vspace{' .. amount .. '}')
+end
 
 function walk_blocks(blocks)
   local new_blocks = {}
@@ -8,12 +21,16 @@ function walk_blocks(blocks)
       local new_inlines = {}
       for _, inline in ipairs(blk.content) do
         if inline.t == 'Math' and inline.mathtype == 'DisplayMath' then
+          table.insert(new_blocks, vspace(eq_before_space))
           if inline.text:match('^\\begin{align%*?}') then
-            -- Replace inline Math with RawBlock (convert Para to RawBlock)
+            -- replace inline Math with RawBlock (convert Para to RawBlock)
+            table.insert(new_blocks, vspace(eq_align_before_space))
             table.insert(new_blocks, pandoc.RawBlock('latex', inline.text))
+            table.insert(new_blocks, vspace(eq_align_after_space))
           else
-            table.insert(new_inlines, inline)
+            table.insert(new_blocks, pandoc.RawBlock('latex', '\\[' .. inline.text .. '\\]'))
           end
+          table.insert(new_blocks, vspace(eq_after_space))
         else
           table.insert(new_inlines, inline)
         end
@@ -23,35 +40,17 @@ function walk_blocks(blocks)
         table.insert(new_blocks, pandoc.Para(new_inlines))
       end
 
-    elseif blk.t == 'Plain' then
-      -- Similar handling for Plain blocks
-      local new_inlines = {}
-      for _, inline in ipairs(blk.content) do
-        if inline.t == 'Math' and inline.mathtype == 'DisplayMath' then
-          if inline.text:match('^\\begin{align%*?}') then
-            table.insert(new_blocks, pandoc.RawBlock('latex', inline.text))
-          else
-            table.insert(new_inlines, inline)
-          end
-        else
-          table.insert(new_inlines, inline)
-        end
-      end
-      if #new_inlines > 0 then
-        table.insert(new_blocks, pandoc.Plain(new_inlines))
-      end
-
     elseif blk.t == 'CodeBlock' or blk.t == 'RawBlock' then
       -- Just keep them as is
       table.insert(new_blocks, blk)
 
     elseif blk.t == 'BlockQuote' or blk.t == 'Div' then
       -- Recurse on nested blocks
+      table.insert(new_blocks, vspace("0.5em"))
       blk.content = walk_blocks(blk.content)
       table.insert(new_blocks, blk)
-
+      table.insert(new_blocks, vspace("0.5em"))
     else
-      -- Other block types just pass through
       table.insert(new_blocks, blk)
     end
   end

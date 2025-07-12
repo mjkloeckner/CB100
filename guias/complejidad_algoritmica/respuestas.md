@@ -218,7 +218,7 @@ Entonces de $(18)$ en $(17)$
 
 $$\begin{align}
 T(n) &= 2\cdotp \left[2 T\left(\frac{n}{4}\right) + \Omicron\left(\frac{n}{2}\right)\right] + \Omicron(n) \nonumber \\
-     &= 4\cdotp T\left(\frac{n}{4}\right) + 2\cdotp \Omicron\left(\frac{n}{2}\right) + \Omicron(n) \\
+     &= 4\cdotp T\left(\frac{n}{4}\right) + 2\cdotp \Omicron\left(\frac{n}{2}\right) + \Omicron(n)
 \end{align}$$
 
 Realizando una iteración más $T\left(\frac{n}{4}\right)$ resulta de reemplazar $n =
@@ -236,16 +236,16 @@ T(n) &= 4\cdotp \left[ 2T\left(\frac{n}{8}\right) +
             \Omicron\left(\frac{n}{2}\right) + \Omicron(n) \nonumber \\
      &= 8\cdotp T\left(\frac{n}{8}\right) +
             4\cdotp \Omicron\left(\frac{n}{4}\right) +
-            2\cdotp \Omicron\left(\frac{n}{2}\right) + \Omicron(n)\\
+            2\cdotp \Omicron\left(\frac{n}{2}\right) + \Omicron(n)
 \end{align}$$
 
 Es decir, luego de $k$ iteraciones se llega a:
 
 $$\begin{align}
 T(n) &= 2^{k}\cdotp T\left(\frac{n}{2^{k}}\right) +
-            \sum^{k-1}_{i=0} 2^{i} \cdotp \Omicron\left(\frac{n}{2^{i}}\right) \nonumber\\
+            \sum^{k-1}_{i=0} 2^{i} \cdotp \Omicron\left(\frac{n}{2^{i}}\right) \nonumber \\
      &= 2^{k}\cdotp T\left(\frac{n}{2^{k}}\right) +
-            \sum^{k-1}_{i=0} \Omicron(n) \\
+            \sum^{k-1}_{i=0} \Omicron(n)
 \end{align}$$
 
 Pero cuando se llega al caso base se cumple:
