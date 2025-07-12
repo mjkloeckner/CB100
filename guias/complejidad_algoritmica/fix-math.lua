@@ -6,8 +6,8 @@
 
 local eq_before_space = "-1em"
 local eq_after_space = "0em"
-local eq_align_before_space "-0.75em"
-local eq_align_after_space "-0.75em"
+local eq_align_before_space = "-0.75em"
+local eq_align_after_space = "-0.75em"
 
 local function vspace(amount)
   return pandoc.RawBlock('latex', '\\vspace{' .. amount .. '}')
