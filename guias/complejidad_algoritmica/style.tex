@@ -8,11 +8,11 @@
 % 			right=2.00cm,
 % 			bmargin=2.50cm]{geometry}
 \usepackage[a4paper,
-			top=2.00cm,
-			left=1.70cm,
-			right=1.70cm,
+			top=2.25cm,
+			left=2.00cm,
+			right=2.00cm,
 			bottom=2.00cm,
-			bmargin=1.75cm]{geometry}
+			bmargin=2.25cm]{geometry}
 
 \usepackage{titlesec}
 \usepackage{fontspec}
@@ -202,7 +202,7 @@ BoldFont        =   *-Bold,
 	enhanced,
 	breakable,
 	size=minimal,
-	left=-4pt,
+	left=8pt,
 	top=8pt,
 	bottom=8pt,
 	right=8pt,
@@ -226,7 +226,7 @@ BoldFont        =   *-Bold,
 \renewcommand*{\thempfootnote}{\ [\arabic{mpfootnote}]\ }
 
 % space between text and footer
-\setlength\footskip{25pt}
+\setlength\footskip{38pt}
 \setlength{\skip\footins}{12pt}
 
 % align first letter of all the lines in the footnotes
@@ -264,3 +264,17 @@ BoldFont        =   *-Bold,
 \AtEndDocument{
   \end{multicols*}
 }
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{
+  leftmargin=0pt,     % no global indentation
+  labelindent=0pt,    % label aligned with margin
+  itemindent=5pt,     % no extra indent
+  labelwidth=0pt,     % label takes no reserved space
+  align=left          % make wrapped lines align with the left edge, not number
+}
+
+\usepackage[spanish]{babel}
+\binoppenalty=10000 
+\relpenalty=10000

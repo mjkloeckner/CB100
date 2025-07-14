@@ -4,9 +4,10 @@ Algoritmos y Estructuras de Datos (CB100) - FIUBA
 Martin Klöckner - [mklockner@fi.uba.ar](mailto:mklockner@fi.uba.ar)
 
 > 1. Un algoritmo divide un problema de tamaño $n$ en dos subproblemas de tamaño
->    $n/2$ con un costo constante en cada paso adicional, obtener la complejidad
->    sabiendo que el costo real $T(n)$ es:
->    $$T(n) = 2T\left(\frac{n}{2}\right) + \Omicron(1)$$
+> $n/2$ con un costo constante en cada paso adicional, obtener la complejidad
+> sabiendo que el costo real $T(n)$ es: 
+> \vspace{-0.65em}
+> $$T(n) = 2T\left(\frac{n}{2}\right) + \Omicron(1)$$
 
 Como la función de costo real $T(n)$ depende de la misma función $T(n)$ pero con
 una entrada menor $n/2$ se trata de un algoritmo recursivo o iterativo. Por el
@@ -17,7 +18,8 @@ $$\begin{align}
 T(n) = 2T\left(\frac{n}{2}\right) + \Omicron(1)
 \end{align}$$
 
-Podemos obtener $T\left(\frac{n}{2}\right)$ reemplazando $n$ con $n/2$ en (1):
+De la ecuación anterior se puede obtener $T\left(\frac{n}{2}\right)$
+reemplazando $n$ con $n/2$:
 
 $$\begin{align}
 T\left(\frac{n}{2}\right) = 2T\left(\frac{n}{4}\right) +
@@ -109,6 +111,7 @@ expansión.
 
 > 2. Un algoritmo busca un valor en un array ordenado reduciendo el problema a
 >    la mitad en cada paso, con un costo constante para la comparación
+>    \vspace{-0.65em}
 >    $$T(n) = T\left(\frac{n}{2}\right) + \Omicron(1)$$
 
 Para obtener la complejidad algorítmica, utilizo el método de expansión:
@@ -188,6 +191,7 @@ $$\Rightarrow\boxed{T(n) = \Omicron(log(n))}$$
 
 > 3. Un algoritmo suma los elementos de una lista de $n$ números dividiendo la
 >    lista en dos partes de igual tamaño. 
+>    \vspace{-0.25em}
 >    $$T(n) = 2T\left(\frac{n}{2}\right) + \Omicron(n)$$
 
 En este caso aplico el teorema maestro en caso de poder aplicarse primero y
