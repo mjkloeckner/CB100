@@ -10,13 +10,14 @@ Martin Klöckner - [mklockner@fi.uba.ar](mailto:mklockner@fi.uba.ar)
 
 Como la función de costo real $T(n)$ depende de la misma función $T(n)$ pero con
 una entrada menor $n/2$ se trata de un algoritmo recursivo o iterativo. Por el
-método de expansion, el orden se puede calcular como se muestra a continuación:
+método de expansion, el orden se calcula siguiendo los procedimientos a
+continuación. De la expresión de $T(n)$:
 
 $$\begin{align}
 T(n) = 2T\left(\frac{n}{2}\right) + \Omicron(1)
 \end{align}$$
 
-Pero $T\left(\frac{n}{2}\right)$ resulta:
+Podemos obtener $T\left(\frac{n}{2}\right)$ reemplazando $n$ con $n/2$ en (1):
 
 $$\begin{align}
 T\left(\frac{n}{2}\right) = 2T\left(\frac{n}{4}\right) +
@@ -31,13 +32,13 @@ T(n) &= 2\cdotp \left[2T\left(\frac{n}{4}\right) + \Omicron(1)\right] + \Omicron
      &= 4T\left(\frac{n}{4}\right) + 3\Omicron(1)
 \end{align}$$
 
-Pero de $(1)$ se puede obtener $T\left(\frac{n}{4}\right)$:
+Pero de $(1)$ también se puede obtener $T\left(\frac{n}{4}\right)$:
 
 $$\begin{align}
 T\left(\frac{n}{4}\right) = 2T\left(\frac{n}{8}\right) + \Omicron(1)
 \end{align}$$
 
-Y reemplazando en la ecuación $(3)$:
+Y reemplazando $(4)$ en la ecuación $(3)$:
 
 $$\begin{align}
 T(n) &= 4\cdotp \left[2T\left(\frac{n}{8}\right) + \Omicron(1)\right]  + 2\Omicron(1) + \Omicron(1) \nonumber\\

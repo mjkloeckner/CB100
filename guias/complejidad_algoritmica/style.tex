@@ -8,11 +8,11 @@
 % 			right=2.00cm,
 % 			bmargin=2.50cm]{geometry}
 \usepackage[a4paper,
-			top=2.50cm,
-			bottom=2.50cm,
-			left=2.00cm,
-			right=2.00cm,
-			bmargin=2.00cm]{geometry}
+			top=2.00cm,
+			left=1.70cm,
+			right=1.70cm,
+			bottom=2.00cm,
+			bmargin=1.75cm]{geometry}
 
 \usepackage{titlesec}
 \usepackage{fontspec}
@@ -156,7 +156,7 @@ BoldFont        =   *-Bold,
 	{\bfseries\Huge\thetitle}
 	\vspace{1mm}
 	\end{flushleft}
-	\thispagestyle{empty}
+	% \thispagestyle{empty}
 }
 
 % remove the page number from all the pages that the TOC occupies
@@ -202,10 +202,10 @@ BoldFont        =   *-Bold,
 	enhanced,
 	breakable,
 	size=minimal,
-	left=0pt,
-	top=12pt,
-	bottom=12pt,
-	right=12pt,
+	left=-4pt,
+	top=8pt,
+	bottom=8pt,
+	right=8pt,
 	boxrule=1pt,
 	sharp corners=all,
 	colback=backquote,
@@ -249,3 +249,18 @@ BoldFont        =   *-Bold,
 \makeatletter
 \setlength{\jot}{8pt} % valor por defecto es 3pt aproximadamente
 \makeatother
+
+\usepackage{multicol}
+\setlength{\columnsep}{12pt}
+
+% Delay start of two-column layout
+\AtBeginDocument{
+  % Nothing here, let Pandoc insert the title normally
+}
+
+% Begin multicols after title
+\usepackage{etoolbox}
+\pretocmd{\maketitle}{\clearpage\begin{multicols*}{2}}{}{}
+\AtEndDocument{
+  \end{multicols*}
+}
