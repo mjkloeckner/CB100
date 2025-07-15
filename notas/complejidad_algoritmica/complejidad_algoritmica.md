@@ -1,6 +1,7 @@
 # Complejidad Algorítmica
 
-\tableofcontents
+Algoritmos y Estructuras de Datos (CB100) - FIUBA  
+Martin Klöckner - [mklockner@fi.uba.ar](mailto:mklockner@fi.uba.ar)
 
 Se dice que un algorítmico es mas eficiente que otro si consume menos recursos.
 La eficiencia se puede medir en términos espaciales (cantidad de memoria
