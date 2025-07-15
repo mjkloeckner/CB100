@@ -134,7 +134,7 @@ La cota que mejor aproxima (Theta $\Theta$) hace referencia a una funcion que
 acota tanto inferiormente como superiormente al tiempo real $T(n)$ de un
 algoritmo dado para un $n$ suficientemente grande.
 
-### Cota superior $\Omicron$
+### Cota superior $\mathcal{O}$
 
 La cota superior hace referencia a una función que acota el crecimiento del
 número de operaciones elementales o tiempo de ejecución de un algoritmo en el
@@ -152,38 +152,38 @@ diferencia.
 El orden expresa el comportamiento dominante de un algoritmo para un número de
 entradas $n$ suficientemente grande, en la practica se suele tomar como si fuera
 la cota superior, aunque por definición no lo es. Por definición se dice que
-$T(n)$ es de orden $g(n)$ (o pertenece a) $\Omicron(g(n))$ si y solo si existen
+$T(n)$ es de orden $g(n)$ (o pertenece a) $\mathcal{O}(g(n))$ si y solo si existen
 constantes positivas $c$ y $n_{0}$, tales que se verifica para todo $n > n_{0}$
 lo siguiente 
 
 $$0 \leq T(n) \leq c*g(n)\hspace{1em} \forall n \geq n_{0}$$
 
 En general en los casos en donde $T(n)$ se expresa como un polinomio, el orden
-$\Omicron$ del algoritmo, es el termino de mayor grado de $T(n)$
+$\mathcal{O}$ del algoritmo, es el termino de mayor grado de $T(n)$
 
 Los ordenes mas comunes entre diferentes algoritmos se pueden ordenar en forma
 creciente en cuanto a complejidad algorítmica, esto permite comparar la
 eficiencia entre los algoritmos:
 
-$$ \Omicron(1) \subset \Omicron(log(n)) \subset \Omicron(n) \subset
-\Omicron(n*log(n)) \subset \Omicron(n^2) \subset \Omicron(n^3) \subset ...
-\subset \Omicron(2^n) \subset \Omicron(n!)$$
+$$ \mathcal{O}(1) \subset \mathcal{O}(log(n)) \subset \mathcal{O}(n) \subset
+\mathcal{O}(n*log(n)) \subset \mathcal{O}(n^2) \subset \mathcal{O}(n^3) \subset ...
+\subset \mathcal{O}(2^n) \subset \mathcal{O}(n!)$$
 
 ![\ ](./func_cmp.png)
 
 #### Propiedades del orden
 
-1. $f$ es $\Omicron(f)$ entonces $f$ esta acotada por su orden
-2. $\Omicron(f)$ es $\Omicron(g) \Rightarrow \Omicron(f)$ esta incluido en
-   $\Omicron(g)$ y viceversa
-3. $\Omicron(f) = \Omicron(g)$ $\Leftrightarrow$ $f$ es $\Omicron(g)$ y $g$ es
-   $\Omicron(f)$
-4. Si $f$ es $\Omicron(g)$ y $g$ es $\Omicron(h)$ $\Rightarrow$ $f$ es $\Omicron(h)$
-5. Si $f$ es $\Omicron(g)$ y $f$ es $\Omicron(h)$ $\Rightarrow$ $f$ es $\Omicron(min(g, h))$
-6. [Regla de la suma] Si $f_{1}$ es $\Omicron(g)$ y $f_{2}$ es $\Omicron(h)$
-   $\Rightarrow$ $f_{1} + f_{2}$ es $\Omicron(max(g, h))$
-7. [Regla del producto] Si $f_{1}$ es $\Omicron(g)$ y $f_{2}$ es $\Omicron(h)$
-   $\Rightarrow$ $f_{1} * f_{2}$ es $\Omicron(g*h)$
+1. $f$ es $\mathcal{O}(f)$ entonces $f$ esta acotada por su orden
+2. $\mathcal{O}(f)$ es $\mathcal{O}(g) \Rightarrow \mathcal{O}(f)$ esta incluido en
+   $\mathcal{O}(g)$ y viceversa
+3. $\mathcal{O}(f) = \mathcal{O}(g)$ $\Leftrightarrow$ $f$ es $\mathcal{O}(g)$ y $g$ es
+   $\mathcal{O}(f)$
+4. Si $f$ es $\mathcal{O}(g)$ y $g$ es $\mathcal{O}(h)$ $\Rightarrow$ $f$ es $\mathcal{O}(h)$
+5. Si $f$ es $\mathcal{O}(g)$ y $f$ es $\mathcal{O}(h)$ $\Rightarrow$ $f$ es $\mathcal{O}(min(g, h))$
+6. [Regla de la suma] Si $f_{1}$ es $\mathcal{O}(g)$ y $f_{2}$ es $\mathcal{O}(h)$
+   $\Rightarrow$ $f_{1} + f_{2}$ es $\mathcal{O}(max(g, h))$
+7. [Regla del producto] Si $f_{1}$ es $\mathcal{O}(g)$ y $f_{2}$ es $\mathcal{O}(h)$
+   $\Rightarrow$ $f_{1} * f_{2}$ es $\mathcal{O}(g*h)$
 
 ## Complejidad algorítmica de algoritmos recursivos
 
