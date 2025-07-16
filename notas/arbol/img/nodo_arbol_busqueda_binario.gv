@@ -1,0 +1,12 @@
+graph Tree {
+    rankdir=TB;
+    splines=polyline;
+    node [shape=record];
+
+    R [label= "{{<left>*|dato|<right>*}}"];
+    A [label= "{{<left>*|dato|<right>*}}"];
+    B [label= "{{<left>*|dato|<right>*}}"];
+
+    R:left -- A;
+    R:right -- B;
+}

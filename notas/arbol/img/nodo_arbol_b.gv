@@ -1,0 +1,14 @@
+graph Tree {
+    rankdir=TB;
+    node [shape=record];
+    splines=polyline;
+
+    R [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
+    A [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
+    B [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
+    C [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
+
+    R:left -- A;
+    R:middle -- B;
+    R:right -- C;
+}
