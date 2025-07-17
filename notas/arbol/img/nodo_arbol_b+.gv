@@ -1,0 +1,64 @@
+// compile with dot
+
+graph Tree {
+    rankdir=TB;
+    node [shape=record, fontname="sans"];
+    splines=polyline;
+
+    R [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+        <tr>
+        <td port="left">*</td>
+        <td>k1</td>
+        <td port="middle">*</td>
+        <td>k2</td>
+        <td port="right">*</td>
+        </tr>
+        </table>
+        >, shape=none];
+
+    A [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+        <tr>
+        <td port="left">*</td>
+        <td>k1</td>
+        <td port="middle">*</td>
+        <td>k3</td>
+        <td port="right">*</td>
+        </tr>
+        </table>
+        >, shape=none];
+
+    B [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+        <tr>
+        <td port="left">*</td>
+        <td>k2</td>
+        <td port="middle">*</td>
+        <td>k4</td>
+        <td port="right">*</td>
+        </tr>
+        </table>
+        >, shape=none];
+
+    C [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+        <tr>
+        <td port="left">*</td>
+        <td>k5</td>
+        <td port="middle">*</td>
+        <td>k6</td>
+        <td port="right">*</td>
+        </tr>
+        </table>
+        >, shape=none];
+
+    R:left -- A:middle;
+    R:middle -- B:middle;
+    R:right -- C:middle;
+
+    A:right -- B:left [dir=forward, arrowhead=normal, arrowsize=0.8];
+    B:right -- C:left [dir=forward, arrowhead=normal, arrowsize=0.8];
+
+    { rank=same; A; B; C; }
+}

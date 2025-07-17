@@ -1,12 +1,14 @@
+// compile with dot
+
 graph Tree {
     rankdir=TB;
-    node [shape=record];
+    node [shape=record, fontname="sans"];
     splines=polyline;
 
     R [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
-    A [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
-    B [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
-    C [label= "{{<left>*|k1|<middle>*|k2|<right>*}}"];
+    A [label= "{{<left>*|k3|<middle>*|k4|<right>*}}"];
+    B [label= "{{<left>*|k5|<middle>*|k6|<right>*}}"];
+    C [label= "{{<left>*|k7|<middle>*|k8|<right>*}}"];
 
     R:left -- A;
     R:middle -- B;

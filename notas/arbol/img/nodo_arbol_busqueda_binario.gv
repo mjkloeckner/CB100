@@ -1,7 +1,9 @@
+// compile with dot
+
 graph Tree {
     rankdir=TB;
     splines=polyline;
-    node [shape=record];
+    node [shape=record, fontname="sans"];
 
     R [label= "{{<left>*|dato|<right>*}}"];
     A [label= "{{<left>*|dato|<right>*}}"];

@@ -1,0 +1,15 @@
+graph G {
+    layout=neato;
+    node[shape=circle, fixedsize=true, width=0.40, fontname="sans"];
+
+    A       [pos="-0.50, 0.50!"];
+    A_label [pos="-0.15, 0.50!", shape=plaintext, label="-2"];
+
+    C       [pos=" 0.00, 0.00!"];
+    C_label [pos=" 0.35, 0.00!", shape=plaintext, label="-1"];
+
+    B       [pos=" 0.50,-0.50!"];
+    B_label [pos=" 0.85,-0.50!", shape=plaintext, label="0"];
+
+    A -- C -- B;
+}
