@@ -282,3 +282,63 @@ BoldFont        =   *-Bold,
 
 \binoppenalty=10000 
 \relpenalty=10000
+
+\usepackage{listings}
+\lstset{
+  breaklines=true,
+  breakatwhitespace=true,
+  basicstyle=\ttfamily\small,
+  columns=fullflexible
+}
+
+\usepackage{xcolor}
+
+\definecolor{bggray}{rgb}{0.95,0.95,0.95}
+\definecolor{keywordcolor}{rgb}{0.2,0.2,0.7}
+\definecolor{commentcolor}{rgb}{0.0,0.5,0.0}
+\definecolor{stringcolor}{rgb}{0.6,0.1,0.1}
+
+\lstset{
+  backgroundcolor=\color{bggray},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  % frame=single,
+  showstringspaces=false,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  numbers=none,
+}
+
+% tango style
+\definecolor{bgcolor}{HTML}{F6F6F6}
+\definecolor{keywordcolor}{HTML}{204A87}
+\definecolor{commentcolor}{HTML}{8F5902}
+\definecolor{stringcolor}{HTML}{4E9A06}
+\definecolor{numbercolor}{HTML}{0000CF}
+\definecolor{operatorcolor}{HTML}{CE5C00}
+\definecolor{identifiercolor}{HTML}{000000} % For general text
+
+% === Listings configuration ===
+\lstset{
+  language=Python,                 % Change this for other languages
+  backgroundcolor=\color{bgcolor},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  identifierstyle=\color{identifiercolor},
+  numberstyle=\color{numbercolor},
+  emphstyle=\color{operatorcolor}\bfseries,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  showstringspaces=true,
+  frame=single,
+  framerule=0pt,
+  xleftmargin=0pt,
+  moredelim=**[is][\color{operatorcolor}\bfseries]{@}{@}, % allow inline operator styling using @...@
+}
+

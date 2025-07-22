@@ -1,0 +1,19 @@
+graph G {
+    layout=neato;
+    node[shape=circle, fixedsize=true, width=0.5, penwidth=2,
+         fontsize=22, fontname="sans"];
+    edge [penwidth=2.0];
+
+    A [pos=" 0.0, 0.7!", label="6"];
+    B [pos="-0.8, 0.0!", label="3"];
+    C [pos=" 0.8, 0.0!", label="8"];
+
+    D [pos="-1.2,-0.8!", label="1"];
+    E [pos="-0.4,-0.8!", label="4"];
+
+    F [pos=" 0.4,-0.8!", label="7"];
+    G [pos=" 1.2,-0.8!", label="9"];
+
+    A -- B -- {D, E};
+    A -- C -- {F, G};
+}
