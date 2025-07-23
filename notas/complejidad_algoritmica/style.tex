@@ -1,0 +1,267 @@
+% \documentclass[14pt]{extarticle}
+
+% page setup
+% \usepackage[a4paper,
+%             top=2.5cm,
+% 			bottom=2.5cm,
+% 			left=2.00cm,
+% 			right=2.00cm,
+% 			bmargin=2.50cm]{geometry}
+\usepackage[a4paper,
+			top=2.00cm,
+			left=1.75cm,
+			right=1.75cm,
+			bottom=2.00cm,
+			bmargin=2.00cm]{geometry}
+
+\setlength{\columnsep}{16pt}  % Default is usually 10pt
+
+\usepackage{titlesec}
+\usepackage{fontspec}
+\setmainfont{Helvetica}
+
+% right pointing hand
+\usepackage{utfsym}
+
+% make pictures caption font bold and small
+\usepackage[font={footnotesize,bf}]{caption}
+\usepackage{subcaption}
+
+% inline code (backticks in md)
+\linespread{1.10}
+\definecolor{bgcolor}{HTML}{e0e0e0}
+\let\oldtexttt\texttt
+
+% \renewcommand{\texttt}[1]{
+% 	\colorbox{bgcolor}{\oldtexttt{#1}}
+% }
+
+% change boldfont bold to extrabold
+% \setmainfont[
+%  BoldFont={Inter-ExtraBold}
+% ]{Inter}
+
+% change regular font to light font
+% \setmainfont{Inter light}
+
+\newfontfamily\titlefont{Inter}[
+UprightFont     =   *-Regular,
+BoldFont        =   *-ExtraBold,
+Scale           =   0.90
+]
+
+\newfontfamily\sectionsfont{Inter}[
+UprightFont     =   *-Regular,
+BoldFont        =   *-Bold,
+]
+
+\setmathfont[Scale=1.05]{Fira Math}
+
+\usepackage{xcolor}
+\definecolor{ugrey}{HTML}{333333}
+
+\titleformat{\section}
+{\color{ugrey}\titlefont\Large\bfseries}
+{\color{ugrey}}
+{0em}
+{}
+
+\titleformat{\subsection}
+{\color{ugrey}\sectionsfont\large\bfseries}
+{\color{ugrey}}
+{0em}
+{}
+
+\titleformat{\subsubsection}
+{\color{ugrey}\sectionsfont\bfseries}
+{\color{ugrey}}
+{0em}
+{}
+
+\titleformat{\paragraph}
+{\color{ugrey}\sectionsfont\bfseries}
+{\color{ugrey}\theparagraph}
+{0em}
+{}
+
+\titleformat{\subparagraph}
+{\color{ugrey}\normalfont\bfseries}
+{\color{ugrey}\theparagraph}
+{0em}
+{}
+
+% spacing: how to read {12pt plus 4pt minus 2pt}
+%       12pt is what we would like the spacing to be
+%       plus 4pt means that TeX can stretch it by at most 4pt
+%       minus 2pt means that TeX can shrink it by at most 2pt
+%
+% \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+
+\titlespacing*{\section}
+{0pt}{1.5ex plus 0.25ex minus .2ex}{1.25ex plus .2ex}
+
+\titlespacing*{\subsection}
+{0pt}{1.5ex plus 0.25ex minus .2ex}{1.25ex plus .2ex}
+
+\titlespacing*{\subsubsection}
+{0pt}{1.25ex plus 0.25ex minus .2ex}{1.25ex plus .2ex}
+
+\titlespacing*{\paragraph}
+{0pt}{1.25ex plus 0.25ex minus .2ex}{1.0ex plus .2ex}
+
+\titlespacing*{\subparagraph}
+{0pt}{1.00ex plus 0.25ex minus .2ex}{1.0ex plus .2ex}
+
+% spacing between formulas and text
+% \usepackage[nodisplayskipstretch]{setspace}
+% \setstretch{1.20}
+
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+\setlength{\belowdisplayshortskip}{\belowdisplayskip}
+
+\setlength{\baselineskip}{0pt}
+
+% \usepackage{setspace}
+% \setstretch{1.25}
+
+% \renewcommand{\figurename}{Fig.}
+
+\usepackage{caption}
+\captionsetup{font=normalsize, font=bf, labelfont=bf}
+\captionsetup[sub]{font=small,labelfont=md}
+
+\renewcommand\thesubfigure{\arabic{subfigure}}
+
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla}
+
+% \renewcommand{\contentsname}{Índice}
+\renewcommand\contentsname{\vspace*{-45pt}}
+
+% TOC dots separation
+% \renewcommand{\cftdotsep}{10}
+
+% \setlength{\cftsecindent}{0pt}% Remove indent for \section
+% \setlength{\cftsubsecindent}{5pt}% Remove indent for \subsection
+% \setlength{\cftsubsubsecindent}{0pt}% Remove indent for \subsubsec
+
+\setcounter{tocdepth}{4}
+
+\usepackage{titling}
+\renewcommand{\maketitle}{ 
+	\begin{flushleft}
+	{\bfseries\Huge\thetitle}
+	\vspace{1mm}
+	\end{flushleft}
+	% \thispagestyle{empty}
+}
+
+% remove the page number from all the pages that the TOC occupies
+% \addtocontents{toc}{\protect\thispagestyle{empty}}
+
+% add page break after TOC set it to page number 1
+\let\oldtableofcontents\tableofcontents % remember the definition
+\renewcommand\tableofcontents{
+	\oldtableofcontents % use the standard toc
+	\thispagestyle{empty}
+	\pagebreak
+	\setcounter{page}{1}
+}
+
+% Set text color for all document
+% \color{ugrey}
+
+\usepackage[titles]{tocloft}
+\renewcommand{\cftdotsep}{1.5}
+\renewcommand{\cftsetpnumwidth}{1.5}
+\renewcommand{\cftsetrmarg}{1.5}
+
+\usepackage{float}
+\makeatletter
+\def\fps@figure{H}
+\makeatother
+
+% nicer chemical figures
+\usepackage{chemfig}
+
+% change style of quote, see also https://tex.stackexchange.com/a/436253/114857
+\usepackage[most]{tcolorbox}
+
+
+\definecolor{linequote}{RGB}{224,215,188}
+\definecolor{bordercolor}{RGB}{221,221,221}
+% \definecolor{backquote}{RGB}{249,245,233}
+\definecolor{backquote}{RGB}{245,245,245}
+
+% change left border: https://tex.stackexchange.com/a/475716/114857
+% change left margin: https://tex.stackexchange.com/a/457936/114857
+\newtcolorbox{myquote}[1][]{%
+	enhanced,
+	breakable,
+	size=minimal,
+	left=8pt,
+	top=8pt,
+	bottom=8pt,
+	right=8pt,
+	boxrule=1pt,
+	sharp corners=all,
+	colback=backquote,
+	colframe=black,
+	#1}
+
+% redefine quote environment to use the myquote environment, see
+% https://tex.stackexchange.com/a/337587/114857
+\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}
+
+% better fractions
+\usepackage{nicefrac,xfrac}
+
+% surround footnotes number with square brackets and always use numbers (even
+% inside quoted text)
+% https://www.overleaf.com/learn/latex/Footnotes
+\renewcommand*{\thefootnote}{\ [\arabic{footnote}]\ }
+\renewcommand*{\thempfootnote}{\ [\arabic{mpfootnote}]\ }
+
+% space between text and footer
+\setlength\footskip{32pt}
+\setlength{\skip\footins}{12pt}
+
+% align first letter of all the lines in the footnotes
+\usepackage[bottomfloats,belowfloats,hang]{footmisc}
+\setlength{\footnotemargin}{1em}
+
+\newcommand{\unit}[2]{\nicefrac{#1}{#2}}
+
+\usepackage{enumitem}
+\usepackage{amsfonts}
+
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\textopenbullet$}
+
+\usepackage{tabularx}
+\usepackage{multirow} % Required for multirows
+\usepackage{colortbl}
+
+% Reduce space around displayed equations safely
+\makeatletter
+\setlength{\jot}{8pt} % valor por defecto es 3pt aproximadamente
+\makeatother
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{
+  leftmargin=0pt,     % no global indentation
+  labelindent=0pt,    % label aligned with margin
+  itemindent=5pt,     % no extra indent
+  labelwidth=0pt,     % label takes no reserved space
+  align=left          % make wrapped lines align with the left edge, not number
+}
+
+\usepackage[spanish]{babel}
+\binoppenalty=10000 
+\relpenalty=10000
