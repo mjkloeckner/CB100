@@ -281,7 +281,7 @@ $T(n)$ resulta:
 $$T(n) = 
 \begin{cases}
 \hspace{0.75em} \mathcal{O}(n^{(n/b)}\cdotp n^{k}) & \text{si } a > 1 \\
-\hspace{0.75em} \mathcal{O}(n^{k}                  & \text{si } a = 1 \\
+\hspace{0.75em} \mathcal{O}(n^{k+1})               & \text{si } a = 1 \\
 \hspace{0.75em} \mathcal{O}(n^k)                   & \text{si } a < 1
 \end{cases}$$
 
