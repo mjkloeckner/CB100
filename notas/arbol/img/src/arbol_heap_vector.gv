@@ -2,5 +2,5 @@ graph {
     node[shape=record, penwidth=2, fontsize=22, fontname="sans"];
     edge [penwidth=2.0];
 
-   array [label="<f0> 50 | <f1> 30 | <f2> 20 | <f3> 15 | <f4> 10 | <f5>  8 | <f6> 16"];
+    array [label="<f0> 50 | <f1> 30 | <f2> 20 | <f3> 15 | <f4> 10 | <f5>  8 | <f6> 16"];
 }

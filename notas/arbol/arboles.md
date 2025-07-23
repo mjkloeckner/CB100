@@ -85,11 +85,13 @@ cuando el dato esta en una hoja).
     [https://www.youtube.com/watch?v=jDM6_TnYIqE&t=239s](https://www.youtube.com/watch?v=jDM6_TnYIqE&t=239s).
 
 Cuando se **inserta** o **elimina** un elemento en el árbol se lo hace siguiendo
-un orden. El caso en que el nodo a eliminar tiene uno o dos hijos es trivial, lo
-particular es cuando el nodo tiene dos hijos, en ese caso se debe reemplazar el
-nodo eliminado por el sucesor inorden, esto es el nodo que se debería visitar si
-se acabara de visitar el nodo eliminado (con recorrido inorden) esto resulta en
-el nodo más a la izquierda del subárbol derecho del nodo eliminado.
+un orden. El caso en que el nodo a eliminar tiene uno o ningún hijo es trivial,
+cuando el nodo tiene dos hijos, se debe reemplazar el nodo eliminado por el
+sucesor inorden, esto es, el nodo que se debería visitar si se acabara de
+visitar el nodo eliminado (con recorrido inorden) esto resulta en el nodo más a
+la izquierda del subárbol derecho del nodo eliminado, otras implementaciones
+utilizan el predecesor inorden, lo que resulta en el nodo mas a la derecha del
+subárbol izquierdo.
 
 ### Maneras de recorrer un árbol binario
 
@@ -149,8 +151,8 @@ alguna hoja, no lo estarían.
 Se dice que un árbol esta completo, si todas sus hojas están llenas excepto el
 ultimo nivel, que debe estar casi-completo de izquierda a derecha, es decir,
 puede haber hojas vacías pero deben estar lo más a la derecha posible y solo en
-el ultimo nivel. En la figura 1 ambos arboles están completos. A un árbol que no
-es completo también se le dice **desequilibrado**.
+el ultimo nivel. En la figura 1 ambos arboles están completos. A un árbol
+incompleto también se le dice **desequilibrado**.
 
 #### Árbol degenerado o patológico
 
@@ -478,15 +480,15 @@ mínimo.
 \end{figure}
 
 Los arboles heap típicamente se almacenan en vectores, almacenando los valores
-por nivel, es decir, para un padre en posición $k$ sus hijos se almacenaran en
-la posición $(2*k)+1$ y $(2*k)+2$ del vector para el hijo izquierdo y derecho
-respectivamente, análogamente, si el hijo esta en la posición $h$ del vector, el
-padre estará en la posición $floor((h-1)/2)$. Almacenando los arboles en
-vectores permite acceder a los datos de forma directa. En la figura 10 se
-muestra como se almacena el árbol heap de máximo de la figura 9.1, como
-particularidad se ve que el primer elemento es la raíz, lo cual es el elemento
-más grande por ser heap de máximo, si fuera de mínimo este sería el menor
-elemento.
+por nivel, contanto $k$ desde $0$, para un padre en posición $k$ sus hijos se
+almacenan en la posición $(2*k)+1$ y $(2*k)+2$ del vector para el hijo
+izquierdo y derecho respectivamente, análogamente, si el hijo esta en la
+posición $h$ del vector, el padre estará en la posición $floor((h-1)/2)$.
+Almacenando los arboles en vectores permite acceder a los datos de forma
+directa. En la figura 10 se muestra como se almacena el árbol heap de máximo de
+la figura 9.1, como particularidad se ve que el primer elemento es la raíz, lo
+cual es el elemento más grande por ser heap de máximo, si fuera de mínimo este
+sería el menor elemento.
 
 \begin{figure}[H]
   \centering
@@ -533,31 +535,29 @@ denominado `arr`, el lenguaje utilizado es python
 ```python
 def heapify(arr, n, i):
   # Se asume que la raiz es maxima
-  largest = i
+  max = i
 
-  # posicion de hijo izquierdo
+  # posicion de hijo izquierdo y derecho
   left = (2*i) + 1
-
-  # posicion de hijo derecho
   right = (2*i) + 2
 
   # se comprueba si hay hijo izquierdo y es 
   # mayor a la raiz
-  if left < n and arr[left] > arr[largest]:
-      largest = left
+  if left < n and arr[left] > arr[max]:
+      max = left
 
-  # se comprueba si hay hijo derecho y es mayor
-  # a la raiz o al hijo izquierdo
-  if right < n and arr[right] > arr[largest]:
-      largest = right
+  # se comprueba si hay hijo derecho y es
+  # mayor a la raiz o al hijo izquierdo
+  if right < n and arr[right] > arr[max]:
+      max = right
 
-  # si la raiz no es maxima se intercambia con
-  # el maximo hijo, y se llama recursivamente
-  # a heapify para continuar con el algoritmo
-  # con los hijos restantes
-  if largest != i:
-      arr[i], arr[largest] = arr[largest], arr[i]
-      heapify(arr, n, largest)
+  # si la raiz no es maxima se intercambia
+  # con el maximo hijo, y se llama
+  # recursivamente a heapify para reordenar
+  # los hijos restantes
+  if max != i:
+      arr[i], arr[max] = arr[max], arr[i]
+      heapify(arr, n, max)
 ```
 
 ## Heapsort
