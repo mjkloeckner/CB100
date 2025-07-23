@@ -1,0 +1,9 @@
+digraph G {
+    node[shape=circle, fontname="sans", fixedsize=true, width=0.5, 
+         penwidth=2, fontsize=22];
+    rankdir=LR;
+    edge [penwidth=2];
+
+    A -> E -> D;
+    A ->D;
+}
