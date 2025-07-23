@@ -346,7 +346,7 @@ puede tener un máximo de 3 hijos, y almacenar 2 claves.
 
 Por definición, en los arboles B se deben cumplir las siguientes reglas:
 
-1. Todos los nodos, salvo la raíz, deben tener al menos $m/2$ hijos claves o
+1. Todos los nodos, salvo la raíz, deben tener al menos $m/2$ hijos o 
    $(m/2) - 1$ claves.
 3. Todas las hojas están en el mismo nivel.
 4. El proceso de creación es de abajo hacia arriba.
